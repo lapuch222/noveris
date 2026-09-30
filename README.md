@@ -1,7 +1,7 @@
 <div align="center">
 
   <!-- Logo/Banner do Projeto -->
-  <img src="./assets/anhanga-banner.png" alt="Noveris Anhangá Logo" width="420"/>
+  <img src="./anhanga-banner.png" .../>. alt="Noveris Anhangá Logo" width="420"/>
 
   # 🦌 ANHANGÁ
   ### Análise Neural de Hábitos, Ambiente e Gaming Adaptativo
