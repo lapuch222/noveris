@@ -37,7 +37,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 18px 40px;
   background: rgba(11, 14, 20, 0.95);
   position: fixed;
   width: 100%;
@@ -57,8 +57,8 @@ header {
 nav a {
   color: var(--cor-subtitulo);
   text-decoration: none;
-  margin-left: 18px;
-  font-size: 0.95rem;
+  margin-left: 16px;
+  font-size: 0.9rem;
   transition: color 0.3s;
 }
 
@@ -73,9 +73,9 @@ nav a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 120px;
+  padding-top: 130px;
   padding-bottom: 60px;
-  background: radial-gradient(circle at center, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(0, 242, 254, 0.12) 0%, transparent 70%);
 }
 
 .noveris-presenta {
@@ -83,18 +83,24 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .company-logo {
-  max-width: 220px;
+  max-width: 210px;
   height: auto;
   filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.3));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.company-logo:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.7));
 }
 
 .presenta-text {
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   letter-spacing: 4px;
   color: var(--cor-subtitulo);
   margin-top: 8px;
@@ -102,36 +108,78 @@ nav a:hover {
   opacity: 0.8;
 }
 
-.hero-logo {
-  max-width: 250px;
-  margin-bottom: 20px;
+/* 🌟 ANIMAÇÃO DE MOVIMENTAÇÃO NA LOGO ANHANGÁ */
+.hero-image-wrapper {
+  display: inline-block;
+  perspective: 1000px;
+}
+
+.floating-logo {
+  max-width: 260px;
+  margin-bottom: 15px;
   filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.5));
+  animation: floatMotion 4s ease-in-out infinite;
+  transition: filter 0.3s ease;
+}
+
+.floating-logo:hover {
+  filter: drop-shadow(0 0 35px rgba(0, 242, 254, 0.9));
+}
+
+@keyframes floatMotion {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   color: #ffffff;
   margin-bottom: 10px;
   text-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
 
 .subtitle {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: var(--cor-subtitulo);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.hero-tagline {
+  font-size: 1.05rem;
+  color: #e2e8f0;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.badge-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 25px;
 }
 
 .badge {
-  display: inline-block;
   padding: 6px 16px;
   background: rgba(123, 44, 191, 0.2);
   border: 1px solid var(--cor-secundaria);
   color: #c77dff;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: bold;
-  margin-bottom: 30px;
   box-shadow: 0 0 10px rgba(123, 44, 191, 0.3);
+}
+
+.secondary-badge {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
 }
 
 .hero-buttons {
@@ -156,7 +204,7 @@ nav a:hover {
 
 .btn.primary:hover {
   box-shadow: 0 0 25px rgba(0, 242, 254, 0.8);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .btn.secondary {
@@ -168,27 +216,27 @@ nav a:hover {
   border-color: var(--cor-destaque);
   color: var(--cor-destaque);
   box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 /* Seções Padrão */
 .container {
-  padding: 60px 20px;
+  padding: 50px 20px;
   max-width: 1000px;
   margin: 0 auto;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--cor-destaque);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
 h3 {
   color: #ffffff;
-  margin-bottom: 15px;
-  font-size: 1.25rem;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
 }
 
 .card {
@@ -206,105 +254,31 @@ h3 {
   box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
 }
 
-/* Elementos da Seção de Exemplo Prático */
-.example-box {
-  background: rgba(11, 14, 20, 0.6);
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 3px solid var(--cor-destaque);
-  margin-top: 15px;
-}
-
-.divider {
-  border: 0;
-  height: 1px;
-  background: var(--borda-cards);
-  margin: 12px 0;
-}
-
-.highlight-warn {
-  color: #ff4d6d;
-  font-weight: bold;
-}
-
-.highlight-ok {
-  color: #38b000;
-  font-weight: bold;
-}
-
-.formula-box {
-  background: #000;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  border: 1px solid rgba(0, 242, 254, 0.3);
-  margin: 15px 0;
-}
-
-.formula-box code {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.4rem;
-  color: var(--cor-destaque);
-}
-
-.conclusion-text {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid var(--borda-cards);
-  color: #c77dff;
-}
-
-.flow-steps .step {
-  padding: 10px 15px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 6px;
-  margin-bottom: 8px;
-  border-left: 2px solid var(--cor-secundaria);
-}
-
-.ai-response {
-  background: rgba(123, 44, 191, 0.15);
-  border-left: 4px solid #c77dff;
-  padding: 15px 20px;
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
-  color: #ffffff;
-  margin: 15px 0;
-}
-
-.privacy-note {
+/* Pipeline Flow */
+.pipeline-flow {
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
-  color: var(--cor-subtitulo);
+  color: var(--cor-destaque);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  margin-bottom: 20px;
 }
 
-/* Card de Curiosidade Especial */
-.curiosidade-card {
-  background: linear-gradient(135deg, #131924 0%, #1c1033 100%);
-  border: 1px solid var(--cor-secundaria);
-  box-shadow: 0 0 15px rgba(123, 44, 191, 0.2);
+.feature-list li {
+  margin-bottom: 10px;
+  list-style: none;
+  position: relative;
+  padding-left: 20px;
 }
 
-.curiosidade-card:hover {
-  border-color: #c77dff;
-  box-shadow: 0 0 25px rgba(123, 44, 191, 0.4);
-}
-
-.curiosidade-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.curiosidade-header h2 {
-  font-size: 1.5rem;
-  color: #c77dff;
-  margin-bottom: 0;
-  text-align: left;
-}
-
-.curiosidade-header .icon {
-  font-size: 1.8rem;
+.feature-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--cor-destaque);
 }
 
 /* Grid Layout */
@@ -314,32 +288,131 @@ h3 {
   gap: 20px;
 }
 
-.grid-item h3, .grid-item h4 {
+.grid-item h3 {
   color: #4cc9f0;
-  margin-bottom: 10px;
 }
 
-/* Tabela de Dados */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  text-align: left;
+/* Matemática Aplicada */
+.math-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.data-table th, .data-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid var(--borda-cards);
+.math-tag {
+  background: rgba(123, 44, 191, 0.2);
+  border: 1px solid var(--cor-secundaria);
+  color: #c77dff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-family: 'Orbitron', sans-serif;
 }
 
-.data-table th {
+/* Caixa Duo (ML + IA Generativa) */
+.duo-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.duo-item {
+  background: rgba(11, 14, 20, 0.6);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 3px solid var(--cor-destaque);
+}
+
+.ai-response {
+  background: rgba(123, 44, 191, 0.15);
+  border-left: 4px solid #c77dff;
+  padding: 15px 20px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: #ffffff;
+  margin-top: 15px;
+}
+
+/* Data Pipeline (Engenharia de Dados) */
+.data-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.pipe-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.pipe-step strong {
   color: var(--cor-destaque);
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
-.data-table tr:hover {
-  background: rgba(0, 242, 254, 0.05);
+.pipe-step small {
+  color: var(--cor-subtitulo);
+  font-size: 0.75rem;
+  margin-top: 5px;
+}
+
+.pipe-arrow {
+  color: #c77dff;
+  font-weight: bold;
+}
+
+/* Smart Home e Acessibilidade */
+.device-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.device-tags span {
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.privacy-note {
+  font-size: 0.9rem;
+  color: var(--cor-subtitulo);
+  margin-top: 10px;
+}
+
+.access-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+  color: var(--cor-subtitulo);
+}
+
+/* Visão NOVERIS */
+.vision-card {
+  background: linear-gradient(135deg, #131924 0%, #1c1033 100%);
+  border-color: var(--cor-secundaria);
+  text-align: center;
+}
+
+.vision-card h2 {
+  color: #c77dff;
 }
 
 /* Rodapé */
