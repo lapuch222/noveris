@@ -6,7 +6,7 @@
   <title>ANHANGÁ — Smart Home 2050 | NOVERIS</title>
   
   <!-- Estilo com parâmetro anti-cache -->
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="style.css?v=4.0">
   
   <!-- Fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +21,7 @@
     <nav>
       <a href="#sobre">Sobre</a>
       <a href="#curiosidade">Curiosidade</a>
+      <a href="#pratica">Na Prática</a>
       <a href="#arquitetura">Arquitetura</a>
       <a href="#metricas">Métricas</a>
       <a href="#sensores">Sensores</a>
@@ -45,7 +46,7 @@
       <div class="badge">SMART HOME 2050</div>
       
       <div class="hero-buttons">
-        <a href="#sobre" class="btn primary">Explorar Solução</a>
+        <a href="#pratica" class="btn primary">Ver Exemplo Prático</a>
         <a href="https://github.com/seu-usuario/anhanga" target="_blank" class="btn secondary">Ver no GitHub</a>
       </div>
     </div>
@@ -82,6 +83,71 @@
     </div>
   </section>
 
+  <!-- NOVO: Funcionamento na Prática e Lógica de IA -->
+  <section id="pratica" class="container">
+    <h2>🎮 Funcionamento na Prática & Lógica de IA</h2>
+    
+    <div class="card">
+      <h3>1. Aprendizado Individual (Machine Learning vs. Regras Rígidas)</h3>
+      <p>
+        O ANHANGÁ não trabalha com limites universais como <code>if duracao > 120</code>. Ele aprende o comportamento individual de cada usuário:
+      </p>
+      <div class="example-box">
+        <p><strong>Usuário A (Padrão Curto):</strong> Histórico de sessões (80, 90, 95, 100, 110 min) → Média: ~94 min. <br><span class="highlight-warn">Uma sessão de 240 min é um desvio extremo!</span></p>
+        <hr class="divider">
+        <p><strong>Usuário B (Padrão Longo):</strong> Histórico de sessões (180, 200, 220, 240, 250 min) → Média: ~218 min. <br><span class="highlight-ok">Uma sessão de 240 min é completamente normal!</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2. Cálculo Estatístico (Z-Score)</h3>
+      <p>Para transformar "jogou muito tempo" em algo matematicamente mensurável e defensável academicamente, o ANHANGÁ utiliza a fórmula do Z-Score:</p>
+      <div class="formula-box">
+        <code>Z = (X - μ) / σ</code>
+        <p>Onde <strong>X</strong> é a sessão atual, <strong>μ</strong> é a média histórica e <strong>σ</strong> é o desvio padrão.</p>
+      </div>
+      <p>Quando o Usuário A atinge 240 min (diferença de +146 min da sua média), o <strong>Z-Score resulta muito elevado</strong>, classificando a sessão como <strong>MUITO FORA DO PADRÃO</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>3. Cruzamento Multicontextual de Dados</h3>
+      <p>A IA não olha apenas o relógio; ela correlaciona o comportamento com o ambiente e os compromissos do usuário:</p>
+      
+      <div class="grid">
+        <div class="card grid-item">
+          <h4>🎮 Sessão</h4>
+          <p>• Duração atual: 240 min<br>• Média: ~94 min<br>• Pausas realizadas: 2</p>
+        </div>
+        <div class="card grid-item">
+          <h4>🌡️ Ambiente</h4>
+          <p>• Temperatura: 24°C<br>• Luminosidade: 300 lux<br>• Ruído: 45 dB</p>
+        </div>
+        <div class="card grid-item">
+          <h4>📅 Perfil & Agenda</h4>
+          <p>• Compromisso às 19:00<br>• Preferência: Iluminação adaptativa</p>
+        </div>
+      </div>
+
+      <p class="conclusion-text">
+        <strong>Análise do ANHANGÁ:</strong> O ambiente está perfeitamente ajustado, porém o fator principal de risco é a duração excepcional combinada com a proximidade de um compromisso na agenda.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>4. O Papel da IA Generativa</h3>
+      <div class="flow-steps">
+        <div class="step"><strong>1. Machine Learning:</strong> Encontra o padrão estatístico. <em>("Sessão fora do histórico")</em></div>
+        <div class="step"><strong>2. IA Generativa:</strong> Traduz o dado em mensagem humanizada e contextualizada.</div>
+      </div>
+      <blockquote class="ai-response">
+        "Sua sessão atual está 146 minutos acima do seu padrão habitual. Como você possui um compromisso próximo às 19:00, considere encerrar a partida ou fazer uma pausa."
+      </blockquote>
+      <p class="privacy-note">
+        🔒 <strong>Autonomia do Usuário:</strong> O ANHANGÁ não toma o controle sem autorização. Ele sugere e adapta dispositivos (reduzir luz do monitor, enviar alerta no telemóvel, ajustar climatizador) de acordo com os limites configurados pelo usuário.
+      </p>
+    </div>
+  </section>
+
   <!-- Arquitetura e Fluxo de Dados -->
   <section id="arquitetura" class="container">
     <h2>⚙️ Arquitetura de Dados</h2>
@@ -92,7 +158,7 @@
       </div>
       <div class="card grid-item">
         <h3>2. Machine Learning</h3>
-        <p>Identificação preditiva de padrões, desvios e situações fora do comportamento habitual do usuário.</p>
+        <p>Identificação preditiva de padrões, desvios e situações fora do comportamento habitual do usuário via Z-Score.</p>
       </div>
       <div class="card grid-item">
         <h3>3. IA Generativa & NLP</h3>
