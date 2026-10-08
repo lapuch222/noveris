@@ -175,10 +175,3 @@ A **NOVERIS** acredita que a próxima geração de Smart Homes não será basead
   <p><b>🦅 ANHANGÁ — Inteligência que entende seu contexto.</b></p>
   <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
 </div>
-
----
-
-<div align="center">
-  <p><b>🦅 ANHANGÁ — Inteligência que entende seu contexto.</b></p>
-  <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
-</div>
