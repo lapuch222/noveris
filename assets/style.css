@@ -1,8 +1,8 @@
 /* ========================================================
-   PALETA DE CORES CENTRALIZADA (Altere as cores aqui!)
+   PALETA DE CORES CENTRALIZADA (NOVERIS / ANHANGÁ)
    ======================================================== */
 :root {
-  --fundo-principal: #0b0e14;  /* Fundo escuro deep space */
+  --fundo-principal: #0b0e14;  /* Fundo escuro Deep Space */
   --fundo-cards: #131924;      /* Cor das caixas/cards */
   --borda-cards: #1e293b;      /* Cor das bordas */
   
@@ -32,7 +32,7 @@ h1, h2, h3, .logo-text {
   letter-spacing: 1.5px;
 }
 
-/* Header / Menu */
+/* Header / Menu Superior */
 header {
   display: flex;
   justify-content: space-between;
@@ -57,7 +57,7 @@ header {
 nav a {
   color: var(--cor-subtitulo);
   text-decoration: none;
-  margin-left: 25px;
+  margin-left: 20px;
   transition: color 0.3s;
 }
 
@@ -65,17 +65,44 @@ nav a:hover {
   color: var(--cor-destaque);
 }
 
-/* Hero Section */
+/* Seção Principal (Hero) */
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 80px;
+  padding-top: 120px;
+  padding-bottom: 60px;
   background: radial-gradient(circle at center, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
 }
 
+/* Empresa Apresentadora (NOVERIS) */
+.noveris-presenta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.company-logo {
+  max-width: 220px;
+  height: auto;
+  filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.3));
+}
+
+.presenta-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: var(--cor-subtitulo);
+  margin-top: 8px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Logo da IA e Título */
 .hero-logo {
   max-width: 250px;
   margin-bottom: 20px;
@@ -145,9 +172,9 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* Seções */
+/* Seções Padrão */
 .container {
-  padding: 80px 20px;
+  padding: 60px 20px;
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -168,13 +195,43 @@ h2 {
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* Efeito Hover nos Cards */
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: var(--cor-destaque);
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
 }
 
+/* Card de Curiosidade Especial */
+.curiosidade-card {
+  background: linear-gradient(135deg, #131924 0%, #1c1033 100%);
+  border: 1px solid var(--cor-secundaria);
+  box-shadow: 0 0 15px rgba(123, 44, 191, 0.2);
+}
+
+.curiosidade-card:hover {
+  border-color: #c77dff;
+  box-shadow: 0 0 25px rgba(123, 44, 191, 0.4);
+}
+
+.curiosidade-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.curiosidade-header h2 {
+  font-size: 1.5rem;
+  color: #c77dff;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.curiosidade-header .icon {
+  font-size: 1.8rem;
+}
+
+/* Grid Layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -186,33 +243,30 @@ h2 {
   margin-bottom: 10px;
 }
 
-.features-list {
-  list-style: none;
+/* Tabela de Dados */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  text-align: left;
 }
 
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+.data-table th, .data-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--borda-cards);
 }
 
-.tech-tags span {
-  background: var(--fundo-cards);
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1px solid var(--borda-cards);
-  color: #38bdf8;
-  font-weight: bold;
-  transition: all 0.3s ease;
+.data-table th {
+  color: var(--cor-destaque);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
 }
 
-.tech-tags span:hover {
-  border-color: var(--cor-destaque);
-  box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+.data-table tr:hover {
+  background: rgba(0, 242, 254, 0.05);
 }
 
-/* Footer */
+/* Rodapé */
 footer {
   text-align: center;
   padding: 40px;
