@@ -2,18 +2,15 @@
    PALETA DE CORES CENTRALIZADA (NOVERIS / ANHANGÁ - CYBERPUNK 2050)
    ======================================================== */
 :root {
-  --fundo-principal: #07090e;  /* Fundo escuro Deep Space */
-  --fundo-cards: #0f1522;      /* Cor das caixas/cards */
-  --borda-cards: #1e293b;      /* Cor das bordas */
-  
-  --cor-texto: #e2e8f0;        /* Cor do texto principal */
-  --cor-subtitulo: #94a3b8;    /* Cor dos subtítulos */
-  
-  --cor-destaque: #00f2fe;     /* Ciano Neon principal */
-  --cor-secundaria: #7b2cbf;   /* Roxo Neon secundário */
+  --fundo-principal: #07090e;
+  --fundo-cards: #0f1522;
+  --borda-cards: #1e293b;
+  --cor-texto: #e2e8f0;
+  --cor-subtitulo: #94a3b8;
+  --cor-destaque: #00f2fe;
+  --cor-secundaria: #7b2cbf;
 }
 
-/* Reset Global */
 * {
   margin: 0;
   padding: 0;
@@ -33,7 +30,7 @@ h1, h2, h3, h4, .logo-text {
   letter-spacing: 1.5px;
 }
 
-/* Header / Menu Superior */
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -68,9 +65,7 @@ nav a:hover {
   text-shadow: 0 0 8px rgba(0, 242, 254, 0.8);
 }
 
-/* ========================================================
-   SEÇÃO HERO & ANIMAÇÕES FUTURISTAS 3D
-   ======================================================== */
+/* Hero & Animações Futuristas */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -90,34 +85,22 @@ nav a:hover {
   margin-bottom: 20px;
 }
 
-/* Efeito Holográfico na Logo da NOVERIS */
+/* Animação Holográfica Contínua na Logo Noveris */
 .hologram-glow {
   position: relative;
   display: inline-block;
 }
 
-.hologram-glow::after {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 70%);
-  z-index: -1;
-  animation: pulseHolo 3s infinite alternate;
-}
-
-.futuristic-hover {
+.company-logo {
   max-width: 210px;
   height: auto;
-  filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.4));
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.5s ease;
+  filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));
+  animation: pulseHolo 3s ease-in-out infinite alternate;
+  transition: transform 0.4s ease;
 }
 
-.futuristic-hover:hover {
-  transform: scale(1.08) translateY(-4px) rotateX(10deg);
-  filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.85));
+.company-logo:hover {
+  transform: scale(1.1) rotate(-2deg);
 }
 
 .presenta-text {
@@ -130,80 +113,78 @@ nav a:hover {
   opacity: 0.85;
 }
 
-/* 🌟 ANEL ORBITAL E FLUTUAÇÃO 3D COMPLEXA (ANHANGÁ) */
+/* 🌟 ANIMAÇÃO 3D FLUTUANTE DA IA ANHANGÁ */
 .hero-image-wrapper {
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   perspective: 1000px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  padding: 20px;
 }
 
-/* Anel de luz giratório em volta do banner */
+/* Anel Orbital de Energia a Girar */
 .orbital-ring {
   position: absolute;
-  width: 280px;
-  height: 280px;
+  width: 290px;
+  height: 290px;
   border-radius: 50%;
-  border: 1px dashed rgba(0, 242, 254, 0.4);
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
-  animation: rotateRing 12s linear infinite;
+  border: 2px dashed rgba(0, 242, 254, 0.5);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+  animation: rotateRing 8s linear infinite;
   pointer-events: none;
 }
 
-.futuristic-3d-float {
+.hero-logo {
   max-width: 260px;
   z-index: 2;
-  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.6));
-  animation: float3DMotion 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7));
+  animation: float3DMotion 4s ease-in-out infinite;
   transition: filter 0.4s ease, transform 0.4s ease;
 }
 
-.futuristic-3d-float:hover {
-  filter: drop-shadow(0 0 40px rgba(0, 242, 254, 1));
-  transform: scale(1.05) rotateY(15deg);
+.hero-logo:hover {
+  filter: drop-shadow(0 0 45px rgba(0, 242, 254, 1));
+  transform: scale(1.08) rotateY(18deg);
 }
 
-/* Keyframes de Animação Futurista */
+/* KEYFRAMES DE MOVIMENTAÇÃO FUTURISTA */
 @keyframes float3DMotion {
   0% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1);
   }
   25% {
-    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    transform: translateY(-15px) rotateX(8deg) rotateY(-8deg) scale(1.02);
   }
   50% {
-    transform: translateY(-16px) rotateX(0deg) rotateY(5deg);
+    transform: translateY(-22px) rotateX(0deg) rotateY(8deg) scale(1.04);
   }
   75% {
-    transform: translateY(-8px) rotateX(-5deg) rotateY(0deg);
+    transform: translateY(-10px) rotateX(-8deg) rotateY(0deg) scale(1.02);
   }
   100% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1);
   }
 }
 
 @keyframes rotateRing {
   0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.05);
+    transform: rotate(0deg) rotateX(60deg);
   }
   100% {
-    transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) rotateX(60deg);
   }
 }
 
 @keyframes pulseHolo {
   0% {
-    opacity: 0.3;
-    transform: scale(0.95);
+    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.3));
+    transform: scale(0.98);
   }
   100% {
-    opacity: 0.8;
-    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.8));
+    transform: scale(1.03);
   }
 }
 
@@ -288,9 +269,7 @@ nav a:hover {
   transform: translateY(-3px);
 }
 
-/* ========================================================
-   ESTILO DOS CARDS COM INTERAÇÃO NEON FUTURISTA
-   ======================================================== */
+/* Cards */
 .container {
   padding: 50px 20px;
   max-width: 1000px;
@@ -316,7 +295,7 @@ h3 {
   border-radius: 10px;
   border: 1px solid var(--borda-cards);
   margin-bottom: 20px;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
 }
@@ -342,7 +321,6 @@ h3 {
   left: 100%;
 }
 
-/* Card Especial de Curiosidade */
 .curiosidade-card {
   background: linear-gradient(135deg, #0f1522 0%, #1a0f2e 100%);
   border: 1px solid var(--cor-secundaria);
@@ -372,7 +350,6 @@ h3 {
   font-size: 1.8rem;
 }
 
-/* Pipeline Flow */
 .pipeline-flow {
   font-family: 'Orbitron', sans-serif;
   font-size: 0.88rem;
@@ -399,7 +376,6 @@ h3 {
   color: var(--cor-destaque);
 }
 
-/* Grid Layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -410,7 +386,6 @@ h3 {
   color: #4cc9f0;
 }
 
-/* Matemática Aplicada */
 .math-grid {
   display: flex;
   flex-wrap: wrap;
@@ -435,7 +410,6 @@ h3 {
   box-shadow: 0 0 12px rgba(123, 44, 191, 0.6);
 }
 
-/* Caixa Duo (ML + IA Generativa) */
 .duo-box {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -460,7 +434,6 @@ h3 {
   margin-top: 15px;
 }
 
-/* Data Pipeline (Engenharia de Dados) */
 .data-pipeline {
   display: flex;
   flex-wrap: wrap;
@@ -500,7 +473,6 @@ h3 {
   font-weight: bold;
 }
 
-/* Smart Home e Acessibilidade */
 .device-tags {
   display: flex;
   flex-wrap: wrap;
@@ -536,7 +508,6 @@ h3 {
   color: var(--cor-subtitulo);
 }
 
-/* Visão NOVERIS */
 .vision-card {
   background: linear-gradient(135deg, #0f1522 0%, #1f0a38 100%);
   border-color: var(--cor-secundaria);
@@ -547,7 +518,6 @@ h3 {
   color: #c77dff;
 }
 
-/* Rodapé */
 footer {
   text-align: center;
   padding: 40px;
