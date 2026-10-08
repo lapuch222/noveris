@@ -1,3 +1,19 @@
+/* ========================================================
+   PALETA DE CORES CENTRALIZADA (Altere as cores aqui!)
+   ======================================================== */
+:root {
+  --fundo-principal: #0b0e14;  /* Fundo escuro deep space */
+  --fundo-cards: #131924;      /* Cor das caixas/cards */
+  --borda-cards: #1e293b;      /* Cor das bordas */
+  
+  --cor-texto: #e2e8f0;        /* Cor do texto principal */
+  --cor-subtitulo: #94a3b8;    /* Cor dos subtítulos */
+  
+  --cor-destaque: #00f2fe;     /* Ciano Neon principal */
+  --cor-secundaria: #7b2cbf;   /* Roxo Neon secundário */
+}
+
+/* Reset Global */
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +21,8 @@
 }
 
 body {
-  background-color: #0b0e14;
-  color: #e2e8f0;
+  background-color: var(--fundo-principal);
+  color: var(--cor-texto);
   font-family: 'Rajdhani', sans-serif;
   line-height: 1.6;
 }
@@ -16,36 +32,37 @@ h1, h2, h3, .logo-text {
   letter-spacing: 1.5px;
 }
 
-/* Header */
+/* Header / Menu */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 50px;
-  background: rgba(11, 14, 20, 0.9);
+  background: rgba(11, 14, 20, 0.95);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 242, 254, 0.1);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
 }
 
 .logo-text {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #00f2fe;
+  color: var(--cor-destaque);
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
 }
 
 nav a {
-  color: #cbd5e1;
+  color: var(--cor-subtitulo);
   text-decoration: none;
   margin-left: 25px;
   transition: color 0.3s;
 }
 
 nav a:hover {
-  color: #00f2fe;
+  color: var(--cor-destaque);
 }
 
 /* Hero Section */
@@ -56,24 +73,25 @@ nav a:hover {
   justify-content: center;
   text-align: center;
   padding-top: 80px;
-  background: radial-gradient(circle at center, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
 }
 
 .hero-logo {
   max-width: 250px;
   margin-bottom: 20px;
-  filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.4));
+  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.5));
 }
 
 .hero h1 {
   font-size: 3.5rem;
   color: #ffffff;
   margin-bottom: 10px;
+  text-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
 
 .subtitle {
   font-size: 1.3rem;
-  color: #94a3b8;
+  color: var(--cor-subtitulo);
   margin-bottom: 15px;
 }
 
@@ -81,12 +99,13 @@ nav a:hover {
   display: inline-block;
   padding: 6px 16px;
   background: rgba(123, 44, 191, 0.2);
-  border: 1px solid #7b2cbf;
+  border: 1px solid var(--cor-secundaria);
   color: #c77dff;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: bold;
   margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(123, 44, 191, 0.3);
 }
 
 .hero-buttons {
@@ -104,22 +123,26 @@ nav a:hover {
 }
 
 .btn.primary {
-  background: #00f2fe;
+  background: var(--cor-destaque);
   color: #0b0e14;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
 }
 
 .btn.primary:hover {
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.8);
+  transform: translateY(-2px);
 }
 
 .btn.secondary {
-  border: 1px solid #334155;
-  color: #e2e8f0;
+  border: 1px solid var(--borda-cards);
+  color: var(--cor-texto);
 }
 
 .btn.secondary:hover {
-  border-color: #00f2fe;
-  color: #00f2fe;
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Seções */
@@ -131,17 +154,25 @@ nav a:hover {
 
 h2 {
   font-size: 2rem;
-  color: #00f2fe;
+  color: var(--cor-destaque);
   margin-bottom: 30px;
   text-align: center;
 }
 
 .card {
-  background: #131924;
+  background: var(--fundo-cards);
   padding: 25px;
   border-radius: 10px;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--borda-cards);
   margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Efeito Hover nos Cards */
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
 }
 
 .grid {
@@ -167,19 +198,25 @@ h2 {
 }
 
 .tech-tags span {
-  background: #1e293b;
+  background: var(--fundo-cards);
   padding: 8px 18px;
   border-radius: 20px;
-  border: 1px solid #334155;
+  border: 1px solid var(--borda-cards);
   color: #38bdf8;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.tech-tags span:hover {
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
 }
 
 /* Footer */
 footer {
   text-align: center;
   padding: 40px;
-  border-top: 1px solid #1e293b;
-  color: #64748b;
+  border-top: 1px solid var(--borda-cards);
+  color: var(--cor-subtitulo);
   margin-top: 50px;
 }
