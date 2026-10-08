@@ -11,14 +11,14 @@
   # 🦌 ANHANGÁ
   ### Análise Neural de Hábitos, Ambiente e Gaming Adaptativo
 
-  *Uma solução de Inteligência Artificial para a **Smart Home 2050** por **NOVERIS***
+  *Uma solução de Inteligência Artificial para a **Smart Home 2050** desenvolvida pela **NOVERIS***
 
   <p>
     <a href="#-sobre-o-projeto">Sobre</a> •
     <a href="#-curiosidade-a-origem-do-nome">Curiosidade</a> •
+    <a href="#-funcionamento-na-prática--lógica-de-ia">Na Prática</a> •
     <a href="#-arquitetura-e-fluxo-de-dados">Arquitetura</a> •
     <a href="#-métricas-e-parâmetros">Métricas</a> •
-    <a href="#-funcionalidades">Funcionalidades</a> •
     <a href="#-tecnologias">Tecnologias</a> •
     <a href="#-como-executar">Como Executar</a> •
     <a href="#-licença">Licença</a>
@@ -56,15 +56,48 @@ A **NOVERIS** escolheu esse nome para simbolizar a essência do projeto: uma Int
 
 ---
 
-## ⚙️ Arquitetura e Fluxo de Dados
+## 🎮 Funcionamento na Prática & Lógica de IA
 
-A arquitetura do sistema é dividida em três pilares principais de processamento:
+Diferente de sistemas convencionais que utilizam regras rígidas como `if duracao > 120: alerta()`, o **ANHANGÁ** aprende o comportamento individual de cada usuário:
 
-```mermaid
-flowchart TD
-    A[Sensores IoT / Telemetria Ambientais] -->|Dados em Tempo Real| B[Camada de Ingestão & Processamento]
-    C[Métricas de Gaming & Sessão] -->|Histórico e Frequência| B
-    B --> D[Modelos de Machine Learning - Anomalias]
-    B --> E[IA Generativa & Processamento NLP]
-    D --> F[Ações Adaptativas na Smart Home]
-    E --> G[Relatórios Conversacionais e Alertas]
+### 🧩 1. Machine Learning vs. Regras Fixas
+- **Usuário A (Padrão Curto):** Histórico de sessões (80, 90, 95, 100, 110 min) → Média: ~94 min.  
+  *Uma sessão de 240 min é um desvio extremo!*
+- **Usuário B (Padrão Longo):** Histórico de sessões (180, 200, 220, 240, 250 min) → Média: ~218 min.  
+  *Uma sessão de 240 min é completamente normal!*
+
+### 📊 2. Modelagem Matemática com Z-Score
+Para fundamentação acadêmica e mensuração exata do desvio, o sistema aplica o cálculo estatístico do **Z-Score**:
+
+$$Z = \frac{X - \mu}{\sigma}$$
+
+Onde:
+- $X$ = Duração da sessão atual (ex: 240 min)
+- $\mu$ = Média histórica do usuário (ex: 94 min)
+- $\sigma$ = Desvio padrão do histórico
+
+Se a diferença resultar em um **Z-Score muito elevado**, o modelo classifica a sessão como **MUITO FORA DO PADRÃO**.
+
+### 🧠 3. Cruzamento Multicontextual de Dados
+O sistema analisa simultaneamente três camadas essenciais:
+
+```text
+                 ANHANGÁ
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼           ▼
+     Sessão      Ambiente     Perfil
+        │           │           │
+     duração     temperatura  preferências
+     pausas      luminosidade  acessibilidade
+     horário     ruído         configurações
+        │           │           │
+        └───────────┼───────────┘
+                    ▼
+              ANÁLISE DE CONTEXTO
+                    │
+                    ▼
+             MODELO DE IA / ML
+                    │
+                    ▼
+             RECOMENDAÇÃO
