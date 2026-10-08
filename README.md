@@ -1,7 +1,12 @@
 <div align="center">
 
-  <!-- Logo/Banner do Projeto -->
-  <img src="./assets/anhanga-banner.png" alt="Noveris Anhangá Logo" width="420"/>
+  <!-- Logo da Empresa (NOVERIS) -->
+  <img src="./assets/noveris-logo.png" alt="NOVERIS Logo" width="280"/>
+  
+  <p><b>A P R E S E N T A</b></p>
+
+  <!-- Banner/Logo da IA (ANHANGÁ) -->
+  <img src="./assets/anhanga-banner.png" alt="NOVERIS Anhangá Logo" width="380"/>
 
   # 🦌 ANHANGÁ
   ### Análise Neural de Hábitos, Ambiente e Gaming Adaptativo
@@ -10,7 +15,9 @@
 
   <p>
     <a href="#-sobre-o-projeto">Sobre</a> •
+    <a href="#-curiosidade-a-origem-do-nome">Curiosidade</a> •
     <a href="#-arquitetura-e-fluxo-de-dados">Arquitetura</a> •
+    <a href="#-métricas-e-parâmetros">Métricas</a> •
     <a href="#-funcionalidades">Funcionalidades</a> •
     <a href="#-tecnologias">Tecnologias</a> •
     <a href="#-como-executar">Como Executar</a> •
@@ -39,8 +46,25 @@ O **ANHANGÁ** é uma plataforma de Inteligência Artificial desenvolvida pela *
 
 A solução conecta **Engenharia de Dados**, **Machine Learning** e **IA Generativa com Processamento de Linguagem Natural (NLP)** para transformar o monitoramento contínuo da rotina do jogador e dos sensores do seu ambiente em insights acionáveis e inteligência adaptativa.
 
-> *Inspirado na entidade protetora da fauna e das matas do folclore brasileiro, o **ANHANGÁ** atua como uma guarda silenciosa e inteligente sobre o bem-estar e a performance do usuário no ambiente doméstico.*
+---
+
+## 💡 Curiosidade: A Origem do Nome
+
+> Na mitologia e folclore brasileiro, o **Anhangá** é reconhecido como o espírito protetor da fauna, da flora e das matas. Ele não é uma figura punitiva, mas sim um **guardião invisível e adaptativo** que preserva o equilíbrio do ecossistema.
+
+A **NOVERIS** escolheu esse nome para simbolizar a essência do projeto: uma Inteligência Artificial que atua como uma **guarda silenciosa sobre o ambiente doméstico do jogador**, monitorando variáveis em tempo real sem interromper a imersão, garantindo o equilíbrio entre alta performance em gaming e saúde/bem-estar na Smart Home 2050.
 
 ---
 
 ## ⚙️ Arquitetura e Fluxo de Dados
+
+A arquitetura do sistema é dividida em três pilares principais de processamento:
+
+```mermaid
+flowchart TD
+    A[Sensores IoT / Telemetria Ambientais] -->|Dados em Tempo Real| B[Camada de Ingestão & Processamento]
+    C[Métricas de Gaming & Sessão] -->|Histórico e Frequência| B
+    B --> D[Modelos de Machine Learning - Anomalias]
+    B --> E[IA Generativa & Processamento NLP]
+    D --> F[Ações Adaptativas na Smart Home]
+    E --> G[Relatórios Conversacionais e Alertas]
