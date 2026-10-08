@@ -15,6 +15,7 @@
 
   <p>
     <a href="#-o-que-é-o-anhangá">Sobre</a> •
+    <a href="#-curiosidade-por-que-o-nome-anhangá">Curiosidade</a> •
     <a href="#-como-funciona">Como Funciona</a> •
     <a href="#-o-que-o-sistema-analisa">Métricas</a> •
     <a href="#-matemática-aplicada">Matemática</a> •
@@ -45,6 +46,14 @@
 O **ANHANGÁ**, desenvolvido pela **NOVERIS**, é uma solução de Inteligência Artificial voltada para ambientes inteligentes que analisa sessões de gaming, aprende os padrões individuais do usuário e oferece recomendações personalizadas de acordo com seu comportamento, preferências e contexto.
 
 O sistema transforma dados de uma sessão de gaming em informações inteligentes, acompanhando o comportamento histórico do usuário para identificar quando uma nova sessão apresenta uma diferença significativa em relação ao seu padrão habitual, integrando também variáveis ambientais do seu espaço doméstico.
+
+---
+
+## 💡 Curiosidade: Por que o nome ANHANGÁ?
+
+> Na mitologia e no folclore brasileiro, o **Anhangá** é reconhecido como o espírito protetor da fauna, da flora e das matas. Ele não é uma figura punitiva, mas sim um **guardião invisível e adaptativo** que preserva o equilíbrio do ecossistema.
+
+A **NOVERIS** escolheu esse nome para simbolizar a essência do projeto: uma Inteligência Artificial que atua como uma **guarda silenciosa sobre o ambiente doméstico do jogador**, monitorando variáveis em tempo real sem interromper a imersão, garantindo o equilíbrio entre alta performance em gaming e saúde/bem-estar na Smart Home 2050.
 
 ---
 
@@ -149,7 +158,7 @@ $$\mathbf{SOURCE} \longrightarrow \mathbf{INGESTION} \longrightarrow \mathbf{PRO
 
 - **Python 3.11+:** Processamento de dados e inteligência do sistema.
 - **FastAPI:** Backend assíncrono para disponibilização dos serviços da aplicação.
-- **Pandas & NumPy:** Tratamento, manipulação e manipulação estatística de arrays.
+- **Pandas & NumPy:** Tratamento, manipulação e cálculo estatístico de arrays.
 - **Scikit-learn:** Modelos de Machine Learning e detecção de padrões/anomalias.
 - **PostgreSQL / Supabase:** Banco de dados relacional para armazenamento seguro.
 - **Git / GitHub Pages:** Controle de versão e publicação do showcase institucional.
@@ -159,6 +168,13 @@ $$\mathbf{SOURCE} \longrightarrow \mathbf{INGESTION} \longrightarrow \mathbf{PRO
 ## 🌐 A Visão da NOVERIS
 
 A **NOVERIS** acredita que a próxima geração de Smart Homes não será baseada apenas em dispositivos conectados. Será baseada em ambientes que compreendem contexto, aprendem padrões e se adaptam às pessoas. O **ANHANGÁ** representa essa visão aplicada ao universo gamer.
+
+---
+
+<div align="center">
+  <p><b>🦅 ANHANGÁ — Inteligência que entende seu contexto.</b></p>
+  <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
+</div>
 
 ---
 
