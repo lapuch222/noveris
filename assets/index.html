@@ -6,7 +6,7 @@
   <title>ANHANGÁ — Smart Home 2050 | NOVERIS</title>
   
   <!-- Estilo com parâmetro anti-cache -->
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
   
   <!-- Fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +20,7 @@
     <div class="logo-text">NOVERIS</div>
     <nav>
       <a href="#sobre">Sobre</a>
+      <a href="#curiosidade">Curiosidade</a>
       <a href="#como-funciona">Como Funciona</a>
       <a href="#analise">Análise & Métricas</a>
       <a href="#engenharia">Engenharia de Dados</a>
@@ -39,7 +40,7 @@
         <p class="presenta-text">APRESENTA</p>
       </div>
 
-      <!-- Banner/Logo da IA ANHANGÁ com Animação -->
+      <!-- Banner/Logo da IA ANHANGÁ com Animação Flutuante -->
       <div class="hero-image-wrapper">
         <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Logo" class="hero-logo floating-logo">
       </div>
@@ -69,7 +70,24 @@
       </p>
       <br>
       <p>
-        O sistema transforma dados de uma sessão de gaming em informações inteligentes, acompanhando o comportamento histórico do usuário e identificando quando uma nova sessão apresenta uma diferença significativa em relação ao seu padrão habitual, integrando também variáveis do ambiente residencial.
+        O sistema transforma dados de uma sessão de gaming em informações inteligentes, acompanhando o comportamento histórico do usuário para identificar quando uma nova sessão apresenta uma diferença significativa em relação ao seu padrão habitual, integrando também variáveis ambientais do seu espaço doméstico.
+      </p>
+    </div>
+  </section>
+
+  <!-- Curiosidade: Por que o nome ANHANGÁ? -->
+  <section id="curiosidade" class="container">
+    <div class="card curiosidade-card">
+      <div class="curiosidade-header">
+        <span class="icon">💡</span>
+        <h2>Curiosidade: Por que o nome ANHANGÁ?</h2>
+      </div>
+      <p>
+        Na mitologia e no folclore brasileiro, o <strong>Anhangá</strong> é reconhecido como o espírito protetor da fauna, da flora e das matas. Ele não é uma figura punitiva, mas sim um <strong>guardião invisível e adaptativo</strong> que preserva o equilíbrio do ecossistema.
+      </p>
+      <br>
+      <p>
+        A <strong>NOVERIS</strong> escolheu esse nome para simbolizar a essência da solução: uma Inteligência Artificial que atua como uma <strong>guarda silenciosa sobre o ambiente doméstico do jogador</strong>, monitorando variáveis em tempo real sem interromper a imersão, garantindo o equilíbrio entre alta performance em gaming e saúde/bem-estar na Smart Home 2050.
       </p>
     </div>
   </section>
@@ -86,17 +104,17 @@
       <ul class="feature-list">
         <li><strong>Coleta de dados:</strong> Captação contínua da sessão e telemetria do ambiente.</li>
         <li><strong>Organização e Processamento:</strong> Estruturação dos dados para análise estatística.</li>
-        <li><strong>Aprendizado de Padrões:</strong> Definição da linha de base comportamental individual.</li>
-        <li><strong>Identificação de Anomalias:</strong> Detecção de desvios relevantes do histórico.</li>
+        <li><strong>Aprendizado de Padrões:</strong> Definição da linha de base (*baseline*) comportamental do usuário.</li>
+        <li><strong>Identificação de Anomalias:</strong> Detecção de desvios relevantes do histórico via Z-Score.</li>
         <li><strong>Análise Multicontextual:</strong> Correlação entre gaming, ambiente e agenda.</li>
-        <li><strong>IA Generativa & Comunicação:</strong> Explicação contextual e recomendações personalizadas.</li>
+        <li><strong>IA Generativa & Comunicação:</strong> Explicação contextual e recomendações personalizadas em linguagem natural.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>🎮 Inteligência para Cada Jogador</h3>
       <p>
-        O ANHANGÁ não utiliza limites fixos universais. Uma sessão de 3 horas pode ser comum para um jogador e completamente atípica para outro. O sistema responde sempre à pergunta: <strong>“O que é normal para este usuário?”</strong>
+        O ANHANGÁ não utiliza limites fixos universais (como <code>if duracao > 120</code>). Uma sessão de 3 horas pode ser comum para um jogador e completamente atípica para outro. O sistema responde sempre à pergunta: <strong>“O que é normal para este usuário?”</strong>
       </p>
     </div>
   </section>
@@ -142,11 +160,11 @@
       <div class="duo-box">
         <div class="duo-item">
           <h4>Machine Learning</h4>
-          <p>Encontra os padrões e identifica diferenças quantitativas nos dados.</p>
+          <p>Encontra os padrões estatísticos e identifica diferenças quantitativas nos dados.</p>
         </div>
         <div class="duo-item">
           <h4>IA Generativa</h4>
-          <p>Explica o padrão encontrado em uma mensagem conversacional e humanizada.</p>
+          <p>Explica o padrão encontrado através de uma mensagem conversacional e humanizada.</p>
         </div>
       </div>
       <blockquote class="ai-response">
@@ -249,7 +267,7 @@
       </div>
       <div class="card grid-item">
         <h3>PostgreSQL / Supabase</h3>
-        <p>Armazenamento de dados relacioanal e gerenciamento em nuvem.</p>
+        <p>Armazenamento de dados relacional e gerenciamento em nuvem.</p>
       </div>
       <div class="card grid-item">
         <h3>Git / GitHub</h3>
@@ -270,7 +288,7 @@
 
   <!-- Rodapé -->
   <footer>
-    <p><strong>🦅 ANHANGÁ — Inteligência que ententde seu contexto.</strong></p>
+    <p><strong>🦅 ANHANGÁ — Inteligência que entende seu contexto.</strong></p>
     <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
   </footer>
 
