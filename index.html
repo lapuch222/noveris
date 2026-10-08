@@ -6,7 +6,7 @@
   <title>ANHANGÁ — Smart Home 2050 | NOVERIS</title>
   
   <!-- Estilo com parâmetro anti-cache -->
-  <link rel="stylesheet" href="style.css?v=4.0">
+  <link rel="stylesheet" href="style.css?v=5.0">
   
   <!-- Fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,12 +20,12 @@
     <div class="logo-text">NOVERIS</div>
     <nav>
       <a href="#sobre">Sobre</a>
-      <a href="#curiosidade">Curiosidade</a>
-      <a href="#pratica">Na Prática</a>
-      <a href="#arquitetura">Arquitetura</a>
-      <a href="#metricas">Métricas</a>
-      <a href="#sensores">Sensores</a>
-      <a href="#faq">FAQ</a>
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#analise">Análise & Métricas</a>
+      <a href="#engenharia">Engenharia de Dados</a>
+      <a href="#smart-home">Smart Home</a>
+      <a href="#acessibilidade">Acessibilidade</a>
+      <a href="#tecnologias">Tecnologias</a>
     </nav>
   </header>
 
@@ -33,208 +33,245 @@
   <section class="hero">
     <div class="hero-content">
       
-      <!-- Apresentação da NOVERIS -->
+      <!-- Logo da NOVERIS com Animação -->
       <div class="noveris-presenta">
-        <img src="./assets/noveris-logo.png" alt="NOVERIS Logo" class="company-logo">
+        <img src="./assets/noveris-logo.png" alt="NOVERIS Logo" class="company-logo animated-logo">
         <p class="presenta-text">APRESENTA</p>
       </div>
 
-      <!-- Banner/Logo da IA ANHANGÁ -->
-      <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Logo" class="hero-logo">
-      <h1>ANHANGÁ</h1>
+      <!-- Banner/Logo da IA ANHANGÁ com Animação -->
+      <div class="hero-image-wrapper">
+        <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Logo" class="hero-logo floating-logo">
+      </div>
+
+      <h1>🦅 ANHANGÁ</h1>
       <p class="subtitle">Análise Neural de Hábitos, Ambiente e Gaming Adaptativo</p>
-      <div class="badge">SMART HOME 2050</div>
+      <p class="hero-tagline">Uma nova forma de compreender a experiência de gaming por meio da Inteligência Artificial.</p>
+      
+      <div class="badge-group">
+        <span class="badge">SMART HOME 2050</span>
+        <span class="badge secondary-badge">EXPOTECH 2026.2</span>
+      </div>
       
       <div class="hero-buttons">
-        <a href="#pratica" class="btn primary">Ver Exemplo Prático</a>
+        <a href="#sobre" class="btn primary">Explorar Solução</a>
         <a href="https://github.com/seu-usuario/anhanga" target="_blank" class="btn secondary">Ver no GitHub</a>
       </div>
     </div>
   </section>
 
-  <!-- Sobre a Solução -->
+  <!-- O que é o ANHANGÁ? -->
   <section id="sobre" class="container">
-    <h2>📌 Sobre a Solução</h2>
+    <h2>🎯 O que é o ANHANGÁ?</h2>
     <div class="card">
       <p>
-        O <strong>ANHANGÁ</strong> é uma solução de Inteligência Artificial voltada ao contexto de <strong>Smart Home 2050</strong>, desenvolvida pela <strong>NOVERIS</strong> para compreender e otimizar sessões de gaming no ambiente doméstico.
+        O <strong>ANHANGÁ</strong>, desenvolvido pela <strong>NOVERIS</strong>, é uma solução de Inteligência Artificial voltada para ambientes inteligentes que analisa sessões de gaming, aprende os padrões individuais do usuário e oferece recomendações personalizadas de acordo com seu comportamento, preferências e contexto.
       </p>
       <br>
       <p>
-        A plataforma coleta e analisa dados cruciais como duração das sessões, horários, frequência, pausas, padrões históricos e condições ambientais (temperatura, iluminação, ruído e presença). Através de modelos de Machine Learning e IA Generativa com Processamento de Linguagem Natural (NLP), o ANHANGÁ transforma dados do cotidiano em inteligência adaptativa para o jogador e sua casa.
+        O sistema transforma dados de uma sessão de gaming em informações inteligentes, acompanhando o comportamento histórico do usuário e identificando quando uma nova sessão apresenta uma diferença significativa em relação ao seu padrão habitual, integrando também variáveis do ambiente residencial.
       </p>
     </div>
   </section>
 
-  <!-- Curiosidade: A Origem do Nome -->
-  <section id="curiosidade" class="container">
-    <div class="card curiosidade-card">
-      <div class="curiosidade-header">
-        <span class="icon">💡</span>
-        <h2>Curiosidade: Por que o nome ANHANGÁ?</h2>
-      </div>
-      <p>
-        Na mitologia e folclore brasileiro, o <strong>Anhangá</strong> é reconhecido como o espírito protetor da fauna, da flora e das matas. Ele não é uma figura punitiva, mas sim um <strong>guardião invisível e adaptativo</strong> que preserva o equilíbrio do ecossistema.
-      </p>
-      <br>
-      <p>
-        A <strong>NOVERIS</strong> escolheu esse nome para simbolizar a essência da solução: uma Inteligência Artificial que atua como uma <strong>guarda silenciosa sobre o ambiente doméstico do jogador</strong>, monitorando variáveis em tempo real sem interromper a imersão, garantindo o equilíbrio entre alta performance em gaming e saúde/bem-estar na Smart Home 2050.
-      </p>
-    </div>
-  </section>
-
-  <!-- NOVO: Funcionamento na Prática e Lógica de IA -->
-  <section id="pratica" class="container">
-    <h2>🎮 Funcionamento na Prática & Lógica de IA</h2>
+  <!-- Como Funciona? -->
+  <section id="como-funciona" class="container">
+    <h2>🧠 Como Funciona?</h2>
     
     <div class="card">
-      <h3>1. Aprendizado Individual (Machine Learning vs. Regras Rígidas)</h3>
-      <p>
-        O ANHANGÁ não trabalha com limites universais como <code>if duracao > 120</code>. Ele aprende o comportamento individual de cada usuário:
-      </p>
-      <div class="example-box">
-        <p><strong>Usuário A (Padrão Curto):</strong> Histórico de sessões (80, 90, 95, 100, 110 min) → Média: ~94 min. <br><span class="highlight-warn">Uma sessão de 240 min é um desvio extremo!</span></p>
-        <hr class="divider">
-        <p><strong>Usuário B (Padrão Longo):</strong> Histórico de sessões (180, 200, 220, 240, 250 min) → Média: ~218 min. <br><span class="highlight-ok">Uma sessão de 240 min é completamente normal!</span></p>
+      <div class="pipeline-flow">
+        <span>Dados</span> ➔ <span>Processamento</span> ➔ <span>Machine Learning</span> ➔ <span>Análise de Contexto</span> ➔ <span>IA Generativa</span> ➔ <span>Recomendação</span>
       </div>
-    </div>
-
-    <div class="card">
-      <h3>2. Cálculo Estatístico (Z-Score)</h3>
-      <p>Para transformar "jogou muito tempo" em algo matematicamente mensurável e defensável academicamente, o ANHANGÁ utiliza a fórmula do Z-Score:</p>
-      <div class="formula-box">
-        <code>Z = (X - μ) / σ</code>
-        <p>Onde <strong>X</strong> é a sessão atual, <strong>μ</strong> é a média histórica e <strong>σ</strong> é o desvio padrão.</p>
-      </div>
-      <p>Quando o Usuário A atinge 240 min (diferença de +146 min da sua média), o <strong>Z-Score resulta muito elevado</strong>, classificando a sessão como <strong>MUITO FORA DO PADRÃO</strong>.</p>
-    </div>
-
-    <div class="card">
-      <h3>3. Cruzamento Multicontextual de Dados</h3>
-      <p>A IA não olha apenas o relógio; ela correlaciona o comportamento com o ambiente e os compromissos do usuário:</p>
       
-      <div class="grid">
-        <div class="card grid-item">
-          <h4>🎮 Sessão</h4>
-          <p>• Duração atual: 240 min<br>• Média: ~94 min<br>• Pausas realizadas: 2</p>
-        </div>
-        <div class="card grid-item">
-          <h4>🌡️ Ambiente</h4>
-          <p>• Temperatura: 24°C<br>• Luminosidade: 300 lux<br>• Ruído: 45 dB</p>
-        </div>
-        <div class="card grid-item">
-          <h4>📅 Perfil & Agenda</h4>
-          <p>• Compromisso às 19:00<br>• Preferência: Iluminação adaptativa</p>
-        </div>
-      </div>
-
-      <p class="conclusion-text">
-        <strong>Análise do ANHANGÁ:</strong> O ambiente está perfeitamente ajustado, porém o fator principal de risco é a duração excepcional combinada com a proximidade de um compromisso na agenda.
-      </p>
+      <ul class="feature-list">
+        <li><strong>Coleta de dados:</strong> Captação contínua da sessão e telemetria do ambiente.</li>
+        <li><strong>Organização e Processamento:</strong> Estruturação dos dados para análise estatística.</li>
+        <li><strong>Aprendizado de Padrões:</strong> Definição da linha de base comportamental individual.</li>
+        <li><strong>Identificação de Anomalias:</strong> Detecção de desvios relevantes do histórico.</li>
+        <li><strong>Análise Multicontextual:</strong> Correlação entre gaming, ambiente e agenda.</li>
+        <li><strong>IA Generativa & Comunicação:</strong> Explicação contextual e recomendações personalizadas.</li>
+      </ul>
     </div>
 
     <div class="card">
-      <h3>4. O Papel da IA Generativa</h3>
-      <div class="flow-steps">
-        <div class="step"><strong>1. Machine Learning:</strong> Encontra o padrão estatístico. <em>("Sessão fora do histórico")</em></div>
-        <div class="step"><strong>2. IA Generativa:</strong> Traduz o dado em mensagem humanizada e contextualizada.</div>
-      </div>
-      <blockquote class="ai-response">
-        "Sua sessão atual está 146 minutos acima do seu padrão habitual. Como você possui um compromisso próximo às 19:00, considere encerrar a partida ou fazer uma pausa."
-      </blockquote>
-      <p class="privacy-note">
-        🔒 <strong>Autonomia do Usuário:</strong> O ANHANGÁ não toma o controle sem autorização. Ele sugere e adapta dispositivos (reduzir luz do monitor, enviar alerta no telemóvel, ajustar climatizador) de acordo com os limites configurados pelo usuário.
+      <h3>🎮 Inteligência para Cada Jogador</h3>
+      <p>
+        O ANHANGÁ não utiliza limites fixos universais. Uma sessão de 3 horas pode ser comum para um jogador e completamente atípica para outro. O sistema responde sempre à pergunta: <strong>“O que é normal para este usuário?”</strong>
       </p>
     </div>
   </section>
 
-  <!-- Arquitetura e Fluxo de Dados -->
-  <section id="arquitetura" class="container">
-    <h2>⚙️ Arquitetura de Dados</h2>
+  <!-- Análise e Métricas -->
+  <section id="analise" class="container">
+    <h2>📊 O que o Sistema Analisa?</h2>
+    
     <div class="grid">
       <div class="card grid-item">
-        <h3>1. Ingestão Telemétrica</h3>
-        <p>Captura contínua de variáveis temporais de gaming e dados ambientais via sensores residenciais IoT.</p>
-      </div>
-      <div class="card grid-item">
-        <h3>2. Machine Learning</h3>
-        <p>Identificação preditiva de padrões, desvios e situações fora do comportamento habitual do usuário via Z-Score.</p>
-      </div>
-      <div class="card grid-item">
-        <h3>3. IA Generativa & NLP</h3>
-        <p>Tradução de dados complexos em recomendações claras, conversacionais e personalizadas.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Métricas Analisadas -->
-  <section id="metricas" class="container">
-    <h2>📊 Métricas Analisadas em Tempo Real</h2>
-    <div class="grid">
-      <div class="card grid-item">
-        <h3>🎮 Sessões de Gaming</h3>
-        <p>Duração, horários de pico, frequência semanal, intervalos entre partidas e padrão histórico de engajamento.</p>
+        <h3>🕹️ Dados da Sessão</h3>
+        <p>Duração, horário de início, quantidade de pausas, histórico de utilização e dispositivo utilizado (PC, Console, Smartphone).</p>
       </div>
       <div class="card grid-item">
         <h3>🌡️ Variáveis Ambientais</h3>
-        <p>Temperatura do cômodo, níveis de umidade, luminosidade (lux), ruído ambiente (dB) e detecção de presença.</p>
+        <p>Temperatura, umidade, luminosidade (lux), nível de ruído (dB) e detecção de presença no cômodo.</p>
       </div>
       <div class="card grid-item">
-        <h3>💡 Insights Preditivos</h3>
-        <p>Identificação de fadiga do jogador, desvios de rotina e sugestões automáticas de iluminação e pausa.</p>
+        <h3>📅 Perfil & Agenda</h3>
+        <p>Preferências do usuário, configurações de acessibilidade e compromissos cadastrados na rotina.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🧮 Matemática Aplicada & Indicadores</h3>
+      <p>
+        Para transformar impressões em métricas mensuráveis, o ANHANGÁ aplica métodos estatísticos avançados:
+      </p>
+      <div class="math-grid">
+        <span class="math-tag">Média (μ)</span>
+        <span class="math-tag">Mediana</span>
+        <span class="math-tag">Desvio Padrão (σ)</span>
+        <span class="math-tag">Z-Score</span>
+        <span class="math-tag">Score de Anomalia</span>
+        <span class="math-tag">Score de Contexto</span>
+        <span class="math-tag">Previsão de Duração</span>
+        <span class="math-tag">Probabilidade de Prolongamento</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🤖 Machine Learning + IA Generativa</h3>
+      <div class="duo-box">
+        <div class="duo-item">
+          <h4>Machine Learning</h4>
+          <p>Encontra os padrões e identifica diferenças quantitativas nos dados.</p>
+        </div>
+        <div class="duo-item">
+          <h4>IA Generativa</h4>
+          <p>Explica o padrão encontrado em uma mensagem conversacional e humanizada.</p>
+        </div>
+      </div>
+      <blockquote class="ai-response">
+        💡 <strong>Exemplo de Recomendação:</strong> "Sua sessão atual está muito acima da sua duração habitual. Como você possui um compromisso próximo, considere fazer uma pausa ou encerrar a sessão."
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Engenharia de Dados -->
+  <section id="engenharia" class="container">
+    <h2>🏗️ Engenharia de Dados</h2>
+    
+    <div class="card">
+      <h3>Fluxo da Arquitetura de Dados</h3>
+      <div class="data-pipeline">
+        <div class="pipe-step">
+          <strong>SOURCE</strong>
+          <small>Dados de aplicação, sessões, IoT e ambiente</small>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <strong>INGESTION</strong>
+          <small>Entrada e organização telemétrica</small>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <strong>PROCESSING</strong>
+          <small>Transformação e criação de indicadores</small>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <strong>STORAGE</strong>
+          <small>Armazenamento estruturado</small>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <strong>CONSUMPTION</strong>
+          <small>Dashboards, análises e recomendações</small>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Parâmetros e Tabela -->
-  <section id="sensores" class="container">
-    <h2>🎛️ Parâmetros do Ecossistema</h2>
+  <!-- Smart Home -->
+  <section id="smart-home" class="container">
+    <h2>🏠 Ecossistema Smart Home 2050</h2>
     <div class="card">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Parâmetro</th>
-            <th>Tipo de Dado</th>
-            <th>Ação do ANHANGÁ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Temperatura & Umidade</td>
-            <td>Sensor IoT / Telemetria</td>
-            <td>Ajuste preditivo do climatizador</td>
-          </tr>
-          <tr>
-            <td>Luminosidade (Lux)</td>
-            <td>Sensor de Iluminação</td>
-            <td>Adaptação de luz para reduzir fadiga visual</td>
-          </tr>
-          <tr>
-            <td>Frequência de Pausas</td>
-            <td>Métricas do Sistema</td>
-            <td>Geração de alertas amigáveis via IA Generativa</td>
-          </tr>
-        </tbody>
-      </table>
+      <p>
+        O ANHANGÁ atua como uma central inteligente capaz de interagir com dispositivos compatíveis:
+      </p>
+      <div class="device-tags">
+        <span>📱 Smartphone</span>
+        <span>💻 Computador</span>
+        <span>🎮 Console</span>
+        <span>📺 TV / Monitor</span>
+        <span>💡 Luminária Inteligente</span>
+        <span>❄️ Ar-condicionado</span>
+      </div>
+      <p class="privacy-note">
+        🔒 <strong>Privacidade e Controle:</strong> O usuário mantém o controle total sobre quais dispositivos podem interagir e quais adaptações automáticas podem ser realizadas.
+      </p>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="container">
-    <h2>❓ Perguntas Frequentes</h2>
+  <!-- Experiência e Acessibilidade -->
+  <section id="acessibilidade" class="container">
+    <h2>♿ Acessibilidade & Experiência Personalizada</h2>
     <div class="card">
-      <h3>Como a IA Generativa atua no ANHANGÁ?</h3>
-      <p>A IA Generativa e o Processamento de Linguagem Natural (NLP) traduzem relatórios e tabelas de dados complexos em recomendações conversacionais e fáceis de entender pelo usuário.</p>
+      <p>O ANHANGÁ permite configurar preferências para garantir uma experiência confortável e segura:</p>
+      <div class="access-grid">
+        <div>• Ajustes de Luminosidade e Contraste</div>
+        <div>• Alertas Visuais, Sonoros e Hápticos</div>
+        <div>• Suporte à Comunicação em Libras</div>
+        <div>• Sensibilidade à luz, som, cor e movimento</div>
+        <div>• Personalização de intensidade de alertas</div>
+        <div>• Redução de estímulos visuais durante fadiga</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>Qual é o foco do projeto na Smart Home 2050?</h3>
-      <p>O foco é conectar engenharia de dados, aprendizado de máquina e sensoriamento ambiental para criar um ambiente doméstico que se adapta ativamente ao bem-estar e ao desempenho do jogador.</p>
+  </section>
+
+  <!-- Tecnologias -->
+  <section id="tecnologias" class="container">
+    <h2>🚀 Tecnologias da Solução</h2>
+    <div class="grid">
+      <div class="card grid-item">
+        <h3>Python</h3>
+        <p>Processamento de dados e inteligência central do sistema.</p>
+      </div>
+      <div class="card grid-item">
+        <h3>FastAPI</h3>
+        <p>Backend de alta performance e disponibilização de APIs REST.</p>
+      </div>
+      <div class="card grid-item">
+        <h3>Pandas & NumPy</h3>
+        <p>Tratamento, manipulação e cálculos estatísticos vetorizados.</p>
+      </div>
+      <div class="card grid-item">
+        <h3>Scikit-learn</h3>
+        <p>Algoritmos de Machine Learning e modelos de anomalias.</p>
+      </div>
+      <div class="card grid-item">
+        <h3>PostgreSQL / Supabase</h3>
+        <p>Armazenamento de dados relacioanal e gerenciamento em nuvem.</p>
+      </div>
+      <div class="card grid-item">
+        <h3>Git / GitHub</h3>
+        <p>Controle de versão e pipeline CI/CD via GitHub Pages.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visão NOVERIS -->
+  <section class="container">
+    <div class="card vision-card">
+      <h2>🌐 A Visão da NOVERIS</h2>
+      <p>
+        A <strong>NOVERIS</strong> acredita que a próxima geração de Smart Homes não será baseada apenas em dispositivos conectados. Será baseada em ambientes que compreendem contexto, aprendem padrões e se adaptam às pessoas. O <strong>ANHANGÁ</strong> representa essa visão aplicada ao universo gamer.
+      </p>
     </div>
   </section>
 
   <!-- Rodapé -->
   <footer>
-    <p>Desenvolvido com excelência pela <strong>NOVERIS</strong> — Projeto ExpoTech / Smart Home 2050 🌌</p>
+    <p><strong>🦅 ANHANGÁ — Inteligência que ententde seu contexto.</strong></p>
+    <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
   </footer>
 
 </body>
