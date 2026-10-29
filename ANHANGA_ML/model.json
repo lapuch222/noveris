@@ -1,0 +1,18 @@
+{
+  "projeto": "ANHANGÁ",
+  "algoritmo": "regressao_logistica",
+  "origem_dados": "sinteticos",
+  "limiar": 0.5,
+  "caracteristicas": [
+    "intercepto",
+    "duracao_atual_dividida_pelo_limite",
+    "media_historica_dividida_pelo_limite",
+    "pausas_divididas_por_5"
+  ],
+  "pesos": [
+    -3.2329763634797875,
+    2.0517283481331825,
+    3.104784955999392,
+    -0.8402353532461814
+  ]
+}
