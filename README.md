@@ -11,22 +11,24 @@
   # 🦅 ANHANGÁ
   ### Análise Neural de Hábitos, Ambiente e Gaming Adaptativo
 
-  *Uma nova forma de compreender a experiência de gaming por meio da Inteligência Artificial.*
+  *Uma tecnologia inteligente que evolui com as pessoas.*
 
   <p>
-    <a href="#-o-que-é-o-anhangá">Sobre</a> •
-    <a href="#-curiosidade-por-que-o-nome-anhangá">Curiosidade</a> •
-    <a href="#-como-funciona">Como Funciona</a> •
-    <a href="#-o-que-o-sistema-analisa">Métricas</a> •
-    <a href="#-matemática-aplicada">Matemática</a> •
-    <a href="#-engenharia-de-dados">Engenharia de Dados</a> •
-    <a href="#-smart-home-2050">Smart Home</a> •
-    <a href="#-acessibilidade--experiência-personalizada">Acessibilidade</a> •
+    <a href="#-nossa-história--a-noveris">História</a> •
+    <a href="#-nossa-trajetória-20242030">Trajetória</a> •
+    <a href="#-o-nascimento-do-anhangá">O ANHANGÁ</a> •
+    <a href="#-por-que-escolhemos-o-nome-anhangá">Curiosidade</a> •
+    <a href="#-como-funciona-na-prática--ia">Funcionamento</a> •
+    <a href="#-matemática-aplicada--z-score">Matemática</a> •
+    <a href="#-engenharia-de-dados">Engenharia</a> •
+    <a href="#-modalidades-comerciais">Modalidades</a> •
+    <a href="#-acessibilidade">Acessibilidade</a> •
     <a href="#-tecnologias">Tecnologias</a>
   </p>
 
   <!-- Badges de Status e Contexto Institucional -->
   <p>
+    <img src="https://img.shields.io/badge/Fundada_em-2024-7B2CBF?style=for-the-badge&logo=rocket&logoColor=white" alt="Fundada em 2024">
     <img src="https://img.shields.io/badge/Contexto-Smart_Home_2050-7B2CBF?style=for-the-badge&logo=iot&logoColor=white" alt="Smart Home 2050">
     <img src="https://img.shields.io/badge/Missão-ExpoTech_2026.2-00F2FE?style=for-the-badge&logo=rocket&logoColor=black" alt="ExpoTech 2026.2">
     <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
@@ -41,137 +43,114 @@
 
 ---
 
-## 🎯 O que é o ANHANGÁ?
+## 🚀 Nossa História: A NOVERIS
 
-O **ANHANGÁ**, desenvolvido pela **NOVERIS**, é uma solução de Inteligência Artificial voltada para ambientes inteligentes que analisa sessões de gaming, aprende os padrões individuais do usuário e oferece recomendações personalizadas de acordo com seu comportamento, preferências e contexto.
+A **NOVERIS** nasceu em **2024** a partir de uma indagação fundamental: *E se a tecnologia pudesse compreender não apenas o que fazemos, mas também o ambiente em que vivemos e a maneira como interagimos com o mundo digital?*
 
-O sistema transforma dados de uma sessão de gaming em informações inteligentes, acompanhando o comportamento histórico do usuário para identificar quando uma nova sessão apresenta uma diferença significativa em relação ao seu padrão habitual, integrando também variáveis ambientais do seu espaço doméstico.
+### O Significado do Nome NOVERIS
+- **NOV:** A ideia de novidade, inovação e transformação.
+- **ERIS:** A identidade futurista de uma empresa que explora novas possibilidades tecnológicas.
 
----
-
-## 💡 Curiosidade: Por que o nome ANHANGÁ?
-
-> Na mitologia e no folclore brasileiro, o **Anhangá** é reconhecido como o espírito protetor da fauna, da flora e das matas. Ele não é uma figura punitiva, mas sim um **guardião invisível e adaptativo** que preserva o equilíbrio do ecossistema.
-
-A **NOVERIS** escolheu esse nome para simbolizar a essência do projeto: uma Inteligência Artificial que atua como uma **guarda silenciosa sobre o ambiente doméstico do jogador**, monitorando variáveis em tempo real sem interromper a imersão, garantindo o equilíbrio entre alta performance em gaming e saúde/bem-estar na Smart Home 2050.
+> **Lema oficial:** *NOVERIS — Inteligência que acompanha sua evolução.*
 
 ---
 
-## 🧠 Como Funciona?
+## 📅 Nossa Trajetória (2024–2030)
 
-O ANHANGÁ combina diferentes etapas de Inteligência Artificial e Engenharia de Dados através do fluxo:
-
-$$\text{Dados} \longrightarrow \text{Processamento} \longrightarrow \text{Machine Learning} \longrightarrow \text{Análise de Contexto} \longrightarrow \text{IA Generativa} \longrightarrow \text{Recomendação}$$
-
-### Principais Etapas do Sistema:
-- **Coleta de dados:** Captação contínua da duração da sessão e telemetria do ambiente.
-- **Organização e Processamento:** Estruturação dos dados telemétricos para análise estatística.
-- **Aprendizado de Padrões:** Definição da linha de base (*baseline*) comportamental do usuário.
-- **Identificação de Anomalias:** Detecção de comportamentos fora do padrão histórico.
-- **Análise Multicontextual:** Cruzamento entre hábitos de jogo, variáveis ambientais e agenda do usuário.
-- **IA Generativa & Comunicação:** Tradução de diagnósticos numéricos em recomendações conversacionais e personalizadas.
+- **2024 — O nascimento da NOVERIS:** Fundação da empresa e início da jornada em IA e dados.
+- **2025 — Construindo nossa identidade:** Evolução focada em inteligência artificial, software e acessibilidade.
+- **2026 — O nascimento do ANHANGÁ:** Desenvolvimento da plataforma inteligente para gaming e telemetria ambiental.
+- **2027 — Nossa próxima evolução:** Integração com dispositivos inteligentes (IoT) e automação de ambientes.
+- **2030 — Nossa visão de futuro:** Expansão do ecossistema NOVERIS para novos horizontes tecnológicos.
 
 ---
 
-## 🎮 Inteligência para Cada Jogador
+## 🎯 O Nascimento do ANHANGÁ
 
-O ANHANGÁ **não utiliza apenas um limite fixo universal de tempo** (como `if duracao > 120`). Cada pessoa possui um hábito único: uma sessão de 3 horas pode ser comum para um jogador e completamente atípica para outro.
+O primeiro grande projeto da NOVERIS surgiu da observação do hábito dos jogadores: a perda da noção do tempo e da qualidade do ambiente (iluminação, ruído, temperatura e ausência de pausas).
 
-Por isso, o ANHANGÁ utiliza o histórico individual para responder:
-> **“O que é normal para este usuário?”**
-
----
-
-## 📊 O que o Sistema Analisa?
-
-| Camada | Variáveis Analisadas |
-| :--- | :--- |
-| **🕹️ Sessão de Gaming** | Duração da sessão, horário de início, quantidade de pausas, histórico de sessões e dispositivo utilizado. |
-| **🌡️ Telemetria Ambiental** | Temperatura do cômodo, umidade, luminosidade (lux), nível de ruído (dB) e presença no ambiente. |
-| **📅 Perfil & Agenda** | Preferências do usuário, configurações de acessibilidade e compromissos cadastrados na rotina. |
+O **ANHANGÁ** é o assistente inteligente desenvolvido para monitorar sessões de jogo, registrar o tempo dedicado, analisar pausas e medir temperatura, luminosidade, umidade e ruído, transformando dados brutos em inteligência adaptativa.
 
 ---
 
-## 🧮 Matemática Aplicada & Indicadores
+## 💡 Por que escolhemos o nome ANHANGÁ?
 
-A inteligência do ANHANGÁ utiliza métodos estatísticos para transformar impressões em dados mensuráveis:
+> Na mitologia e no folclore brasileiro tupi, o **Anhangá** é o espírito protetor da fauna e das florestas. Ele atua como um **guardião invisível e adaptativo**.
 
-- **Média ($\mu$) & Mediana:** Identificação da tendência central do histórico do usuário.
-- **Desvio Padrão ($\sigma$):** Medição da variabilidade habitual do jogador.
-- **Z-Score ($Z$):** Cálculo exato da distância estatística da sessão atual em relação ao histórico:
-  $$Z = \frac{X - \mu}{\sigma}$$
-- **Score de Anomalia & Contexto:** Métricas ponderadas que correlacionam o desvio de tempo com os sensores de ambiente.
-- **Previsão & Probabilidade:** Estimativa do tempo provável de prolongamento da sessão.
+A **NOVERIS** adotou essa inspiração como símbolo de cuidado e equilíbrio: o **ANHANGÁ** protege o equilíbrio entre o jogador, seus hábitos e o ambiente doméstico. O sistema não proíbe a prática de jogar, mas incentiva o jogo consciente, atuando de maneira discreta e respeitosa.
 
 ---
 
-## 🤖 Machine Learning + IA Generativa
+## 💡 Curiosidades: Você Sabia?
 
-O ANHANGÁ divide a inteligência em duas funções complementares:
-
-* **Machine Learning:** Encontra o padrão estatístico e detecta a diferença quantitativa (*"Esta sessão está muito acima do seu padrão habitual"*).
-* **IA Generativa:** Transforma o resultado da análise em uma comunicação amigável, clara e contextualizada:
-
-> 💡 *"Sua sessão atual está muito acima da sua duração habitual. Como você possui um compromisso próximo, considere fazer uma pausa ou encerrar a sessão."*
+1. **A NOVERIS foi fundada em 2024**, mas seu projeto principal (ANHANGÁ) ganhou estrutura em 2026.
+2. **O nome ANHANGÁ** representa guarda silenciosa e acompanhamento sem imposições coercitivas.
+3. **Autonomia mantida:** O aplicativo não toma decisões pelo jogador; fornece dados para a sua própria gestão.
+4. **Acessibilidade nativa:** A inclusão visual, auditiva e motora foi projetada desde a primeira linha de código.
 
 ---
 
-## 🏠 Smart Home 2050
+## 🧠 Como Funciona na Prática & IA
 
-O **ANHANGÁ** atua como uma central inteligente capaz de interagir com dispositivos compatíveis no ambiente doméstico:
+O sistema não opera com limites universais arbitrários (`if duracao > 120`). Ele aprende a linha de base individual do usuário para responder: **“O que é normal para este usuário?”**
 
-- 📱 **Smartphone:** Envio de alertas em linguagem natural e notificações.
-- 💻 **Computador / Console / TV / Monitor:** Ajustes de perfil de iluminação e brilho da tela.
-- 💡 **Luminária Inteligente:** Adaptação da luz do cômodo para redução de fadiga visual.
-- ❄️ **Ar-condicionado:** Ajuste preditivo do climatizador durante sessões longas.
-
-🔒 **Privacidade & Controle:** O usuário mantém total controle sobre quais dispositivos a IA tem permissão para ajustar e quais automações podem ser realizadas.
+$$\text{Dados} \longrightarrow \text{Processamento} \longrightarrow \text{Machine Learning (Z-Score)} \longrightarrow \text{Contexto} \longrightarrow \text{IA Generativa} \longrightarrow \text{Recomendação}$$
 
 ---
 
-## ♿ Acessibilidade & Experiência Personalizada
+## 🧮 Matemática Aplicada & Z-Score
 
-O sistema permite configurar preferências para garantir uma experiência previsível e confortável:
+Para mensurar estatisticamente os desvios comportamentais, o ANHANGÁ aplica a fórmula:
 
-- **Ajustes Visuais:** Controle de luminosidade, contraste, tamanho de texto e sensibilidade a cores/movimentos.
-- **Alertas Customizados:** Modos visuais, sonoros e hápticos com intensidade ajustável.
-- **Acessibilidade:** Suporte à comunicação e adaptação de alertas para Libras.
-- **Redução de Estímulos:** Suavização automática de brilho e som ao detectar fadiga.
+$$Z = \frac{X - \mu}{\sigma}$$
+
+Onde $X$ é a duração atual, $\mu$ é a média histórica e $\sigma$ é o desvio padrão. Se o **Z-Score** for muito elevado, a IA Generativa traduz a anomalia estatística em uma recomendação clara e amigável:
+
+> 💡 *"Sua sessão atual está muito acima da sua duração habitual. Como você possui um compromisso próximo às 19:00, considere fazer uma pausa ou encerrar a sessão."*
+
+---
+
+## 💼 Modalidades Comerciais
+
+1. **ANHANGÁ Free:** Acompanhamento gratuito de sessões, histórico, controle de tempo e indicadores básicos.
+2. **ANHANGÁ Plus:** Assinatura com relatórios avançados de Machine Learning e alertas preditivos por IA.
+3. **ANHANGÁ Connect:** Integração completa com automação de Smart Home e dispositivos IoT compatíveis.
+
+---
+
+## ♿ Acessibilidade como Inovação
+
+- Paletas de cores para daltonismo (Protanopia, Deuteranopia, Tritanopia).
+- Modos de Alto Contraste e regulagem do tamanho do texto.
+- Alertas visuais, sonoros e hápticos personalizáveis.
+- Suporte e adaptação para Libras e redução de estímulos visuais na fadiga.
 
 ---
 
 ## 🏗️ Engenharia de Dados
 
-A arquitetura de dados é estruturada no fluxo telemétrico de ponta a ponta:
-
 $$\mathbf{SOURCE} \longrightarrow \mathbf{INGESTION} \longrightarrow \mathbf{PROCESSING} \longrightarrow \mathbf{STORAGE} \longrightarrow \mathbf{CONSUMPTION}$$
 
-1. **SOURCE:** Captura de dados brutos da aplicação, sessões, dispositivos IoT e ambiente.
-2. **INGESTION:** Entrada e organização telemétrica dos eventos em tempo real.
-3. **PROCESSING:** Tratamento, transformação e geração de indicadores estatísticos.
-4. **STORAGE:** Armazenamento estruturado e relacional dos dados historizados.
-5. **CONSUMPTION:** Exibição em Dashboards, respostas da IA Generativa e gatilhos de automação.
+1. **SOURCE:** Captura telemétrica da aplicação, jogos, sensores IoT e ambiente.
+2. **INGESTION:** Entrada e organização dos dados telemétricos em tempo real.
+3. **PROCESSING:** Processamento de arrays com Pandas/NumPy e cálculo de Z-Score.
+4. **STORAGE:** Armazenamento relacional historizado no PostgreSQL / Supabase.
+5. **CONSUMPTION:** Dashboards executivos e respostas contextualizadas via IA.
 
 ---
 
 ## 🚀 Tecnologias
 
-- **Python 3.11+:** Processamento de dados e inteligência do sistema.
-- **FastAPI:** Backend assíncrono para disponibilização dos serviços da aplicação.
-- **Pandas & NumPy:** Tratamento, manipulação e cálculo estatístico de arrays.
-- **Scikit-learn:** Modelos de Machine Learning e detecção de padrões/anomalias.
-- **PostgreSQL / Supabase:** Banco de dados relacional para armazenamento seguro.
-- **Git / GitHub Pages:** Controle de versão e publicação do showcase institucional.
+- **Python 3.11+** | **FastAPI** | **Pandas & NumPy**
+- **Scikit-learn** | **PostgreSQL / Supabase** | **Git / GitHub Pages**
 
 ---
 
-## 🌐 A Visão da NOVERIS
+## 🌐 O Futuro da NOVERIS
 
-A **NOVERIS** acredita que a próxima geração de Smart Homes não será baseada apenas em dispositivos conectados. Será baseada em ambientes que compreendem contexto, aprendem padrões e se adaptam às pessoas. O **ANHANGÁ** representa essa visão aplicada ao universo gamer.
-
----
+A NOVERIS expandirá sua tecnologia para produtividade, acessibilidade e automação residencial inteligente.
 
 <div align="center">
-  <p><b>🦅 ANHANGÁ — Inteligência que entende seu contexto.</b></p>
-  <p>NOVERIS • ExpoTech 2026.2 • Missão 2050 🌌</p>
+  <p><b>NOVERIS — O futuro não é apenas inteligente. Ele precisa ser humano.</b></p>
+  <p>NOVERIS © 2024–2026 • ExpoTech 2026.2 • Missão 2050 🌌</p>
 </div>
