@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NOVERIS | ANHANGÁ Mobile — Smart Home 2050</title>
+  <title>NOVERIS | ANHANGÁ Mobile & HUB — Smart Home 2050</title>
   
   <!-- Fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -267,6 +267,7 @@
       gap: 10px;
       justify-content: center;
       margin-bottom: 25px;
+      flex-wrap: wrap;
     }
 
     .badge {
@@ -398,6 +399,42 @@
     .curiosidade-card:hover {
       border-color: #c77dff;
       box-shadow: 0 0 30px rgba(123, 44, 191, 0.4);
+    }
+
+    /* PRICING & PLANOS CARD */
+    .pricing-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .price-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--cor-destaque);
+      margin: 15px 0;
+      text-shadow: 0 0 10px var(--glow-cyan);
+    }
+
+    .price-list {
+      list-style: none;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .price-list li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--cor-subtitulo);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .price-list li i {
+      color: var(--cor-verde);
+      margin-top: 4px;
     }
 
     /* TIMELINE */
@@ -534,7 +571,7 @@
       bottom: 2rem;
       right: 2rem;
       background: var(--cor-destaque);
-      color: #07090e;
+      color: #0b0e14;
       width: 45px;
       height: 45px;
       border-radius: 50%;
@@ -578,6 +615,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#anhanga">ANHANGÁ Mobile</a></li>
+        <li><a href="#planos">Planos & HUB</a></li>
         <li><a href="#historia">Desenvolvimento</a></li>
         <li><a href="#funcionalidades">Funcionalidades</a></li>
         <li><a href="#arquitetura">Arquitetura</a></li>
@@ -595,7 +633,7 @@
     </div>
   </header>
 
-  <!-- SEÇÃO PRINCIPAL (HERO) COM AS SUAS IMAGEMS REAIS DOS ASSETS -->
+  <!-- SEÇÃO PRINCIPAL (HERO) COM AS SUAS IMAGENS REAIS DOS ASSETS -->
   <section class="hero">
     <div class="hero-content">
       
@@ -611,17 +649,18 @@
         <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Banner" class="hero-logo-img">
       </div>
 
-      <h1>🦅 ANHANGÁ Mobile</h1>
+      <h1>🦅 ANHANGÁ Mobile & HUB</h1>
       <p class="subtitle">Análise Neural de Hábitos, Ambiente e Gaming Adaptativo</p>
-      <p class="hero-tagline">Tecnologia que entende seu ritmo.</p>
+      <p class="hero-tagline">Tecnologia que entende seu ritmo. O ANHANGÁ HUB é vendido separadamente, sem obrigatoriedade de assinatura paga.</p>
       
       <div class="badge-group">
         <span class="badge">SMART HOME 2050</span>
         <span class="badge secondary-badge">EXPOTECH 2026.2</span>
+        <span class="badge" style="background: rgba(0,245,160,0.15); color: var(--cor-verde); border-color: rgba(0,245,160,0.4);">HUB OPCIONAL</span>
       </div>
       
       <div class="hero-buttons">
-        <a href="#anhanga" class="btn primary">Conheça o ANHANGÁ <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#planos" class="btn primary">Ver Planos & Política do HUB <i class="fa-solid fa-arrow-right"></i></a>
         <a href="#sobre" class="btn secondary">Nossa história</a>
       </div>
     </div>
@@ -691,6 +730,105 @@
       <p style="font-size:0.8rem; color:var(--cor-subtitulo); margin-top:15px;">
         * Trata-se de uma interpretação artística e autoral do projeto; as tradições indígenas possuem múltiplas e ricas variações culturais que devem ser respeitadas.
       </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 2.1: NOVA POLÍTICA DO ANHANGÁ HUB E PLANOS -->
+  <section id="planos" class="container">
+    <div class="section-header">
+      <span>Flexibilidade & Transparência</span>
+      <h2>Política do ANHANGÁ HUB e Planos de Assinatura</h2>
+    </div>
+
+    <div class="card futuristic-card" style="margin-bottom: 30px; border-left: 4px solid var(--cor-destaque);">
+      <h3 style="margin-bottom: 10px; color: var(--cor-destaque);"><i class="fa-solid fa-circle-info"></i> Diretrizes Comerciais</h3>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; color: var(--cor-subtitulo); font-size: 0.95rem;">
+        <li>• O <strong>ANHANGÁ HUB</strong> é um aparelho físico opcional vendido separadamente.</li>
+        <li>• A compra do HUB <strong>NÃO</strong> inclui nem exige nenhuma assinatura paga.</li>
+        <li>• Você pode contratar os planos Plus ou Pro <strong>sem</strong> precisar comprar o HUB.</li>
+        <li>• Nenhuma medição básica do HUB é bloqueada no plano grátis (Normal).</li>
+        <li>• Os valores apresentados são propostas comerciais e os recursos físicos estão em desenvolvimento.</li>
+      </ul>
+    </div>
+
+    <div class="grid-3">
+      <!-- PLANO NORMAL -->
+      <div class="card futuristic-card pricing-card">
+        <div>
+          <span class="status-badge status-tested">Base Gratuita</span>
+          <h3>Plano Normal</h3>
+          <div class="price-tag">R$ 0,00 <span style="font-size:0.9rem; color:var(--cor-subtitulo);">/mês</span></div>
+          <p style="font-size:0.9rem; color:var(--cor-subtitulo); margin-bottom:15px;">Ideal para quem busca autonomia essencial.</p>
+          
+          <p style="font-size:0.85rem; font-weight:bold; color:var(--cor-destaque); margin-bottom:5px;">Com o ANHANGÁ HUB:</p>
+          <ul class="price-list">
+            <li><i class="fa-solid fa-check"></i> Acesso às funções básicas do app</li>
+            <li><i class="fa-solid fa-check"></i> Relógio flutuante e Histórico de partidas</li>
+            <li><i class="fa-solid fa-check"></i> Meu Ritmo & Agenda Inteligente básica</li>
+            <li><i class="fa-solid fa-check"></i> Visualização de dados ambientais disponíveis</li>
+            <li><i class="fa-solid fa-check"></i> <strong>Acesso às medições básicas do HUB</strong></li>
+            <li><i class="fa-solid fa-check"></i> Recomendações básicas & Acessibilidade essencial</li>
+          </ul>
+        </div>
+        <div style="margin-top:20px; padding-top:15px; border-top:1px solid var(--borda-cards);">
+          <p style="font-size:0.8rem; color:var(--cor-subtitulo);">* Sem o HUB: o app continua funcionando com funções essenciais e dados autorizados externos.</p>
+        </div>
+      </div>
+
+      <!-- PLANO PLUS -->
+      <div class="card futuristic-card pricing-card" style="border-color: var(--cor-secundaria);">
+        <div>
+          <span class="status-badge" style="background:rgba(123,44,191,0.2); color:#c77dff; border:1px solid var(--cor-secundaria);">Intermediário</span>
+          <h3>Plano Plus</h3>
+          <div class="price-tag">R$ 19,90 <span style="font-size:0.9rem; color:var(--cor-subtitulo);">/mês</span></div>
+          <p style="font-size:0.9rem; color:var(--cor-subtitulo); margin-bottom:15px;">Para quem quer aprofundar a análise de hábitos.</p>
+          
+          <p style="font-size:0.85rem; font-weight:bold; color:#c77dff; margin-bottom:5px;">Recursos Incluídos:</p>
+          <ul class="price-list">
+            <li><i class="fa-solid fa-check"></i> Tudo incluído no Plano Normal</li>
+            <li><i class="fa-solid fa-check"></i> Análises avançadas de hábitos e comportamento</li>
+            <li><i class="fa-solid fa-check"></i> Relatórios ambientais detalhados</li>
+            <li><i class="fa-solid fa-check"></i> Comparações históricas aprofundadas</li>
+            <li><i class="fa-solid fa-check"></i> Recomendações totalmente personalizadas</li>
+          </ul>
+        </div>
+        <div style="margin-top:20px; padding-top:15px; border-top:1px solid var(--borda-cards);">
+          <p style="font-size:0.8rem; color:var(--cor-subtitulo);">* Pode ser contratado independentemente de possuir ou não o ANHANGÁ HUB.</p>
+        </div>
+      </div>
+
+      <!-- PLANO PRO -->
+      <div class="card futuristic-card pricing-card" style="border-color: var(--cor-destaque); box-shadow: 0 0 20px var(--glow-cyan);">
+        <div>
+          <span class="status-badge status-planned">Avançado / Futuro</span>
+          <h3>Plano Pro</h3>
+          <div class="price-tag">R$ 39,90 <span style="font-size:0.9rem; color:var(--cor-subtitulo);">/mês</span></div>
+          <p style="font-size:0.9rem; color:var(--cor-subtitulo); margin-bottom:15px;">Automação total e ecossistema inteligente.</p>
+          
+          <p style="font-size:0.85rem; font-weight:bold; color:var(--cor-destaque); margin-bottom:5px;">Recursos Exclusivos:</p>
+          <ul class="price-list">
+            <li><i class="fa-solid fa-check"></i> Tudo incluído no Plano Plus</li>
+            <li><i class="fa-solid fa-check"></i> Automações avançadas de ambiente</li>
+            <li><i class="fa-solid fa-check"></i> Perfis inteligentes de ambiente (Smart Home)</li>
+            <li><i class="fa-solid fa-check"></i> Integração com dispositivos compatíveis</li>
+            <li><i class="fa-solid fa-check"></i> Recursos premium futuros em primeira mão</li>
+          </ul>
+        </div>
+        <div style="margin-top:20px; padding-top:15px; border-top:1px solid var(--borda-cards);">
+          <p style="font-size:0.8rem; color:var(--cor-subtitulo);">* Máxima potência telemétrica com ou sem hardware dedicado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIRETRIZES SEM HUB -->
+    <div class="card futuristic-card" style="margin-top: 30px;">
+      <h3 style="margin-bottom: 12px;"><i class="fa-solid fa-mobile-screen-button" style="color:var(--cor-destaque);"></i> Funcionamento Sem o ANHANGÁ HUB</h3>
+      <div class="grid-2" style="gap: 15px; color: var(--cor-subtitulo); font-size: 0.95rem;">
+        <div>• O aplicativo continua funcionando normalmente sem a presença do aparelho físico.</div>
+        <div>• O usuário mantém todas as funções correspondentes ao plano escolhido (Normal, Plus ou Pro).</div>
+        <div>• Dados ambientais podem ser obtidos de fontes externas disponíveis e devidamente autorizadas.</div>
+        <div>• <strong>Aviso de Transparência:</strong> O sistema jamais apresenta dados externos como se fossem medições reais e exclusivas do interior do quarto do usuário.</div>
+      </div>
     </div>
   </section>
 
@@ -880,6 +1018,16 @@
     </div>
 
     <div class="faq-container">
+      <!-- NOVA PERG FREQ SOLICITADA -->
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Se eu comprar o ANHANGÁ HUB, preciso pagar uma assinatura?</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Não. Você pode comprar o ANHANGÁ HUB e continuar utilizando o plano Normal gratuitamente, com acesso às funções básicas e às medições disponibilizadas pelo aparelho. Os planos Plus e Pro são opcionais.
+        </div>
+      </div>
       <div class="faq-item">
         <div class="faq-question">
           <span>O ANHANGÁ controla meu celular ou impede de jogar?</span>
@@ -912,7 +1060,7 @@
 
   <!-- RODAPÉ -->
   <footer>
-    <p><strong>🦅 ANHANGÁ Mobile — Tecnologia que entende seu ritmo.</strong></p>
+    <p><strong>🦅 ANHANGÁ Mobile & HUB — Tecnologia que entende seu ritmo.</strong></p>
     <p>NOVERIS © 2024–2026 • ExpoTech 2026.2 • Missão 2050 🌌</p>
   </footer>
 
