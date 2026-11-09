@@ -1,1073 +1,1034 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVERIS | Inteligência que entende seu ritmo</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ========================================================
-           NOVERIS & ANHANGÁ — DESIGN SYSTEM (CYBERPUNK 2050 / PREMIUM)
-           ======================================================== */
-        :root {
-            --bg-primary: #07090e;
-            --bg-secondary: #0f141f;
-            --bg-card: #131b2e;
-            --bg-card-hover: #1a2540;
-            
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            
-            --accent-cyan: #00f2fe;
-            --accent-violet: #7b2cbf;
-            --accent-green: #00f5a0;
-            
-            --border-color: rgba(255, 255, 255, 0.08);
-            --glow-cyan: rgba(0, 242, 254, 0.25);
-            --glow-violet: rgba(123, 44, 191, 0.3);
-            
-            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #f4f6f9;
-            --bg-secondary: #eef2f7;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f8fafc;
-            --text-primary: #0b0f19;
-            --text-secondary: #4b5563;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --glow-cyan: rgba(0, 150, 200, 0.15);
-            --glow-violet: rgba(124, 58, 237, 0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
-
-        h1, h2, h3, h4, .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1.2px;
-        }
-
-        /* HEADER & NAVBAR */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(7, 9, 14, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        [data-theme="light"] header {
-            background: rgba(244, 246, 249, 0.85);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 1.1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px var(--glow-cyan);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.8rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 8px var(--glow-cyan);
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .theme-toggle, .menu-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .theme-toggle:hover, .menu-toggle:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            box-shadow: 0 0 12px var(--glow-cyan);
-        }
-
-        .menu-toggle {
-            display: none;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 9rem 2rem 5rem;
-            position: relative;
-            background: radial-gradient(circle at 50% 25%, var(--glow-violet) 0%, transparent 65%);
-        }
-
-        .hero-content {
-            max-width: 950px;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 18px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0 20px var(--glow-cyan);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.2rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            line-height: 1.15;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px var(--glow-cyan));
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.9rem 2.2rem;
-            border-radius: 8px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            border: none;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary {
-            background: var(--accent-cyan);
-            color: #07090e;
-            box-shadow: 0 4px 20px var(--glow-cyan);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(0, 242, 254, 0.6);
-            background: #33f5ff;
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px var(--glow-cyan);
-        }
-
-        /* SECTIONS & GRIDS */
-        section {
-            padding: 6rem 2rem;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header span {
-            color: var(--accent-cyan);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            font-size: 0.8rem;
-            display: block;
-            margin-bottom: 0.6rem;
-            text-shadow: 0 0 8px var(--glow-cyan);
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            font-weight: 700;
-        }
-
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-
-        /* CARDS FUTURISTAS */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            background: var(--bg-card-hover);
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-cyan);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card i {
-            font-size: 2.5rem;
-            color: var(--accent-cyan);
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 10px var(--glow-cyan));
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* SPOTLIGHT ANHANGÁ */
-        .anhanga-spotlight {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .spotlight-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        @media(max-width: 968px) {
-            .spotlight-grid { grid-template-columns: 1fr; }
-        }
-
-        .spotlight-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .spotlight-content p {
-            color: var(--text-secondary);
-            margin-bottom: 1.2rem;
-        }
-
-        .logo-placeholder {
-            background: var(--bg-card);
-            border: 2px dashed var(--accent-violet);
-            border-radius: 20px;
-            padding: 3.5rem 2rem;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 40px var(--glow-violet);
-        }
-
-        .logo-placeholder i {
-            font-size: 4rem;
-            color: var(--accent-violet);
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 15px var(--glow-violet));
-        }
-
-        /* TIMELINE INTERATIVA */
-        .timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 3px;
-            background: var(--border-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -1.5px;
-            box-shadow: 0 0 10px var(--glow-cyan);
-        }
-
-        @media(max-width: 768px) {
-            .timeline::after { left: 25px; }
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-        }
-
-        @media(max-width: 768px) {
-            .timeline-item { width: 100%; padding-left: 60px; padding-right: 20px; }
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            right: -9px;
-            background: var(--accent-cyan);
-            border: 4px solid var(--bg-primary);
-            top: 25px;
-            border-radius: 50%;
-            z-index: 1;
-            box-shadow: 0 0 15px var(--glow-cyan);
-        }
-
-        @media(max-width: 768px) {
-            .timeline-item::after { left: 16px; }
-        }
-
-        .left { left: 0; }
-        .right { left: 50%; }
-        @media(max-width: 768px) { .right { left: 0; } }
-
-        .timeline-content {
-            padding: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            transition: var(--transition);
-        }
-
-        .timeline-content:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 15px var(--glow-cyan);
-        }
-
-        .timeline-content h4 {
-            color: var(--accent-cyan);
-            margin-bottom: 0.4rem;
-            font-size: 0.95rem;
-        }
-
-        .timeline-content h3 {
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        .timeline-content p {
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-        }
-
-        /* ARQUITETURA DE DADOS */
-        .architecture-flow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.8rem;
-            max-width: 650px;
-            margin: 3rem auto 0;
-            text-align: center;
-        }
-
-        .arch-node {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 1.1rem 2rem;
-            border-radius: 10px;
-            width: 100%;
-            font-weight: 600;
-            color: var(--text-primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: var(--transition);
-        }
-
-        .arch-node:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px var(--glow-cyan);
-        }
-
-        .arch-arrow {
-            color: var(--accent-cyan);
-            font-size: 1.1rem;
-            text-shadow: 0 0 8px var(--glow-cyan);
-        }
-
-        /* FAQ ACCORDION */
-        .faq-container {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .faq-question {
-            padding: 1.4rem 1.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        .faq-answer {
-            padding: 0 1.8rem 1.5rem;
-            color: var(--text-secondary);
-            display: none;
-            font-size: 0.95rem;
-        }
-
-        .faq-item.active .faq-answer { display: block; }
-        .faq-item.active { border-color: var(--accent-cyan); box-shadow: 0 0 15px var(--glow-cyan); }
-        .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--accent-cyan); }
-        .faq-question i { transition: var(--transition); }
-
-        /* BADGES DE STATUS */
-        .status-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-        .status-tested { background: rgba(0, 245, 160, 0.15); color: var(--accent-green); border: 1px solid rgba(0,245,160,0.3); }
-        .status-validating { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-        .status-planned { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0,242,254,0.3); }
-
-        /* FOOTER & BACK TO TOP */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 4rem 2rem 2.5rem;
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .footer-content {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.2rem;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--accent-cyan);
-            color: #07090e;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 999;
-            box-shadow: 0 4px 20px var(--glow-cyan);
-        }
-
-        .back-to-top.visible { opacity: 1; visibility: visible; }
-        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(0,242,254,0.8); }
-
-        @media(max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--bg-secondary);
-                padding: 2rem;
-                border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            }
-            .nav-links.active { display: flex; }
-            .menu-toggle { display: flex; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVERIS | ANHANGÁ Mobile — Smart Home 2050</title>
+  
+  <!-- Fontes do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ========================================================
+       PALETA DE CORES CYBERPUNK 2050 & DESIGN NEON (NOVERIS)
+       ======================================================== */
+    :root {
+      --fundo-principal: #07090e;
+      --fundo-cards: #0f1522;
+      --fundo-cards-hover: #172033;
+      --borda-cards: #1e293b;
+      
+      --cor-texto: #e2e8f0;
+      --cor-subtitulo: #94a3b8;
+      
+      --cor-destaque: #00f2fe;     /* Ciano Neon */
+      --cor-secundaria: #7b2cbf;   /* Roxo Neon */
+      --cor-verde: #00f5a0;        /* Verde Esmeralda */
+      
+      --glow-cyan: rgba(0, 242, 254, 0.35);
+      --glow-purple: rgba(123, 44, 191, 0.4);
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --fundo-principal: #f4f6f9;
+      --fundo-cards: #ffffff;
+      --fundo-cards-hover: #f8fafc;
+      --borda-cards: rgba(0, 0, 0, 0.08);
+      --cor-texto: #0b0f19;
+      --cor-subtitulo: #4b5563;
+      --glow-cyan: rgba(0, 150, 200, 0.2);
+      --glow-purple: rgba(124, 58, 237, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--fundo-principal);
+      color: var(--cor-texto);
+      font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: var(--transition);
+    }
+
+    h1, h2, h3, h4, .logo-text {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1.5px;
+    }
+
+    /* HEADER & NAVBAR */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(7, 9, 14, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--cor-destaque);
+      text-shadow: 0 0 12px var(--glow-cyan);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--cor-subtitulo);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--cor-destaque);
+      text-shadow: 0 0 8px var(--glow-cyan);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .theme-toggle, .menu-toggle {
+      background: var(--fundo-cards);
+      border: 1px solid var(--borda-cards);
+      color: var(--cor-texto);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--cor-destaque);
+      color: var(--cor-destaque);
+      box-shadow: 0 0 12px var(--glow-cyan);
+    }
+
+    .menu-toggle { display: none; }
+
+    /* SEÇÃO HERO COM LOGOS EM CSS / ÍCONES NEON */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 130px;
+      padding-bottom: 60px;
+      background: radial-gradient(circle at center, rgba(0, 242, 254, 0.15) 0%, rgba(123, 44, 191, 0.05) 50%, transparent 80%);
+    }
+
+    .hero-content {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .noveris-presenta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    /* LOGO DA EMPRESA EM ESTILO NEON CORPORATIVO */
+    .company-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(123, 44, 191, 0.2));
+      border: 2px solid var(--cor-destaque);
+      border-radius: 16px;
+      box-shadow: 0 0 25px var(--glow-cyan);
+      animation: pulseHolo 3s ease-in-out infinite alternate;
+      transition: transform 0.4s ease;
+    }
+
+    .company-logo-badge:hover {
+      transform: scale(1.05);
+    }
+
+    .company-logo-badge i {
+      font-size: 1.8rem;
+      color: var(--cor-destaque);
+      filter: drop-shadow(0 0 8px var(--glow-cyan));
+    }
+
+    .company-logo-badge span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #ffffff;
+      text-shadow: 0 0 10px var(--glow-cyan);
+    }
+
+    .presenta-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 6px;
+      color: var(--cor-subtitulo);
+      margin-top: 10px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* LOGO DO ANHANGÁ (CERVO FUTURISTA / ÍCONE NEON COM ANEL ORBITAL) */
+    .hero-image-wrapper {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      margin-bottom: 25px;
+      padding: 20px;
+    }
+
+    .orbital-ring {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 2px dashed rgba(0, 242, 254, 0.5);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+      animation: rotateRing 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .hero-logo-icon {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(123, 44, 191, 0.3) 0%, rgba(7, 9, 14, 0.8) 70%);
+      border: 2px solid var(--cor-secundaria);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 0 40px var(--glow-purple);
+      animation: float3DMotion 4s ease-in-out infinite;
+      transition: transform 0.4s ease;
+    }
+
+    .hero-logo-icon:hover {
+      transform: scale(1.08) rotateY(15deg);
+      box-shadow: 0 0 60px rgba(0, 242, 254, 0.7);
+      border-color: var(--cor-destaque);
+    }
+
+    .hero-logo-icon i {
+      font-size: 4rem;
+      color: var(--cor-destaque);
+      filter: drop-shadow(0 0 15px var(--glow-cyan));
+      margin-bottom: 5px;
+    }
+
+    .hero-logo-icon span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffffff;
+    }
+
+    @keyframes float3DMotion {
+      0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); }
+      25% { transform: translateY(-12px) rotateX(6deg) rotateY(-6deg) scale(1.02); }
+      50% { transform: translateY(-18px) rotateX(0deg) rotateY(6deg) scale(1.04); }
+      75% { transform: translateY(-8px) rotateX(-6deg) rotateY(0deg) scale(1.02); }
+      100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); }
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg) rotateX(60deg); }
+      100% { transform: rotate(360deg) rotateX(60deg); }
+    }
+
+    @keyframes pulseHolo {
+      0% { box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); transform: scale(0.98); }
+      100% { box-shadow: 0 0 35px rgba(0, 242, 254, 0.7); transform: scale(1.02); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px var(--glow-cyan);
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--cor-subtitulo);
+      margin-bottom: 10px;
+    }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      color: var(--cor-texto);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .badge {
+      padding: 6px 16px;
+      background: rgba(123, 44, 191, 0.2);
+      border: 1px solid var(--cor-secundaria);
+      color: #c77dff;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(123, 44, 191, 0.3);
+    }
+
+    .secondary-badge {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: var(--cor-destaque);
+      color: var(--cor-destaque);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    .btn.primary {
+      background: var(--cor-destaque);
+      color: #0b0e14;
+      box-shadow: 0 0 15px var(--glow-cyan);
+    }
+
+    .btn.primary:hover {
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.9);
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    .btn.secondary {
+      border: 1px solid var(--borda-cards);
+      color: var(--cor-texto);
+      background: var(--fundo-cards);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--cor-destaque);
+      color: var(--cor-destaque);
+      box-shadow: 0 0 15px var(--glow-cyan);
+      transform: translateY(-3px);
+    }
+
+    /* CONTAINERS & CARDS */
+    .container {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header span {
+      color: var(--cor-destaque);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+
+    .card {
+      background: var(--fundo-cards);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid var(--borda-cards);
+      margin-bottom: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .futuristic-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--cor-destaque);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .futuristic-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
+      transition: 0.5s;
+    }
+
+    .futuristic-card:hover::before { left: 100%; }
+
+    .curiosidade-card {
+      background: linear-gradient(135deg, #0f1522 0%, #1a0f2e 100%);
+      border: 1px solid var(--cor-secundaria);
+      box-shadow: 0 0 15px rgba(123, 44, 191, 0.2);
+    }
+
+    .curiosidade-card:hover {
+      border-color: #c77dff;
+      box-shadow: 0 0 30px rgba(123, 44, 191, 0.4);
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background: var(--borda-cards);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -1px;
+    }
+
+    @media(max-width: 768px) { .timeline::after { left: 20px; } }
+
+    .timeline-item {
+      padding: 10px 30px;
+      position: relative;
+      width: 50%;
+    }
+
+    @media(max-width: 768px) { .timeline-item { width: 100%; padding-left: 50px; padding-right: 15px; } }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      right: -8px;
+      background: var(--cor-destaque);
+      border: 3px solid var(--fundo-principal);
+      top: 22px;
+      border-radius: 50%;
+      z-index: 1;
+      box-shadow: 0 0 10px var(--glow-cyan);
+    }
+
+    @media(max-width: 768px) { .timeline-item::after { left: 12px; } }
+
+    .left { left: 0; }
+    .right { left: 50%; }
+    @media(max-width: 768px) { .right { left: 0; } }
+
+    .timeline-content {
+      padding: 20px;
+      background: var(--fundo-cards);
+      border: 1px solid var(--borda-cards);
+      border-radius: 10px;
+    }
+
+    /* ARQUITETURA & FLOW */
+    .architecture-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      max-width: 600px;
+      margin: 30px auto 0;
+      text-align: center;
+    }
+
+    .arch-node {
+      background: var(--fundo-cards);
+      border: 1px solid var(--borda-cards);
+      padding: 15px 25px;
+      border-radius: 8px;
+      width: 100%;
+      font-weight: 600;
+      color: var(--cor-texto);
+    }
+
+    .arch-arrow {
+      color: var(--cor-destaque);
+      font-size: 1.2rem;
+    }
+
+    /* FAQ ACCORDION */
+    .faq-container { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      background: var(--fundo-cards);
+      border: 1px solid var(--borda-cards);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .faq-answer {
+      padding: 0 22px 18px;
+      color: var(--cor-subtitulo);
+      display: none;
+    }
+    .faq-item.active .faq-answer { display: block; }
+    .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--cor-destaque); }
+
+    /* BADGES STATUS */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .status-tested { background: rgba(0, 245, 160, 0.15); color: var(--cor-verde); border: 1px solid rgba(0,245,160,0.3); }
+    .status-validating { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+    .status-planned { background: rgba(0, 242, 254, 0.15); color: var(--cor-destaque); border: 1px solid rgba(0,242,254,0.3); }
+
+    /* FOOTER & BACK TO TOP */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--borda-cards);
+      color: var(--cor-subtitulo);
+      margin-top: 50px;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--cor-destaque);
+      color: #07090e;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+      box-shadow: 0 0 15px var(--glow-cyan);
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+
+    @media(max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--fundo-principal);
+        padding: 2rem;
+        border-bottom: 1px solid var(--borda-cards);
+      }
+      .nav-links.active { display: flex; }
+      .menu-toggle { display: flex; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- HEADER & NAVEGAÇÃO -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">NOVERIS<span>.</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#anhanga">ANHANGÁ</a></li>
-                <li><a href="#historia">História</a></li>
-                <li><a href="#funcionalidades">Funcionalidades</a></li>
-                <li><a href="#arquitetura">Arquitetura</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
-                <li><a href="#faq">FAQ</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Alternar Tema">
-                    <i class="fa-solid fa-moon" id="themeIcon"></i>
-                </button>
-                <button class="menu-toggle" id="menuToggle" aria-label="Menu Mobile">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+  <!-- CABEÇALHO / NAVEGAÇÃO -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo-text"><i class="fa-solid fa-microchip"></i> NOVERIS</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#anhanga">ANHANGÁ Mobile</a></li>
+        <li><a href="#historia">Desenvolvimento</a></li>
+        <li><a href="#funcionalidades">Funcionalidades</a></li>
+        <li><a href="#arquitetura">Arquitetura</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar Tema">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu Mobile">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fa-solid fa-microchip"></i> Inteligência Artificial & Ciência de Dados
-            </div>
-            <h1>Tecnologia que entende <span>seu ritmo.</span></h1>
-            <p>A NOVERIS desenvolve soluções inteligentes, acessíveis e personalizadas que transformam dados complexos em experiências digitais intuitivas e seguras.</p>
-            <div class="hero-buttons">
-                <a href="#anhanga" class="btn btn-primary">Conheça o ANHANGÁ <i class="fa-solid fa-arrow-right"></i></a>
-                <a href="#sobre" class="btn btn-secondary">Nossa história</a>
-            </div>
+  <!-- SEÇÃO PRINCIPAL (HERO) COM AS LOGOS DA EMPRESA E DA IA -->
+  <section class="hero">
+    <div class="hero-content">
+      
+      <!-- LOGO 1: NOVERIS (EMPRESA) -->
+      <div class="noveris-presenta">
+        <div class="company-logo-badge">
+          <i class="fa-solid fa-brain"></i>
+          <span>NOVERIS</span>
         </div>
-    </section>
+        <p class="presenta-text">A P R E S E N T A</p>
+      </div>
 
-    <!-- SOBRE A EMPRESA & MISSAO/VISAO -->
-    <section id="sobre">
-        <div class="section-header">
-            <span>Quem Somos</span>
-            <h2>Inovação com propósito humano</h2>
+      <!-- LOGO 2: ANHANGÁ (IA / CERVO FUTURISTA) -->
+      <div class="hero-image-wrapper">
+        <div class="orbital-ring"></div>
+        <div class="hero-logo-icon">
+          <i class="fa-solid fa-shield-cat"></i>
+          <span>ANHANGÁ</span>
         </div>
-        <div class="grid-2" style="margin-bottom: 4rem;">
-            <div class="card">
-                <i class="fa-solid fa-bullseye"></i>
-                <h3>Missão</h3>
-                <p>Desenvolver soluções inteligentes, acessíveis e personalizadas que melhorem experiências digitais e promovam a autonomia do usuário com total transparência e responsabilidade.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-eye"></i>
-                <h3>Visão</h3>
-                <p>Ser referência em inovação, desenvolvimento de software e inteligência artificial aplicada, conectando o comportamento humano à tecnologia de ponta.</p>
-            </div>
-        </div>
-        
-        <div class="section-header" style="margin-bottom: 2rem;">
-            <h3 style="font-size: 1.5rem;">Nossos Valores</h3>
-        </div>
-        <div class="grid-4">
-            <div class="card" style="padding: 1.5rem;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-bolt" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Inovação</h3>
-                <p style="font-size: 0.85rem;">Busca constante por novas fronteiras tecnológicas.</p>
-            </div>
-            <div class="card" style="padding: 1.5rem;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-universal-access" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Acessibilidade</h3>
-                <p style="font-size: 0.85rem;">Tecnologia inclusiva desde a concepção do código.</p>
-            </div>
-            <div class="card" style="padding: 1.5rem;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-shield-halved" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Privacidade</h3>
-                <p style="font-size: 0.85rem;">Proteção rigorosa de dados e conformidade estrita.</p>
-            </div>
-            <div class="card" style="padding: 1.5rem;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-brain" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>IA Responsável</h3>
-                <p style="font-size: 0.85rem;">Algoritmos transparentes que auxiliam, sem coação.</p>
-            </div>
-        </div>
-    </section>
+      </div>
 
-    <!-- ANHANGÁ SPOTLIGHT -->
-    <section id="anhanga" class="anhanga-spotlight">
-        <div class="spotlight-grid">
-            <div class="spotlight-content">
-                <div class="hero-badge" style="margin-bottom: 1rem;">Produto Principal</div>
-                <h2>ANHANGÁ Mobile</h2>
-                <p><strong>Análise Neural de Hábitos, Ambiente e Gaming Adaptativo.</strong></p>
-                <p>O ANHANGÁ é nosso principal ecossistema mobile voltado ao monitoramento inteligente de hábitos gamer, tempo de jogo, pausas, condições ambientais, acessibilidade e inteligência analítica.</p>
-                <p><em>Nota importante:</em> O sistema oferece informações e recomendações detalhadas, atuando de forma consultiva e mantendo o controle total nas mãos do jogador.</p>
-            </div>
-            <div>
-                <div class="logo-placeholder">
-                    <i class="fa-solid fa-shield-cat"></i>
-                    <h3>Espaço reservado para a Logo Original</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Aqui será inserida posteriormente a arte oficial do cervo com olhos luminosos e chifres conectados.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <h1>🦅 ANHANGÁ Mobile</h1>
+      <p class="subtitle">Análise Neural de Hábitos, Ambiente e Gaming Adaptativo</p>
+      <p class="hero-tagline">Tecnologia que entende seu ritmo.</p>
+      
+      <div class="badge-group">
+        <span class="badge">SMART HOME 2050</span>
+        <span class="badge secondary-badge">EXPOTECH 2026.2</span>
+      </div>
+      
+      <div class="hero-buttons">
+        <a href="#anhanga" class="btn primary">Conheça o ANHANGÁ <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#sobre" class="btn secondary">Nossa história</a>
+      </div>
+    </div>
+  </section>
 
-    <!-- ORIGEM E CURIOSIDADES -->
-    <section>
-        <div class="section-header">
-            <span>Mitologia & Design</span>
-            <h2>A história por trás do ANHANGÁ</h2>
-        </div>
-        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-secondary);">
-            O nome ANHANGÁ foi inspirado em tradições indígenas brasileiras, onde em algumas narrativas é associado à proteção dos animais e das matas, podendo aparecer como um veado branco de olhos luminosos. A NOVERIS criou uma interpretação artística futurista.
-        </p>
-        <div class="grid-4">
-            <div class="card">
-                <i class="fa-solid fa-eye"></i>
-                <h3>Olhos Luminosos</h3>
-                <p>Percepção apurada do ambiente e sensibilidade aos estados de uso.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-network-wired"></i>
-                <h3>Chifres</h3>
-                <p>Conexão lógica entre informações telemétricas e o histórico do usuário.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-paw"></i>
-                <h3>Cervo</h3>
-                <p>Atenção constante ao ecossistema e equilíbrio dinâmico.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-microchip"></i>
-                <h3>Estética Futurista</h3>
-                <p>Fusão entre ancestralidade cultural e vanguarda tecnológica.</p>
-            </div>
-        </div>
-        <p style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 2rem;">
-            * Trata-se de uma interpretação artística e autoral do projeto; as tradições indígenas possuem múltiplas e ricas variações culturais que devem ser respeitadas.
-        </p>
-    </section>
-
-    <!-- HISTÓRIA DO DESENVOLVIMENTO (TIMELINE) -->
-    <section id="historia" style="background: var(--bg-secondary);">
-        <div class="section-header">
-            <span>Evolução Tecnológica</span>
-            <h2>História do Desenvolvimento</h2>
-        </div>
-        <div class="timeline">
-            <div class="timeline-item left">
-                <div class="timeline-content">
-                    <h4>Fase 1</h4>
-                    <h3>Python + FastAPI + Supabase PostgreSQL</h3>
-                    <p>Construção da API base para cadastro, sessões e análises em <code>http://127.0.0.1:8000/docs</code>. Integração imediata com Supabase PostgreSQL.</p>
-                </div>
-            </div>
-            <div class="timeline-item right">
-                <div class="timeline-content">
-                    <h4>Fase 2</h4>
-                    <h3>Estatística Avançada com Python</h3>
-                    <p>Implementação de cálculos de Média, Mediana, Desvio Padrão, Z-score, Scores de anomalia e recomendação ambiental baseada em dados.</p>
-                </div>
-            </div>
-            <div class="timeline-item left">
-                <div class="timeline-content">
-                    <h4>Fase 3</h4>
-                    <h3>Machine Learning & Edge Functions</h3>
-                    <p>Desenvolvimento do modelo de regressão logística experimental para estimar o risco de prolongamento das partidas via Supabase Edge Functions.</p>
-                </div>
-            </div>
-            <div class="timeline-item right">
-                <div class="timeline-content">
-                    <h4>Fase 4</h4>
-                    <h3>Flutter + Dart + Kotlin + Supabase</h3>
-                    <p>Desenvolvimento do aplicativo Android com histórico completo, estatísticas, jogos instalados e relógio flutuante (validado no Samsung Galaxy A56 com Android 16).</p>
-                </div>
-            </div>
-            <div class="timeline-item left">
-                <div class="timeline-content">
-                    <h4>Fase 5</h4>
-                    <h3>Agenda Inteligente & Meu Quarto</h3>
-                    <p>Integração de acessibilidade avançada, simulação de ambiente virtual via Supabase Realtime e leitura de compromissos autorizados.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FUNCIONALIDADES DO APLICATIVO -->
-    <section id="funcionalidades">
-        <div class="section-header">
-            <span>Ecossistema ANHANGÁ</span>
-            <h2>Funcionalidades do Aplicativo</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card">
-                <i class="fa-solid fa-clock"></i>
-                <h3>Relógio Flutuante (Kotlin)</h3>
-                <p>Cronômetro flutuante sobre outros aplicativos. Tempo decorrido, alerta de limite, pausa e movimentação livre. Testado com sucesso no Android 16.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>Meu Ritmo</h3>
-                <p>Estatísticas detalhadas de partidas, tempo total, tempo médio, duração habitual, variações, sessões mais curtas/longas e análises históricas.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-gamepad"></i>
-                <h3>Partidas</h3>
-                <p>Histórico individual completo por jogo, plataforma, horário, duração estipulada, pausas registradas e classificações analíticas associadas.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-calendar-days"></i>
-                <h3>Agenda Inteligente</h3>
-                <p>Consulta compromissos autorizados do calendário Android para correlacionar eventos ao limite de tempo escolhido pelo jogador.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-house-laptop"></i>
-                <h3>Meu Quarto</h3>
-                <p>Simulação virtual de ambiente gamer (luz, temperatura, umidade, ruído, personagem) com comunicação em tempo real via Supabase Realtime.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-universal-access"></i>
-                <h3>Acessibilidade & IA</h3>
-                <p>Alto contraste, paletas para daltonismo, tipografia ajustável e análises experimentais baseadas nos dados do próprio usuário.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MACHINE LEARNING & IA -->
-    <section style="background: var(--bg-secondary);">
-        <div class="section-header">
-            <span>Inteligência Analítica</span>
-            <h2>ANHANGÁ Predictor (Regressão Logística)</h2>
-        </div>
-        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-secondary);">
-            Modelo experimental desenvolvido para estimar o risco de uma sessão ultrapassar o limite de tempo definido, utilizando variáveis como duração atual, média histórica e pausas.
-        </p>
-        <div class="grid-4" style="text-align: center;">
-            <div class="card">
-                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">83,00%</h3>
-                <p>Acurácia do Modelo</p>
-            </div>
-            <div class="card">
-                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">86,62%</h3>
-                <p>Precisão</p>
-            </div>
-            <div class="card">
-                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">89,13%</h3>
-                <p>Recall</p>
-            </div>
-            <div class="card">
-                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">87,86%</h3>
-                <p>F1-Score</p>
-            </div>
-        </div>
-        <p style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 2rem;">
-            * Métricas obtidas com base em conjuntos de dados sintéticos para validação de arquitetura (Treinamento: 1.600 amostras / Teste: 400 amostras). Não constitui validação clínica ou com usuários reais em larga escala.
-        </p>
-    </section>
-
-    <!-- ARQUITETURA DE DADOS & SUPABASE -->
-    <section id="arquitetura">
-        <div class="section-header">
-            <span>Engenharia Robusta</span>
-            <h2>Arquitetura de Dados & Supabase PostgreSQL</h2>
-        </div>
-        <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
-            Desde o início dos testes com FastAPI, utilizamos Supabase PostgreSQL para garantir integridade relacional, segurança e alta disponibilidade nas tabelas dimensionais e de fatos:
-        </p>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 2rem auto;">
-            <span class="hero-badge" style="background:var(--bg-card);">dim_usuario</span>
-            <span class="hero-badge" style="background:var(--bg-card);">dim_jogo</span>
-            <span class="hero-badge" style="background:var(--bg-card);">dim_dispositivo</span>
-            <span class="hero-badge" style="background:var(--bg-card);">dim_ambiente</span>
-            <span class="hero-badge" style="background:var(--bg-card);">dim_tempo</span>
-            <span class="hero-badge" style="background:var(--bg-card);">dim_modelo_ia</span>
-            <span class="hero-badge" style="background:var(--bg-card);">fato_ia</span>
-            <span class="hero-badge" style="background:var(--bg-card);">fato_acao_ia</span>
-            <span class="hero-badge" style="background:var(--bg-card);">fato_avaliacao_modelo</span>
-        </div>
-
-        <div class="architecture-flow">
-            <div class="arch-node">Jogador (Usuário Final)</div>
-            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="arch-node">Aplicativo Mobile (Flutter / Dart)</div>
-            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="arch-node">Serviço Kotlin & Integração Supabase</div>
-            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="arch-node">Supabase PostgreSQL & Edge Functions</div>
-            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="arch-node">Insights, Analytics & Retorno Visual no App</div>
-        </div>
-    </section>
-
-    <!-- SITUAÇÃO DO PROJETO / ROADMAP -->
-    <section id="roadmap" style="background: var(--bg-secondary);">
-        <div class="section-header">
-            <span>Transparência Operacional</span>
-            <h2>Nossa Evolução e Situação Atual</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card">
-                <span class="status-badge status-tested">Implementado & Testado</span>
-                <h3>Validadas em Campo</h3>
-                <p>• Aplicativo Flutter instalado no Android<br>• Relógio flutuante (Kotlin)<br>• Histórico e estatísticas locais/nuvem<br>• Backend FastAPI com Supabase<br>• Comunicação virtual do Meu Quarto</p>
-            </div>
-            <div class="card">
-                <span class="status-badge status-validating">Em Validação</span>
-                <h3>Ajustes Finais</h3>
-                <p>• Integração automática da Agenda<br>• Alertas durante jogos em segundo plano<br>• Indicadores amigáveis em todas as telas<br>• Sincronização contínua de telemetria</p>
-            </div>
-            <div class="card">
-                <span class="status-badge status-planned">Planejado</span>
-                <h3>Próximos Passos</h3>
-                <p>• Conclusão da Agenda com Meu Quarto<br>• Automação com dispositivos físicos inteligentes<br>• Expansão de ferramentas de acessibilidade<br>• Testes do modelo com dados reais autorizados</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-        <div class="section-header">
-            <span>Dúvidas Comuns</span>
-            <h2>Perguntas Frequentes</h2>
-        </div>
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>O ANHANGÁ controla o meu celular ou impede de jogar?</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Não. O ANHANGÁ foi desenvolvido para fornecer informações, estatísticas e recomendações inteligentes. Ele atua como um assistente de autogestão, mantendo o controle e a autonomia integral nas mãos do jogador.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>O sistema utiliza banco de dados MySQL?</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Não. Desde o início dos testes com FastAPI, utilizamos exclusivamente o Supabase PostgreSQL, garantindo alta performance e segurança relacional.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>A Agenda e a automação física já estão concluídas?</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    A leitura de compromissos e a simulação virtual do ambiente já estão implementadas e em fase de validação final. A automação completa com dispositivos físicos inteligentes está planejada para etapas futuras.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Como a NOVERIS lida com a minha privacidade?</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Adotamos diretrizes estritas de privacidade e transparência. Seus dados de uso e telemetria são protegidos por criptografia e protocolos de segurança avançados na nuvem do Supabase, sem compartilhamento indevido.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER & CONTATO -->
-    <footer>
-        <div class="footer-content">
-            <a href="#" class="logo" style="font-size: 1.8rem;">NOVERIS<span>.</span></a>
-            <p>Tecnologia, Inteligência Artificial e Ciência de Dados aplicada com responsabilidade.</p>
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">NOVERIS © 2024–2026 • Todos os direitos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- BOTÃO VOLTAR AO TOPO -->
-    <div class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
-        <i class="fa-solid fa-arrow-up"></i>
+  <!-- SEÇÃO 1: SOBRE A NOVERIS -->
+  <section id="sobre" class="container">
+    <div class="section-header">
+      <span>Quem Somos</span>
+      <h2>Inovação com Propósito Humano</h2>
+    </div>
+    
+    <div class="grid-2">
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-bullseye" style="color:var(--cor-destaque);"></i> Missão</h3>
+        <p>Desenvolver soluções inteligentes, acessíveis e personalizadas que melhorem experiências digitais e promovam a autonomia do usuário com total transparência e responsabilidade.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-eye" style="color:var(--cor-destaque);"></i> Visão</h3>
+        <p>Ser referência em inovação, desenvolvimento de software e inteligência artificial aplicada, conectando o comportamento humano à tecnologia de ponta.</p>
+      </div>
     </div>
 
-    <!-- JAVASCRIPT INTERATIVO -->
-    <script>
-        // Alternância de Tema (Claro / Escuro)
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const htmlElement = document.documentElement;
+    <div class="card futuristic-card" style="margin-top:20px;">
+      <h3>Nossos Valores</h3>
+      <div class="grid-4" style="margin-top:15px;">
+        <div>• <strong>Inovação:</strong> Novas fronteiras.</div>
+        <div>• <strong>Acessibilidade:</strong> Inclusão nativa.</div>
+        <div>• <strong>Privacidade:</strong> Proteção estrita.</div>
+        <div>• <strong>IA Responsável:</strong> Algoritmos éticos.</div>
+      </div>
+    </div>
+  </section>
 
-        // Recuperar tema salvo
-        const savedTheme = localStorage.getItem('noveris_theme') || 'dark';
-        htmlElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
+  <!-- SEÇÃO 2: PRODUTO ANHANGÁ MOBILE & ORIGEM -->
+  <section id="anhanga" class="container">
+    <div class="section-header">
+      <span>Produto Principal</span>
+      <h2>ANHANGÁ Mobile</h2>
+    </div>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('noveris_theme', newTheme);
-            updateThemeIcon(newTheme);
+    <div class="card futuristic-card">
+      <p>
+        O <strong>ANHANGÁ Mobile</strong> é o principal ecossistema digital da NOVERIS, voltado ao monitoramento inteligente de hábitos gamer, tempo de jogo, pausas, condições ambientais, acessibilidade e inteligência analítica.
+      </p>
+      <br>
+      <p>
+        <em>Nota importante:</em> O sistema fornece relatórios, estatísticas e recomendações de autogestão de forma consultiva, mantendo a autonomia total nas mãos do jogador.
+      </p>
+    </div>
+
+    <!-- ORIGEM E CURIOSIDADES -->
+    <div class="card curiosidade-card futuristic-card">
+      <div class="section-header" style="text-align:left; margin-bottom:15px;">
+        <span style="color:#c77dff;">Mitologia & Design</span>
+        <h2 style="font-size:1.5rem; color:#c77dff;">A História por trás do ANHANGÁ</h2>
+      </div>
+      <p>
+        O nome ANHANGÁ foi inspirado em tradições indígenas brasileiras, onde em algumas narrativas é associado à proteção dos animais e das matas, podendo aparecer como um veado branco de olhos luminosos. A NOVERIS criou uma interpretação artística futurista:
+      </p>
+      <div class="grid-4" style="margin-top:20px;">
+        <div><strong>• Olhos Luminosos:</strong> Percepção do ambiente.</div>
+        <div><strong>• Chifres:</strong> Conexão lógica de dados.</div>
+        <div><strong>• Cervo:</strong> Atenção ao ecossistema.</div>
+        <div><strong>• Estética Futurista:</strong> Tradição + Tecnologia.</div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--cor-subtitulo); margin-top:15px;">
+        * Trata-se de uma interpretação artística e autoral do projeto; as tradições indígenas possuem múltiplas e ricas variações culturais que devem ser respeitadas.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 3: HISTÓRIA DO DESENVOLVIMENTO (TIMELINE) -->
+  <section id="historia" class="container">
+    <div class="section-header">
+      <span>Evolução Tecnológica</span>
+      <h2>História do Desenvolvimento</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h4 style="color:var(--cor-destaque);">Fase 1</h4>
+          <h3>Python + FastAPI + Supabase PostgreSQL</h3>
+          <p>Construção da API base para cadastro, sessões e análises em <code>http://127.0.0.1:8000/docs</code>. Integração imediata com Supabase PostgreSQL.</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h4 style="color:var(--cor-destaque);">Fase 2</h4>
+          <h3>Estatística Avançada (Z-Score)</h3>
+          <p>Cálculos de Média, Mediana, Desvio Padrão, Z-score comportamental e classificação ambiental adaptativa em Python.</p>
+        </div>
+      </div>
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h4 style="color:var(--cor-destaque);">Fase 3</h4>
+          <h3>Machine Learning & Edge Functions</h3>
+          <p>Desenvolvimento do modelo experimental de Regressão Logística para estimar o risco de prolongamento das partidas.</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h4 style="color:var(--cor-destaque);">Fase 4</h4>
+          <h3>Flutter + Dart + Kotlin</h3>
+          <p>Desenvolvimento do aplicativo Android com histórico, estatísticas e Relógio Flutuante (validado no Samsung Galaxy A56 com Android 16).</p>
+        </div>
+      </div>
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h4 style="color:var(--cor-destaque);">Fase 5</h4>
+          <h3>Agenda Inteligente & Meu Quarto</h3>
+          <p>Integração de acessibilidade avançada, simulação de ambiente virtual via Supabase Realtime e leitura de compromissos autorizados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 4: FUNCIONALIDADES DO APLICATIVO -->
+  <section id="funcionalidades" class="container">
+    <div class="section-header">
+      <span>Recursos do Sistema</span>
+      <h2>Funcionalidades do ANHANGÁ Mobile</h2>
+    </div>
+
+    <div class="grid-3">
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-clock" style="color:var(--cor-destaque);"></i> Relógio Flutuante (Kotlin)</h3>
+        <p>Cronômetro flutuante sobre outros apps. Tempo decorrido, alerta de limite, pausa e movimentação livre. Testado no Android 16.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-chart-line" style="color:var(--cor-destaque);"></i> Meu Ritmo</h3>
+        <p>Estatísticas de partidas registradas, tempo total, tempo médio, duração habitual, variações e comparações históricas.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-gamepad" style="color:var(--cor-destaque);"></i> Partidas</h3>
+        <p>Histórico individual por jogo, plataforma, horário, duração, limite estipulado, pausas e classificações analíticas.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-calendar-days" style="color:var(--cor-destaque);"></i> Agenda Inteligente</h3>
+        <p>Consulta compromissos autorizados do calendário Android para relacionar eventos ao limite de tempo escolhido pelo jogador.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-house-laptop" style="color:var(--cor-destaque);"></i> Meu Quarto</h3>
+        <p>Simulação virtual de ambiente gamer (luz, temperatura, umidade, ruído) com comunicação em tempo real via Supabase Realtime.</p>
+      </div>
+      <div class="card futuristic-card">
+        <h3><i class="fa-solid fa-universal-access" style="color:var(--cor-destaque);"></i> Acessibilidade & IA</h3>
+        <p>Alto contraste, paletas para daltonismo, tipografia ajustável e análises experimentais baseadas nos dados do usuário.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 5: MACHINE LEARNING & METRICAS -->
+  <section class="container">
+    <div class="card futuristic-card">
+      <div class="section-header" style="margin-bottom:20px;">
+        <span>Inteligência Analítica</span>
+        <h2>ANHANGÁ Predictor (Regressão Logística)</h2>
+      </div>
+      <p style="text-align:center; color:var(--cor-subtitulo); margin-bottom:25px;">
+        Modelo experimental desenvolvido para estimar o risco de uma sessão ultrapassar o limite de tempo definido pelo jogador.
+      </p>
+      
+      <div class="grid-4" style="text-align:center;">
+        <div class="card">
+          <h3 style="font-size:2rem; color:var(--cor-verde);">83,00%</h3>
+          <p>Acurácia</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:2rem; color:var(--cor-verde);">86,62%</h3>
+          <p>Precisão</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:2rem; color:var(--cor-verde);">89,13%</h3>
+          <p>Recall</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:2rem; color:var(--cor-verde);">87,86%</h3>
+          <p>F1-Score</p>
+        </div>
+      </div>
+      <p style="text-align:center; font-size:0.8rem; color:var(--cor-subtitulo); margin-top:20px;">
+        * Métricas obtidas com dados sintéticos para validação de arquitetura (Treinamento: 1.600 amostras / Teste: 400 amostras). Não constitui validação clínica com usuários reais.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 6: ARQUITETURA DE DADOS (SUPABASE POSTGRESQL) -->
+  <section id="arquitetura" class="container">
+    <div class="section-header">
+      <span>Engenharia Robusta</span>
+      <h2>Arquitetura de Dados & Supabase PostgreSQL</h2>
+    </div>
+    
+    <p style="text-align:center; color:var(--cor-subtitulo); margin-bottom:20px;">
+      Desde o início dos testes com FastAPI, utilizamos Supabase PostgreSQL para garantir integridade relacional nas tabelas:
+    </p>
+
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:30px;">
+      <span class="badge">dim_usuario</span>
+      <span class="badge">dim_jogo</span>
+      <span class="badge">dim_dispositivo</span>
+      <span class="badge">dim_ambiente</span>
+      <span class="badge">dim_tempo</span>
+      <span class="badge">dim_modelo_ia</span>
+      <span class="badge">fato_ia</span>
+      <span class="badge">fato_acao_ia</span>
+      <span class="badge">fato_avaliacao_modelo</span>
+    </div>
+
+    <div class="architecture-flow">
+      <div class="arch-node">Jogador (Usuário Final)</div>
+      <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+      <div class="arch-node">Aplicativo Mobile (Flutter / Dart)</div>
+      <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+      <div class="arch-node">Serviço Kotlin & Integração Supabase</div>
+      <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+      <div class="arch-node">Supabase PostgreSQL & Edge Functions</div>
+      <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+      <div class="arch-node">Insights, Analytics & Retorno Visual no App</div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 7: SITUAÇÃO DO PROJETO / ROADMAP -->
+  <section id="roadmap" class="container">
+    <div class="section-header">
+      <span>Transparência Operacional</span>
+      <h2>Nossa Evolução e Situação Atual</h2>
+    </div>
+
+    <div class="grid-3">
+      <div class="card futuristic-card">
+        <span class="status-badge status-tested">Implementado & Testado</span>
+        <h3>Validadas em Campo</h3>
+        <p>• App Flutter no Android<br>• Relógio flutuante (Kotlin)<br>• Histórico e estatísticas<br>• Backend FastAPI com Supabase<br>• Comunicação virtual do Meu Quarto</p>
+      </div>
+      <div class="card futuristic-card">
+        <span class="status-badge status-validating">Em Validação</span>
+        <h3>Ajustes Finais</h3>
+        <p>• Integração automática da Agenda<br>• Alertas durante jogos em 2º plano<br>• Indicadores amigáveis<br>• Validação contínua de telemetria</p>
+      </div>
+      <div class="card futuristic-card">
+        <span class="status-badge status-planned">Planejado</span>
+        <h3>Próximos Passos</h3>
+        <p>• Conclusão da Agenda com Meu Quarto<br>• Automação com dispositivos físicos IoT<br>• Expansão da acessibilidade<br>• Testes do modelo com dados reais</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 8: FAQ -->
+  <section id="faq" class="container">
+    <div class="section-header">
+      <span>Dúvidas Comuns</span>
+      <h2>Perguntas Frequentes</h2>
+    </div>
+
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>O ANHANGÁ controla meu celular ou impede de jogar?</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Não. O ANHANGÁ fornece informações, estatísticas e recomendações inteligentes. Ele atua como assistente de autogestão, mantendo a autonomia total nas mãos do jogador.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>O sistema utiliza banco de dados MySQL?</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Não. Desde o início dos testes com FastAPI, utilizamos exclusivamente o Supabase PostgreSQL.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>A Agenda e a automação física já estão concluídas?</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          A leitura de compromissos e a simulação virtual já estão implementadas. A automação com dispositivos físicos reais está planejada para etapas futuras.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p><strong>🦅 ANHANGÁ Mobile — Tecnologia que entende seu ritmo.</strong></p>
+    <p>NOVERIS © 2024–2026 • ExpoTech 2026.2 • Missão 2050 🌌</p>
+  </footer>
+
+  <!-- BOTÃO VOLTAR AO TOPO -->
+  <div class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <i class="fa-solid fa-arrow-up"></i>
+  </div>
+
+  <!-- JAVASCRIPT INTERATIVO -->
+  <script>
+    // Alternância de Tema (Claro / Escuro)
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('noveris_theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('noveris_theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+      themeIcon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+
+    // Menu Mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+    // Accordion FAQ
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        document.querySelectorAll('.faq-item').forEach(other => {
+          if (other !== item) other.classList.remove('active');
         });
+        item.classList.toggle('active');
+      });
+    });
 
-        function updateThemeIcon(theme) {
-            if (theme === 'light') {
-                themeIcon.className = 'fa-solid fa-sun';
-            } else {
-                themeIcon.className = 'fa-solid fa-moon';
-            }
-        }
+    // Botão Voltar ao Topo
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
 
-        // Menu Mobile Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Fechar menu mobile ao clicar em um link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Accordion FAQ
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                // Fechar outros
-                faqItems.forEach(other => {
-                    if (other !== item) other.classList.remove('active');
-                });
-                item.classList.toggle('active');
-            });
-        });
-
-        // Botão Voltar ao Topo
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
 </body>
 </html>
