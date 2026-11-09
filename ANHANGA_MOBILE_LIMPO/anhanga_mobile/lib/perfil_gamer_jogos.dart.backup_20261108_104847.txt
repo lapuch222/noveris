@@ -1,0 +1,223 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:installed_apps/installed_apps.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+/// ANHANGÁ - lista jogos visíveis ao Android e sincroniza apenas após ação
+/// explícita do usuário. Não acessa dados internos dos jogos nem tempo de uso.
+class PerfilGamerJogos extends StatefulWidget {
+  const PerfilGamerJogos({super.key});
+
+  @override
+  State<PerfilGamerJogos> createState() => _PerfilGamerJogosState();
+}
+
+class _PerfilGamerJogosState extends State<PerfilGamerJogos> {
+  bool _ocupado = false;
+  bool _concordou = false;
+  String _aviso =
+      'Toque em Procurar jogos para visualizar os jogos detectáveis.';
+  List<AppInfo> _jogos = [];
+  List<Map<String, dynamic>> _salvos = [];
+
+  Future<void> _procurarJogos() async {
+    if (!Platform.isAndroid) {
+      setState(
+        () => _aviso = 'Esta função está disponível somente no Android.',
+      );
+      return;
+    }
+    setState(() {
+      _ocupado = true;
+      _aviso = 'Procurando jogos visíveis no Android...';
+    });
+    try {
+      final apps = await InstalledApps.getInstalledApps(
+        excludeSystemApps: true,
+        excludeNonLaunchableApps: true,
+        withIcon: false,
+        detectPlatformType: false,
+      );
+      final jogos =
+          apps.where((app) => app.category == AppCategory.game).toList()..sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+          );
+      if (!mounted) return;
+      setState(() {
+        _jogos = jogos;
+        _concordou = false;
+        _aviso = jogos.isEmpty
+            ? 'Nenhum jogo identificável foi encontrado. O Android pode limitar essa lista ou não classificar alguns jogos.'
+            : '${jogos.length} jogo(s) identificado(s). Confira a lista antes de sincronizar.';
+      });
+    } catch (erro) {
+      if (mounted) setState(() => _aviso = 'Falha ao procurar jogos: $erro');
+    } finally {
+      if (mounted) setState(() => _ocupado = false);
+    }
+  }
+
+  Future<void> _consultarSalvos() async {
+    final usuario = Supabase.instance.client.auth.currentUser;
+    if (usuario == null) {
+      setState(
+        () => _aviso = 'Faça login no ANHANGÁ para consultar seus jogos.',
+      );
+      return;
+    }
+    setState(() => _ocupado = true);
+    try {
+      final resultado = await Supabase.instance.client
+          .from('jogos_instalados')
+          .select('nome_jogo,pacote,atualizado_em,id_jogo')
+          .eq('auth_user_id', usuario.id)
+          .order('nome_jogo');
+      if (!mounted) return;
+      setState(() {
+        _salvos = List<Map<String, dynamic>>.from(resultado);
+        _aviso = '${_salvos.length} jogo(s) cadastrado(s) na sua conta.';
+      });
+    } catch (erro) {
+      if (mounted) setState(() => _aviso = 'Erro ao consultar banco: $erro');
+    } finally {
+      if (mounted) setState(() => _ocupado = false);
+    }
+  }
+
+  Future<void> _sincronizar() async {
+    if (_ocupado || !_concordou || _jogos.isEmpty) return;
+    final cliente = Supabase.instance.client;
+    final usuario = cliente.auth.currentUser;
+    if (usuario == null) {
+      setState(() => _aviso = 'Faça login para sincronizar seus jogos.');
+      return;
+    }
+
+    setState(() {
+      _ocupado = true;
+      _aviso = 'Associando jogos ao seu perfil no Supabase...';
+    });
+
+    var salvos = 0;
+    final falhas = <String>[];
+    try {
+      for (final jogo in _jogos) {
+        try {
+          // A função do banco identifica o usuário autenticado,
+          // reutiliza ou cria a entrada em dim_jogo, insere em
+          // usuario_jogo e atualiza jogos_instalados atomicamente.
+          await cliente.rpc(
+            'sincronizar_jogo_android',
+            params: {'p_nome_jogo': jogo.name, 'p_pacote': jogo.packageName},
+          );
+          salvos++;
+        } catch (erro) {
+          falhas.add('${jogo.name}: $erro');
+        }
+      }
+
+      if (!mounted) return;
+      setState(() {
+        _concordou = false;
+        _aviso = falhas.isEmpty
+            ? '$salvos jogo(s) vinculados ao seu perfil com sucesso.'
+            : '$salvos de ${_jogos.length} jogo(s) vinculados. '
+                  'Falha(s): ${falhas.take(2).join(' | ')}';
+      });
+
+      // Confirma os dados persistidos, sem exigir novo clique.
+      final resultado = await cliente
+          .from('jogos_instalados')
+          .select('nome_jogo,pacote,atualizado_em,id_jogo')
+          .eq('auth_user_id', usuario.id)
+          .order('nome_jogo');
+      if (mounted) {
+        setState(() {
+          _salvos = List<Map<String, dynamic>>.from(resultado);
+        });
+      }
+    } catch (erro) {
+      if (mounted) {
+        setState(() => _aviso = 'Erro ao consultar o cadastro: $erro');
+      }
+    } finally {
+      if (mounted) setState(() => _ocupado = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('ANHANGÁ • Meus Jogos')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text(
+            'Detecta jogos classificados como games e visíveis ao Android. '
+            'A lista pode ser incompleta. Nenhum dado é enviado antes da sua confirmação.',
+          ),
+          const SizedBox(height: 12),
+          FilledButton.icon(
+            onPressed: _ocupado ? null : _procurarJogos,
+            icon: const Icon(Icons.search),
+            label: const Text('Procurar jogos no celular'),
+          ),
+          const SizedBox(height: 12),
+          Text(_aviso),
+          const SizedBox(height: 16),
+          if (_jogos.isNotEmpty) ...[
+            Text(
+              'Jogos identificados (${_jogos.length})',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            for (final jogo in _jogos)
+              ListTile(
+                leading: const Icon(Icons.sports_esports),
+                title: Text(jogo.name),
+                subtitle: Text(jogo.packageName),
+              ),
+            CheckboxListTile(
+              title: const Text(
+                'Autorizo salvar esta lista de jogos na minha conta.',
+              ),
+              subtitle: const Text(
+                'Nomes e pacotes serão associados a dim_jogo e usuario_jogo. Sem tempo de uso.',
+              ),
+              value: _concordou,
+              onChanged: _ocupado
+                  ? null
+                  : (valor) => setState(() => _concordou = valor ?? false),
+            ),
+            FilledButton.icon(
+              onPressed: _ocupado || !_concordou ? null : _sincronizar,
+              icon: const Icon(Icons.cloud_upload),
+              label: const Text('Sincronizar jogos com Supabase'),
+            ),
+          ],
+          const SizedBox(height: 20),
+          OutlinedButton.icon(
+            onPressed: _ocupado ? null : _consultarSalvos,
+            icon: const Icon(Icons.cloud_done),
+            label: const Text('Ver jogos salvos'),
+          ),
+          if (_salvos.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              'Jogos no Supabase (${_salvos.length})',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            for (final jogo in _salvos)
+              ListTile(
+                leading: const Icon(Icons.check_circle_outline),
+                title: Text('${jogo['nome_jogo'] ?? 'Jogo'}'),
+                subtitle: Text(
+                  "${jogo['pacote'] ?? ''} · dim_jogo: ${jogo['id_jogo'] ?? 'pendente'}",
+                ),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}

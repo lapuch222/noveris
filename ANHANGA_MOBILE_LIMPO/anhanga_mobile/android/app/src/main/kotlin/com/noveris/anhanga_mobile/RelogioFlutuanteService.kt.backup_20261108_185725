@@ -1,0 +1,1040 @@
+
+
+package com.noveris.anhanga_mobile
+
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.PixelFormat
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.os.SystemClock
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import android.provider.Settings
+import android.util.Log
+import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.UUID
+import kotlin.math.max
+
+class RelogioFlutuanteService : Service() {
+
+    companion object {
+        const val ACAO_INICIAR = "anhanga.INICIAR"
+        const val ACAO_PAUSAR = "anhanga.PAUSAR"
+        const val ACAO_CONTINUAR = "anhanga.CONTINUAR"
+        const val ACAO_ENCERRAR = "anhanga.ENCERRAR"
+
+        private const val CANAL_SESSAO =
+            "anhanga_sessao"
+
+        private const val CANAL_ALERTAS =
+            "anhanga_alertas_v1"
+
+        private const val NOTIFICACAO_ID = 8301
+        private const val ALERTA_ID = 8302
+
+        private const val PREF_SESSOES =
+            "anhanga_sessoes"
+
+        private const val CHAVE_PENDENTES =
+            "pendentes"
+
+        private const val TAG = "ANHANGA_SESSAO"
+
+        @Volatile
+        private var instancia:
+            RelogioFlutuanteService? = null
+
+        fun estadoAtual(): Map<String, Any> {
+            return instancia?.estado() ?: mapOf(
+                "ativo" to false,
+                "pausado" to false,
+                "decorridoSegundos" to 0,
+                "restanteSegundos" to 0,
+                "limiteSegundos" to 0,
+                "jogo" to "",
+                "minimizado" to false
+            )
+        }
+    }
+
+    private val handler =
+        Handler(Looper.getMainLooper())
+
+    private lateinit var wm: WindowManager
+
+    private var janela: View? = null
+    private var parametros:
+        WindowManager.LayoutParams? = null
+
+    private var textoTempo: TextView? = null
+    private var textoRestante: TextView? = null
+    private var titulo: TextView? = null
+    private var botaoPausa: TextView? = null
+
+    private var limiteMs = 0L
+    private var acumuladoMs = 0L
+    private var iniciouEmMs = 0L
+
+    private var rodando = false
+    private var ativo = false
+    private var minimizado = false
+
+    private var avisoCinco = false
+    private var avisoUm = false
+    private var avisoFim = false
+
+    private var jogoAtual = "Jogo"
+
+    // ========================================================
+    // DADOS DA SESSÃO
+    // ========================================================
+
+    private var sessaoUuid: String? = null
+
+    // NOVO:
+    // Dono da sessão no Supabase Auth.
+    // Este ID permanece associado à partida mesmo
+    // que o usuário troque de conta depois.
+    private var authUserId: String? = null
+
+    private var inicioSessaoMs = 0L
+    private var quantidadePausas = 0
+    private var sessaoRegistrada = false
+
+    private val atualizar = object : Runnable {
+        override fun run() {
+            atualizarTela()
+            handler.postDelayed(this, 250L)
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        wm = getSystemService(
+            WINDOW_SERVICE
+        ) as WindowManager
+
+        criarCanais()
+
+        instancia = this
+    }
+
+    // ========================================================
+    // COMANDOS RECEBIDOS DO MAINACTIVITY
+    // ========================================================
+
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int
+    ): Int {
+
+        when (intent?.action) {
+
+            ACAO_INICIAR -> {
+                if (!Settings.canDrawOverlays(this)) {
+                    stopSelf()
+                    return START_NOT_STICKY
+                }
+
+                val limite = intent.getIntExtra(
+                    "limiteSegundos",
+                    60
+                )
+
+                val novoAuthUserId =
+                    intent.getStringExtra("authUserId")
+                        ?.takeIf { it.isNotBlank() }
+
+                // Nunca iniciar sem proprietário.
+                if (
+                    limite <= 0 ||
+                    novoAuthUserId == null
+                ) {
+                    Log.e(
+                        TAG,
+                        "Início recusado: limite ou usuário inválido."
+                    )
+
+                    // Se já existe uma partida em andamento,
+                    // não a encerrar por um comando inválido.
+                    if (!ativo) stopSelf()
+
+                    return START_NOT_STICKY
+                }
+
+                // Evitar perda de sessão se iniciar novamente.
+                if (ativo) {
+                    registrarSessaoEncerrada()
+                }
+
+                limiteMs =
+                    max(1, limite).toLong() * 1000L
+
+                jogoAtual =
+                    intent.getStringExtra("jogo")
+                        ?: "Jogo"
+
+                // Identificação imutável desta sessão.
+                sessaoUuid =
+                    UUID.randomUUID().toString()
+
+                authUserId = novoAuthUserId
+
+                inicioSessaoMs =
+                    System.currentTimeMillis()
+
+                quantidadePausas = 0
+                sessaoRegistrada = false
+
+                acumuladoMs = 0L
+                iniciouEmMs =
+                    SystemClock.elapsedRealtime()
+
+                rodando = true
+                ativo = true
+                minimizado = false
+
+                avisoCinco = false
+                avisoUm = false
+                avisoFim = false
+
+                startForeground(
+                    NOTIFICACAO_ID,
+                    notificacaoSessao(
+                        "Sessão em andamento"
+                    )
+                )
+
+                removerJanela()
+                mostrarJanela()
+
+                handler.removeCallbacks(atualizar)
+                handler.post(atualizar)
+
+                Log.i(
+                    TAG,
+                    "Sessão iniciada: $sessaoUuid"
+                )
+            }
+
+            ACAO_PAUSAR -> pausar()
+
+            ACAO_CONTINUAR -> continuar()
+
+            ACAO_ENCERRAR -> {
+                registrarSessaoEncerrada()
+                stopSelf()
+                return START_NOT_STICKY
+            }
+
+            else -> {
+                // Não encerrar uma sessão existente por
+                // um comando desconhecido.
+                if (!ativo) stopSelf()
+                return START_NOT_STICKY
+            }
+        }
+
+        return START_NOT_STICKY
+    }
+
+    // ========================================================
+    // TEMPO
+    // ========================================================
+
+    private fun decorridoMs(): Long {
+        return acumuladoMs +
+            if (rodando) {
+                max(
+                    0L,
+                    SystemClock.elapsedRealtime() -
+                        iniciouEmMs
+                )
+            } else {
+                0L
+            }
+    }
+
+    private fun estado(): Map<String, Any> {
+        val decorrido = decorridoMs()
+
+        return mapOf(
+            "ativo" to ativo,
+            "pausado" to (ativo && !rodando),
+            "decorridoSegundos" to
+                (decorrido / 1000L).toInt(),
+            "restanteSegundos" to
+                (max(0L, limiteMs - decorrido) /
+                    1000L).toInt(),
+            "limiteSegundos" to
+                (limiteMs / 1000L).toInt(),
+            "jogo" to jogoAtual,
+            "minimizado" to minimizado
+        )
+    }
+
+    private fun pausar() {
+        if (ativo && rodando) {
+            acumuladoMs = decorridoMs()
+            rodando = false
+            quantidadePausas++
+
+            atualizarTela()
+            atualizarNotificacaoSessao(
+                "Sessão pausada"
+            )
+        }
+    }
+
+    private fun continuar() {
+        if (ativo && !rodando) {
+            iniciouEmMs =
+                SystemClock.elapsedRealtime()
+
+            rodando = true
+
+            atualizarTela()
+            atualizarNotificacaoSessao(
+                "Sessão em andamento"
+            )
+        }
+    }
+
+    private fun formatar(ms: Long): String {
+        val segundos = max(0L, ms / 1000L)
+
+        return "%02d:%02d:%02d".format(
+            segundos / 3600L,
+            (segundos / 60L) % 60L,
+            segundos % 60L
+        )
+    }
+
+    // ========================================================
+    // REGISTRO LOCAL
+    // ========================================================
+
+    private fun registrarSessaoEncerrada() {
+        if (!ativo || sessaoRegistrada) return
+
+        val uuid = sessaoUuid ?: return
+
+        if (inicioSessaoMs <= 0L) return
+
+        val fimSessaoMs =
+            System.currentTimeMillis()
+
+        val duracaoMs = decorridoMs()
+
+        val registro = JSONObject().apply {
+            put("sessao_uuid", uuid)
+
+            // NOVO: proprietário da partida.
+            // Se não houver proprietário, o Flutter não
+            // enviará automaticamente essa sessão.
+            if (authUserId != null) {
+                put("auth_user_id", authUserId)
+            } else {
+                put("auth_user_id", JSONObject.NULL)
+            }
+
+            put("jogo", jogoAtual)
+            put("inicio", inicioSessaoMs)
+            put("fim", fimSessaoMs)
+
+            put(
+                "duracao_segundos",
+                duracaoMs / 1000.0
+            )
+
+            put(
+                "limite_segundos",
+                limiteMs / 1000L
+            )
+
+            put(
+                "quantidade_pausas",
+                quantidadePausas
+            )
+
+            put("plataforma", "Android")
+
+            put(
+                "limite_atingido",
+                duracaoMs >= limiteMs
+            )
+        }
+
+        try {
+            val preferencias = getSharedPreferences(
+                PREF_SESSOES,
+                MODE_PRIVATE
+            )
+
+            val conteudo = preferencias.getString(
+                CHAVE_PENDENTES,
+                "[]"
+            ) ?: "[]"
+
+            val registros = JSONArray(conteudo)
+
+            // Evita UUID duplicado no armazenamento.
+            for (i in 0 until registros.length()) {
+                val existente =
+                    registros.getJSONObject(i)
+
+                if (
+                    existente.optString("sessao_uuid") ==
+                    uuid
+                ) {
+                    sessaoRegistrada = true
+                    return
+                }
+            }
+
+            registros.put(registro)
+
+            // Gravação síncrona para não perder a
+            // pendência quando o serviço for encerrado.
+            val salvo = preferencias.edit()
+                .putString(
+                    CHAVE_PENDENTES,
+                    registros.toString()
+                )
+                .commit()
+
+            if (salvo) {
+                sessaoRegistrada = true
+
+                Log.i(
+                    TAG,
+                    "Sessão salva localmente: $uuid"
+                )
+            } else {
+                Log.e(
+                    TAG,
+                    "Falha ao salvar sessão: $uuid"
+                )
+            }
+
+        } catch (erro: Exception) {
+            Log.e(
+                TAG,
+                "Erro ao registrar sessão",
+                erro
+            )
+        }
+    }
+
+    // ========================================================
+    // ATUALIZAÇÃO DO RELÓGIO
+    // ========================================================
+
+    private fun atualizarTela() {
+        if (!ativo) return
+
+        val decorrido = decorridoMs()
+        val restante =
+            max(0L, limiteMs - decorrido)
+
+        textoTempo?.text =
+            if (minimizado) {
+                formatar(restante)
+            } else {
+                formatar(decorrido)
+            }
+
+        textoRestante?.text =
+            if (restante == 0L) {
+                "Limite atingido!"
+            } else {
+                "Restante: ${formatar(restante)}"
+            }
+
+        botaoPausa?.text =
+            if (rodando) {
+                "Pausar"
+            } else {
+                "Continuar"
+            }
+
+        if (!rodando) return
+
+        // Alerta de 5 minutos.
+        if (
+            limiteMs > 5 * 60 * 1000L &&
+            restante <= 5 * 60 * 1000L &&
+            !avisoCinco
+        ) {
+            avisoCinco = true
+            vibrar(200L)
+
+            enviarAlerta(
+                "Faltam 5 minutos",
+                "Sua sessão de $jogoAtual está terminando."
+            )
+        }
+
+        // Alerta de 1 minuto.
+        if (
+            limiteMs > 60 * 1000L &&
+            restante <= 60 * 1000L &&
+            !avisoUm
+        ) {
+            avisoUm = true
+            vibrar(400L)
+
+            enviarAlerta(
+                "Falta 1 minuto",
+                "Considere encerrar sua sessão de jogo."
+            )
+        }
+
+        // Limite atingido.
+        if (restante == 0L && !avisoFim) {
+            avisoFim = true
+            vibrar(800L)
+
+            titulo?.text =
+                "ANHANGÁ · Limite atingido"
+
+            enviarAlerta(
+                "Limite de tempo atingido",
+                "Você atingiu o tempo definido para $jogoAtual."
+            )
+
+            atualizarNotificacaoSessao(
+                "Limite de tempo atingido"
+            )
+        }
+    }
+
+    // ========================================================
+    // VIBRAÇÃO
+    // ========================================================
+
+    private fun vibrar(duracao: Long) {
+        try {
+            val vibrator = if (
+                Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.S
+            ) {
+                val manager = getSystemService(
+                    VIBRATOR_MANAGER_SERVICE
+                ) as VibratorManager
+
+                manager.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                getSystemService(
+                    VIBRATOR_SERVICE
+                ) as Vibrator
+            }
+
+            if (!vibrator.hasVibrator()) return
+
+            if (
+                Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.O
+            ) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        duracao,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(duracao)
+            }
+
+        } catch (_: Exception) {
+            // Não interromper a sessão por falha de vibração.
+        }
+    }
+
+    // ========================================================
+    // APARÊNCIA
+    // ========================================================
+
+    private fun dp(valor: Int): Int {
+        return (
+            valor * resources.displayMetrics.density
+        ).toInt()
+    }
+
+    private fun fundo(): GradientDrawable {
+        return GradientDrawable().apply {
+            setColor(Color.rgb(18, 28, 38))
+            cornerRadius = dp(12).toFloat()
+
+            setStroke(
+                dp(1),
+                Color.rgb(0, 194, 215)
+            )
+        }
+    }
+
+    private fun textoBotao(
+        texto: String,
+        acao: () -> Unit
+    ): TextView {
+        return TextView(this).apply {
+            this.text = texto
+            textSize = 11f
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+
+            setPadding(
+                dp(8),
+                dp(7),
+                dp(8),
+                dp(7)
+            )
+
+            background = GradientDrawable().apply {
+                setColor(Color.rgb(45, 64, 78))
+                cornerRadius = dp(7).toFloat()
+            }
+
+            setOnClickListener {
+                acao()
+            }
+        }
+    }
+
+    // ========================================================
+    // JANELA FLUTUANTE
+    // ========================================================
+
+    private fun mostrarJanela() {
+        if (janela != null) return
+
+        val raiz = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+
+            setPadding(
+                dp(10),
+                dp(7),
+                dp(10),
+                dp(7)
+            )
+
+            background = fundo()
+        }
+
+        val cabecalho = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+
+        titulo = TextView(this).apply {
+            text = "ANHANGÁ"
+            textSize = 11f
+            setTextColor(Color.WHITE)
+            setTypeface(null, Typeface.BOLD)
+            maxLines = 1
+        }
+
+        cabecalho.addView(
+            titulo,
+            LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+        )
+
+        val alternar = textoBotao(
+            if (minimizado) "+" else "−"
+        ) {
+            alternarMinimizacao()
+        }
+
+        cabecalho.addView(alternar)
+        raiz.addView(cabecalho)
+
+        textoTempo = TextView(this).apply {
+            textSize =
+                if (minimizado) 17f else 19f
+
+            setTextColor(Color.WHITE)
+            setTypeface(null, Typeface.BOLD)
+            gravity = Gravity.CENTER
+        }
+
+        raiz.addView(textoTempo)
+
+        if (!minimizado) {
+            textoRestante = TextView(this).apply {
+                textSize = 11f
+
+                setTextColor(
+                    Color.rgb(130, 225, 235)
+                )
+
+                gravity = Gravity.CENTER
+            }
+
+            raiz.addView(textoRestante)
+
+            val botoes = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER
+            }
+
+            botaoPausa = textoBotao("Pausar") {
+                if (rodando) {
+                    pausar()
+                } else {
+                    continuar()
+                }
+            }
+
+            botoes.addView(botaoPausa)
+
+            val encerrar = textoBotao("Encerrar") {
+                registrarSessaoEncerrada()
+                stopSelf()
+            }
+
+            val margem = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginStart = dp(6)
+            }
+
+            botoes.addView(
+                encerrar,
+                margem
+            )
+
+            val margemBotoes =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topMargin = dp(5)
+                }
+
+            raiz.addView(
+                botoes,
+                margemBotoes
+            )
+        }
+
+        val posicaoX =
+            parametros?.x ?: dp(20)
+
+        val posicaoY =
+            parametros?.y ?: dp(130)
+
+        parametros =
+            WindowManager.LayoutParams(
+                dp(if (minimizado) 125 else 190),
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT
+            ).apply {
+                gravity =
+                    Gravity.TOP or Gravity.START
+                x = posicaoX
+                y = posicaoY
+            }
+
+        configurarArrastar(titulo!!)
+
+        janela = raiz
+
+        wm.addView(
+            raiz,
+            parametros
+        )
+
+        atualizarTela()
+    }
+
+    // ========================================================
+    // ARRASTAR
+    // ========================================================
+
+    private fun configurarArrastar(view: View) {
+        view.setOnTouchListener(
+            object : View.OnTouchListener {
+                var inicioX = 0
+                var inicioY = 0
+
+                var toqueX = 0f
+                var toqueY = 0f
+
+                override fun onTouch(
+                    v: View,
+                    event: MotionEvent
+                ): Boolean {
+                    val lp =
+                        parametros ?: return false
+
+                    when (event.actionMasked) {
+                        MotionEvent.ACTION_DOWN -> {
+                            inicioX = lp.x
+                            inicioY = lp.y
+
+                            toqueX = event.rawX
+                            toqueY = event.rawY
+
+                            return true
+                        }
+
+                        MotionEvent.ACTION_MOVE -> {
+                            lp.x =
+                                inicioX +
+                                (event.rawX - toqueX)
+                                    .toInt()
+
+                            lp.y =
+                                inicioY +
+                                (event.rawY - toqueY)
+                                    .toInt()
+
+                            janela?.let {
+                                wm.updateViewLayout(
+                                    it,
+                                    lp
+                                )
+                            }
+
+                            return true
+                        }
+
+                        MotionEvent.ACTION_UP,
+                        MotionEvent.ACTION_CANCEL -> {
+                            return true
+                        }
+                    }
+
+                    return false
+                }
+            }
+        )
+    }
+
+    // ========================================================
+    // MINIMIZAR E EXPANDIR
+    // ========================================================
+
+    private fun alternarMinimizacao() {
+        val x = parametros?.x ?: dp(20)
+        val y = parametros?.y ?: dp(130)
+
+        minimizado = !minimizado
+
+        removerJanela()
+        mostrarJanela()
+
+        parametros?.let { lp ->
+            lp.x = x
+            lp.y = y
+
+            janela?.let { view ->
+                wm.updateViewLayout(
+                    view,
+                    lp
+                )
+            }
+        }
+    }
+
+    private fun removerJanela() {
+        janela?.let {
+            try {
+                wm.removeView(it)
+            } catch (_: Exception) {
+            }
+        }
+
+        janela = null
+        parametros = null
+
+        textoTempo = null
+        textoRestante = null
+
+        botaoPausa = null
+        titulo = null
+    }
+
+    // ========================================================
+    // CANAIS DE NOTIFICAÇÃO
+    // ========================================================
+
+    private fun criarCanais() {
+        val nm = getSystemService(
+            NOTIFICATION_SERVICE
+        ) as NotificationManager
+
+        nm.createNotificationChannel(
+            NotificationChannel(
+                CANAL_SESSAO,
+                "Sessão de jogo ANHANGÁ",
+                NotificationManager.IMPORTANCE_LOW
+            )
+        )
+
+        nm.createNotificationChannel(
+            NotificationChannel(
+                CANAL_ALERTAS,
+                "Alertas de tempo ANHANGÁ",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                enableVibration(true)
+            }
+        )
+    }
+
+    private fun podeNotificar(): Boolean {
+        return Build.VERSION.SDK_INT <
+            Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // ========================================================
+    // NOTIFICAÇÃO DA SESSÃO
+    // ========================================================
+
+    private fun notificacaoSessao(
+        mensagem: String
+    ): Notification {
+        val abrir = PendingIntent.getActivity(
+            this,
+            0,
+            Intent(
+                this,
+                MainActivity::class.java
+            ),
+            PendingIntent.FLAG_UPDATE_CURRENT or
+                PendingIntent.FLAG_IMMUTABLE
+        )
+
+        return NotificationCompat.Builder(
+            this,
+            CANAL_SESSAO
+        )
+            .setSmallIcon(
+                android.R.drawable.ic_lock_idle_alarm
+            )
+            .setContentTitle(
+                "ANHANGÁ — $jogoAtual"
+            )
+            .setContentText(mensagem)
+            .setContentIntent(abrir)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .build()
+    }
+
+    private fun atualizarNotificacaoSessao(
+        mensagem: String
+    ) {
+        if (!podeNotificar()) return
+
+        val nm = getSystemService(
+            NOTIFICATION_SERVICE
+        ) as NotificationManager
+
+        nm.notify(
+            NOTIFICACAO_ID,
+            notificacaoSessao(mensagem)
+        )
+    }
+
+    // ========================================================
+    // ALERTAS
+    // ========================================================
+
+    private fun enviarAlerta(
+        tituloAlerta: String,
+        mensagem: String
+    ) {
+        if (!podeNotificar()) return
+
+        val nm = getSystemService(
+            NOTIFICATION_SERVICE
+        ) as NotificationManager
+
+        val notificacao =
+            NotificationCompat.Builder(
+                this,
+                CANAL_ALERTAS
+            )
+                .setSmallIcon(
+                    android.R.drawable.ic_lock_idle_alarm
+                )
+                .setContentTitle(
+                    "ANHANGÁ — $tituloAlerta"
+                )
+                .setContentText(mensagem)
+                .setAutoCancel(true)
+                .setPriority(
+                    NotificationCompat.PRIORITY_HIGH
+                )
+                .build()
+
+        nm.notify(
+            ALERTA_ID,
+            notificacao
+        )
+    }
+
+    // ========================================================
+    // ENCERRAMENTO
+    // ========================================================
+
+    override fun onDestroy() {
+        // Preserva a sessão se ela ainda não
+        // tiver sido registrada.
+        registrarSessaoEncerrada()
+
+        ativo = false
+        rodando = false
+
+        handler.removeCallbacks(atualizar)
+
+        removerJanela()
+
+        instancia = null
+
+        super.onDestroy()
+    }
+
+    override fun onBind(
+        intent: Intent?
+    ): IBinder? = null
+}

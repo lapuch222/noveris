@@ -1,0 +1,435 @@
+
+package com.noveris.anhanga_mobile
+
+import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.core.content.ContextCompat
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import org.json.JSONArray
+
+class MainActivity : FlutterActivity() {
+
+    private val canalJogos =
+        "com.noveris.anhanga_mobile/jogos"
+
+    private val canalRelogio =
+        "com.noveris.anhanga_mobile/relogio"
+
+    private val nomePreferencias = "anhanga_sessoes"
+    private val chavePendentes = "pendentes"
+
+    override fun configureFlutterEngine(
+        flutterEngine: FlutterEngine
+    ) {
+        super.configureFlutterEngine(flutterEngine)
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            canalJogos
+        ).setMethodCallHandler { call, result ->
+
+            when (call.method) {
+                "listarJogos" -> {
+                    try {
+                        result.success(listarJogos())
+                    } catch (e: Exception) {
+                        result.error(
+                            "ERRO_JOGOS",
+                            e.message,
+                            null
+                        )
+                    }
+                }
+
+                else -> result.notImplemented()
+            }
+        }
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            canalRelogio
+        ).setMethodCallHandler { call, result ->
+
+            try {
+                when (call.method) {
+
+                    "temPermissaoSobreposicao" -> {
+                        result.success(
+                            Settings.canDrawOverlays(this)
+                        )
+                    }
+
+                    "solicitarPermissaoSobreposicao" -> {
+                        startActivity(
+                            Intent(
+                                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:$packageName")
+                            )
+                        )
+                        result.success(null)
+                    }
+
+                    "obterEstado" -> {
+                        result.success(
+                            RelogioFlutuanteService.estadoAtual()
+                        )
+                    }
+
+                    "iniciarSessao" -> {
+                        val limite =
+                            call.argument<Int>("limiteSegundos") ?: 0
+
+                        val jogo =
+                            call.argument<String>("jogo")
+                                ?: "Jogo"
+
+                        val authUserId =
+                            call.argument<String>("authUserId")
+
+                        val agendaPrazoMs =
+                            call.argument<Long>("agendaPrazoMs") ?: 0L
+
+                        when {
+                            !Settings.canDrawOverlays(this) -> {
+                                result.error(
+                                    "SEM_PERMISSAO",
+                                    "Autorize exibir sobre outros aplicativos.",
+                                    null
+                                )
+                            }
+
+                            limite <= 0 -> {
+                                result.error(
+                                    "LIMITE_INVALIDO",
+                                    "Informe um limite maior que zero.",
+                                    null
+                                )
+                            }
+
+                            authUserId.isNullOrBlank() -> {
+                                result.error(
+                                    "USUARIO_INVALIDO",
+                                    "Entre na sua conta antes de iniciar.",
+                                    null
+                                )
+                            }
+
+                            !validarUuid(authUserId) -> {
+                                result.error(
+                                    "USUARIO_INVALIDO",
+                                    "Identificador de conta inválido.",
+                                    null
+                                )
+                            }
+
+                            else -> {
+                                enviarAcao(
+                                    acao =
+                                        RelogioFlutuanteService.ACAO_INICIAR,
+                                    limite = limite,
+                                    jogo = jogo,
+                                    authUserId = authUserId,
+                                    agendaPrazoMs = agendaPrazoMs
+                                )
+
+                                result.success(null)
+                            }
+                        }
+                    }
+
+                    "pausarSessao" -> {
+                        enviarAcao(
+                            RelogioFlutuanteService.ACAO_PAUSAR
+                        )
+                        result.success(null)
+                    }
+
+                    "continuarSessao" -> {
+                        enviarAcao(
+                            RelogioFlutuanteService.ACAO_CONTINUAR
+                        )
+                        result.success(null)
+                    }
+
+                    "encerrarSessao" -> {
+                        enviarAcao(
+                            RelogioFlutuanteService.ACAO_ENCERRAR
+                        )
+                        result.success(null)
+                    }
+
+                    "obterSessoesPendentes" -> {
+                        result.success(
+                            obterSessoesPendentes()
+                        )
+                    }
+
+                    "confirmarSessaoSalva" -> {
+                        val uuid =
+                            call.argument<String>("sessaoUuid")
+
+                        if (uuid.isNullOrBlank()) {
+                            result.error(
+                                "UUID_INVALIDO",
+                                "Informe o identificador da sessão.",
+                                null
+                            )
+                        } else {
+                            result.success(
+                                confirmarSessaoSalva(uuid)
+                            )
+                        }
+                    }
+
+                    else -> result.notImplemented()
+                }
+
+            } catch (e: Exception) {
+                result.error(
+                    "ERRO_RELOGIO",
+                    e.message,
+                    null
+                )
+            }
+        }
+    }
+
+    private fun validarUuid(valor: String): Boolean {
+        return try {
+            java.util.UUID.fromString(valor)
+            true
+        } catch (_: IllegalArgumentException) {
+            false
+        }
+    }
+
+    private fun enviarAcao(
+        acao: String,
+        limite: Int = 0,
+        jogo: String = "",
+        authUserId: String = "",
+        agendaPrazoMs: Long = 0L
+    ) {
+        val intent = Intent(
+            this,
+            RelogioFlutuanteService::class.java
+        ).apply {
+            action = acao
+            putExtra("limiteSegundos", limite)
+            putExtra("jogo", jogo)
+
+            // Identificador recebido do Supabase Auth.
+            putExtra("authUserId", authUserId)
+            putExtra("agendaPrazoMs", agendaPrazoMs)
+        }
+
+        if (
+            acao ==
+            RelogioFlutuanteService.ACAO_INICIAR
+        ) {
+            ContextCompat.startForegroundService(
+                this,
+                intent
+            )
+        } else {
+            startService(intent)
+        }
+    }
+
+    // ========================================================
+    // SESSÕES PENDENTES NO ANDROID
+    // ========================================================
+
+    private fun obterSessoesPendentes():
+        List<Map<String, Any?>> {
+
+        val preferencias = getSharedPreferences(
+            nomePreferencias,
+            MODE_PRIVATE
+        )
+
+        val conteudo = preferencias.getString(
+            chavePendentes,
+            "[]"
+        ) ?: "[]"
+
+        val registros = JSONArray(conteudo)
+
+        val resultado =
+            mutableListOf<Map<String, Any?>>()
+
+        for (i in 0 until registros.length()) {
+            val registro = registros.getJSONObject(i)
+
+            // Registro legado: sem proprietário confirmado.
+            val authUserId =
+                if (
+                    registro.has("auth_user_id") &&
+                    !registro.isNull("auth_user_id")
+                ) {
+                    registro.optString("auth_user_id")
+                        .takeIf { it.isNotBlank() }
+                } else {
+                    null
+                }
+
+            resultado.add(
+                mapOf(
+                    "sessao_uuid" to
+                        registro.optString("sessao_uuid"),
+
+                    "auth_user_id" to authUserId,
+
+                    "jogo" to
+                        registro.optString("jogo"),
+
+                    "inicio" to
+                        registro.optLong("inicio"),
+
+                    "fim" to
+                        registro.optLong("fim"),
+
+                    "duracao_segundos" to
+                        registro.optDouble("duracao_segundos"),
+
+                    "limite_segundos" to
+                        registro.optLong("limite_segundos"),
+
+                    "quantidade_pausas" to
+                        registro.optInt("quantidade_pausas"),
+
+                    "plataforma" to
+                        registro.optString(
+                            "plataforma",
+                            "Android"
+                        ),
+
+                    "limite_atingido" to
+                        registro.optBoolean("limite_atingido")
+                )
+            )
+        }
+
+        return resultado
+    }
+
+    // Só recebe a confirmação depois que o Flutter
+    // verifica a existência da sessão no Supabase.
+    //
+    // Uma confirmação recebida do Dart não é uma prova
+    // criptográfica de gravação no banco: a confirmação
+    // real é feita pela lógica do main.dart.
+
+    private fun confirmarSessaoSalva(
+        sessaoUuid: String
+    ): Boolean {
+
+        val preferencias = getSharedPreferences(
+            nomePreferencias,
+            MODE_PRIVATE
+        )
+
+        val conteudo = preferencias.getString(
+            chavePendentes,
+            "[]"
+        ) ?: "[]"
+
+        val registros = JSONArray(conteudo)
+        val restantes = JSONArray()
+
+        var encontrou = false
+
+        for (i in 0 until registros.length()) {
+            val registro = registros.getJSONObject(i)
+
+            if (
+                registro.optString("sessao_uuid") ==
+                sessaoUuid
+            ) {
+                encontrou = true
+            } else {
+                restantes.put(registro)
+            }
+        }
+
+        if (!encontrou) return false
+
+        return preferencias.edit()
+            .putString(
+                chavePendentes,
+                restantes.toString()
+            )
+            .commit()
+    }
+
+    // ========================================================
+    // BUSCAR JOGOS INSTALADOS
+    // ========================================================
+
+    private fun listarJogos():
+        List<Map<String, String>> {
+
+        val pm = packageManager
+
+        val intent = Intent(
+            Intent.ACTION_MAIN
+        ).addCategory(
+            Intent.CATEGORY_LAUNCHER
+        )
+
+        val apps = if (
+            Build.VERSION.SDK_INT >=
+            Build.VERSION_CODES.TIRAMISU
+        ) {
+            pm.queryIntentActivities(
+                intent,
+                PackageManager.ResolveInfoFlags.of(0L)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            pm.queryIntentActivities(intent, 0)
+        }
+
+        val encontrados =
+            mutableMapOf<String, Map<String, String>>()
+
+        for (item in apps) {
+            val info =
+                item.activityInfo?.applicationInfo
+                    ?: continue
+
+            val jogo =
+                (info.flags and
+                    ApplicationInfo.FLAG_IS_GAME) != 0 ||
+                (
+                    Build.VERSION.SDK_INT >=
+                        Build.VERSION_CODES.O &&
+                    info.category ==
+                        ApplicationInfo.CATEGORY_GAME
+                )
+
+            if (!jogo) continue
+
+            val pacote = info.packageName
+
+            val nome = pm.getApplicationLabel(
+                info
+            ).toString()
+
+            encontrados[pacote] = mapOf(
+                "nome" to nome,
+                "pacote" to pacote
+            )
+        }
+
+        return encontrados.values.sortedBy {
+            it["nome"]?.lowercase()
+        }
+    }
+}
