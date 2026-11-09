@@ -96,6 +96,9 @@
       color: var(--cor-destaque);
       text-shadow: 0 0 12px var(--glow-cyan);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .nav-links {
@@ -146,7 +149,7 @@
 
     .menu-toggle { display: none; }
 
-    /* SEÇÃO HERO COM IMAGENS DAS LOGOS E ANIMAÇÕES FUTURISTAS */
+    /* SEÇÃO HERO COM LOGOS EM CSS / ÍCONES NEON */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -168,31 +171,53 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
-    .company-logo {
-      max-width: 230px;
-      height: auto;
-      filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));
+    /* LOGO DA EMPRESA EM ESTILO NEON CORPORATIVO */
+    .company-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(123, 44, 191, 0.2));
+      border: 2px solid var(--cor-destaque);
+      border-radius: 16px;
+      box-shadow: 0 0 25px var(--glow-cyan);
       animation: pulseHolo 3s ease-in-out infinite alternate;
       transition: transform 0.4s ease;
     }
 
-    .company-logo:hover {
-      transform: scale(1.08) rotate(-2deg);
+    .company-logo-badge:hover {
+      transform: scale(1.05);
+    }
+
+    .company-logo-badge i {
+      font-size: 1.8rem;
+      color: var(--cor-destaque);
+      filter: drop-shadow(0 0 8px var(--glow-cyan));
+    }
+
+    .company-logo-badge span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #ffffff;
+      text-shadow: 0 0 10px var(--glow-cyan);
     }
 
     .presenta-text {
       font-family: 'Orbitron', sans-serif;
       font-size: 0.8rem;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       color: var(--cor-subtitulo);
-      margin-top: 8px;
+      margin-top: 10px;
       text-transform: uppercase;
       opacity: 0.85;
     }
 
+    /* LOGO DO ANHANGÁ (CERVO FUTURISTA / ÍCONE NEON COM ANEL ORBITAL) */
     .hero-image-wrapper {
       position: relative;
       display: inline-flex;
@@ -205,8 +230,8 @@
 
     .orbital-ring {
       position: absolute;
-      width: 290px;
-      height: 290px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
       border: 2px dashed rgba(0, 242, 254, 0.5);
       box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
@@ -214,24 +239,48 @@
       pointer-events: none;
     }
 
-    .hero-logo {
-      max-width: 270px;
+    .hero-logo-icon {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(123, 44, 191, 0.3) 0%, rgba(7, 9, 14, 0.8) 70%);
+      border: 2px solid var(--cor-secundaria);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       z-index: 2;
-      filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7));
+      box-shadow: 0 0 40px var(--glow-purple);
       animation: float3DMotion 4s ease-in-out infinite;
-      transition: filter 0.4s ease, transform 0.4s ease;
+      transition: transform 0.4s ease;
     }
 
-    .hero-logo:hover {
-      filter: drop-shadow(0 0 45px rgba(0, 242, 254, 1));
-      transform: scale(1.08) rotateY(18deg);
+    .hero-logo-icon:hover {
+      transform: scale(1.08) rotateY(15deg);
+      box-shadow: 0 0 60px rgba(0, 242, 254, 0.7);
+      border-color: var(--cor-destaque);
+    }
+
+    .hero-logo-icon i {
+      font-size: 4rem;
+      color: var(--cor-destaque);
+      filter: drop-shadow(0 0 15px var(--glow-cyan));
+      margin-bottom: 5px;
+    }
+
+    .hero-logo-icon span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffffff;
     }
 
     @keyframes float3DMotion {
       0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); }
-      25% { transform: translateY(-15px) rotateX(8deg) rotateY(-8deg) scale(1.02); }
-      50% { transform: translateY(-22px) rotateX(0deg) rotateY(8deg) scale(1.04); }
-      75% { transform: translateY(-10px) rotateX(-8deg) rotateY(0deg) scale(1.02); }
+      25% { transform: translateY(-12px) rotateX(6deg) rotateY(-6deg) scale(1.02); }
+      50% { transform: translateY(-18px) rotateX(0deg) rotateY(6deg) scale(1.04); }
+      75% { transform: translateY(-8px) rotateX(-6deg) rotateY(0deg) scale(1.02); }
       100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1); }
     }
 
@@ -241,8 +290,8 @@
     }
 
     @keyframes pulseHolo {
-      0% { filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.3)); transform: scale(0.98); }
-      100% { filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.8)); transform: scale(1.03); }
+      0% { box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); transform: scale(0.98); }
+      100% { box-shadow: 0 0 35px rgba(0, 242, 254, 0.7); transform: scale(1.02); }
     }
 
     .hero h1 {
@@ -575,7 +624,7 @@
   <!-- CABEÇALHO / NAVEGAÇÃO -->
   <header>
     <div class="nav-container">
-      <a href="#" class="logo-text">NOVERIS</a>
+      <a href="#" class="logo-text"><i class="fa-solid fa-microchip"></i> NOVERIS</a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#anhanga">ANHANGÁ Mobile</a></li>
@@ -596,20 +645,26 @@
     </div>
   </header>
 
-  <!-- SEÇÃO PRINCIPAL (HERO) COM AS DUAS LOGOS RENDERIZADAS -->
+  <!-- SEÇÃO PRINCIPAL (HERO) COM AS LOGOS DA EMPRESA E DA IA -->
   <section class="hero">
     <div class="hero-content">
       
       <!-- LOGO 1: NOVERIS (EMPRESA) -->
       <div class="noveris-presenta">
-        <img src="./assets/noveris-logo.png" alt="NOVERIS Logo" class="company-logo">
+        <div class="company-logo-badge">
+          <i class="fa-solid fa-brain"></i>
+          <span>NOVERIS</span>
+        </div>
         <p class="presenta-text">A P R E S E N T A</p>
       </div>
 
       <!-- LOGO 2: ANHANGÁ (IA / CERVO FUTURISTA) -->
       <div class="hero-image-wrapper">
         <div class="orbital-ring"></div>
-        <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Banner" class="hero-logo">
+        <div class="hero-logo-icon">
+          <i class="fa-solid fa-shield-cat"></i>
+          <span>ANHANGÁ</span>
+        </div>
       </div>
 
       <h1>🦅 ANHANGÁ Mobile</h1>
