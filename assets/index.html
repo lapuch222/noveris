@@ -1,386 +1,1073 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ANHANGÁ — Smart Home 2050 | NOVERIS</title>
-  
-  <!-- Estilo com parâmetro anti-cache v9.0 -->
-  <link rel="stylesheet" href="style.css?v=9.0">
-  
-  <!-- Fontes do Google -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVERIS | Inteligência que entende seu ritmo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ========================================================
+           NOVERIS & ANHANGÁ — DESIGN SYSTEM (CYBERPUNK 2050 / PREMIUM)
+           ======================================================== */
+        :root {
+            --bg-primary: #07090e;
+            --bg-secondary: #0f141f;
+            --bg-card: #131b2e;
+            --bg-card-hover: #1a2540;
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            
+            --accent-cyan: #00f2fe;
+            --accent-violet: #7b2cbf;
+            --accent-green: #00f5a0;
+            
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 242, 254, 0.25);
+            --glow-violet: rgba(123, 44, 191, 0.3);
+            
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f4f6f9;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --text-primary: #0b0f19;
+            --text-secondary: #4b5563;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --glow-cyan: rgba(0, 150, 200, 0.15);
+            --glow-violet: rgba(124, 58, 237, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.2px;
+        }
+
+        /* HEADER & NAVBAR */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] header {
+            background: rgba(244, 246, 249, 0.85);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 8px var(--glow-cyan);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .menu-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover, .menu-toggle:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--glow-cyan);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9rem 2rem 5rem;
+            position: relative;
+            background: radial-gradient(circle at 50% 25%, var(--glow-violet) 0%, transparent 65%);
+        }
+
+        .hero-content {
+            max-width: 950px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            line-height: 1.15;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px var(--glow-cyan));
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: #07090e;
+            box-shadow: 0 4px 20px var(--glow-cyan);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(0, 242, 254, 0.6);
+            background: #33f5ff;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        /* SECTIONS & GRIDS */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header span {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 8px var(--glow-cyan);
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+
+        /* CARDS FUTURISTAS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-cyan);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px var(--glow-cyan));
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* SPOTLIGHT ANHANGÁ */
+        .anhanga-spotlight {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media(max-width: 968px) {
+            .spotlight-grid { grid-template-columns: 1fr; }
+        }
+
+        .spotlight-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spotlight-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .logo-placeholder {
+            background: var(--bg-card);
+            border: 2px dashed var(--accent-violet);
+            border-radius: 20px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 40px var(--glow-violet);
+        }
+
+        .logo-placeholder i {
+            font-size: 4rem;
+            color: var(--accent-violet);
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 15px var(--glow-violet));
+        }
+
+        /* TIMELINE INTERATIVA */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: var(--border-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            box-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        @media(max-width: 768px) {
+            .timeline::after { left: 25px; }
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        @media(max-width: 768px) {
+            .timeline-item { width: 100%; padding-left: 60px; padding-right: 20px; }
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: -9px;
+            background: var(--accent-cyan);
+            border: 4px solid var(--bg-primary);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        @media(max-width: 768px) {
+            .timeline-item::after { left: 16px; }
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+        @media(max-width: 768px) { .right { left: 0; } }
+
+        .timeline-content {
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 15px var(--glow-cyan);
+        }
+
+        .timeline-content h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        /* ARQUITETURA DE DADOS */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            max-width: 650px;
+            margin: 3rem auto 0;
+            text-align: center;
+        }
+
+        .arch-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.1rem 2rem;
+            border-radius: 10px;
+            width: 100%;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+
+        .arch-node:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        .arch-arrow {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px var(--glow-cyan);
+        }
+
+        /* FAQ ACCORDION */
+        .faq-container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-question {
+            padding: 1.4rem 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .faq-answer {
+            padding: 0 1.8rem 1.5rem;
+            color: var(--text-secondary);
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active { border-color: var(--accent-cyan); box-shadow: 0 0 15px var(--glow-cyan); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--accent-cyan); }
+        .faq-question i { transition: var(--transition); }
+
+        /* BADGES DE STATUS */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        .status-tested { background: rgba(0, 245, 160, 0.15); color: var(--accent-green); border: 1px solid rgba(0,245,160,0.3); }
+        .status-validating { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+        .status-planned { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0,242,254,0.3); }
+
+        /* FOOTER & BACK TO TOP */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-cyan);
+            color: #07090e;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 4px 20px var(--glow-cyan);
+        }
+
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(0,242,254,0.8); }
+
+        @media(max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: flex; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Cabeçalho / Navigation -->
-  <header>
-    <div class="logo-text">NOVERIS</div>
-    <nav>
-      <a href="#historia">História</a>
-      <a href="#trajetoria">Trajetória</a>
-      <a href="#sobre-anhanga">ANHANGÁ</a>
-      <a href="#curiosidades">Curiosidades</a>
-      <a href="#como-funciona">Como Funciona</a>
-      <a href="#engenharia">Engenharia</a>
-      <a href="#comercial">Modalidades</a>
-      <a href="#acessibilidade">Acessibilidade</a>
-      <a href="#tecnologias">Tecnologias</a>
-    </nav>
-  </header>
-
-  <!-- Seção Principal (Hero) -->
-  <section class="hero">
-    <div class="hero-content">
-      
-      <!-- Logo da NOVERIS com Animação Holográfica -->
-      <div class="noveris-presenta">
-        <div class="hologram-glow">
-          <img src="./assets/noveris-logo.png" alt="NOVERIS Logo" class="company-logo futuristic-hover">
+    <!-- HEADER & NAVEGAÇÃO -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">NOVERIS<span>.</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#anhanga">ANHANGÁ</a></li>
+                <li><a href="#historia">História</a></li>
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#arquitetura">Arquitetura</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar Tema">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menu Mobile">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
-        <p class="presenta-text">A P R E S E N T A</p>
-      </div>
+    </header>
 
-      <!-- Banner/Logo da IA ANHANGÁ com Animação 3D & Anel Orbital -->
-      <div class="hero-image-wrapper">
-        <div class="orbital-ring"></div>
-        <img src="./assets/anhanga-banner.png" alt="ANHANGÁ Logo" class="hero-logo futuristic-3d-float">
-      </div>
-
-      <h1>🦅 ANHANGÁ</h1>
-      <p class="subtitle">Análise Neural de Hábitos, Ambiente e Gaming Adaptativo</p>
-      <p class="hero-tagline">A tecnologia deve evoluir com as pessoas.</p>
-      
-      <div class="badge-group">
-        <span class="badge">SMART HOME 2050</span>
-        <span class="badge secondary-badge">EXPOTECH 2026.2</span>
-      </div>
-
-      <p class="slogan-hero"><em>"NOVERIS — Inteligência que acompanha sua evolução."</em></p>
-      
-      <div class="hero-buttons">
-        <a href="#sobre-anhanga" class="btn primary">Explorar Solução</a>
-        <a href="https://github.com/seu-usuario/anhanga" target="_blank" class="btn secondary">Ver no GitHub</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Nossa História: A Ideia & O Nome NOVERIS -->
-  <section id="historia" class="container">
-    <h2>🚀 Nossa História: A Tecnologia Deve Evoluir com as Pessoas</h2>
-    
-    <div class="card futuristic-card">
-      <h3>1. O Nascimento de uma Ideia</h3>
-      <p>
-        A <strong>NOVERIS</strong> nasceu de uma pergunta: <em>E se a tecnologia pudesse compreender não apenas o que fazemos, mas também o ambiente em que vivemos e a maneira como interagimos com o mundo digital?</em>
-      </p>
-      <br>
-      <p>
-        Em um mundo cada vez mais conectado, percebemos que muitos sistemas registram informações, mas poucos transformam esses dados em recomendações realmente úteis. Mais do que desenvolver aplicativos, nossa proposta é criar tecnologias capazes de observar padrões, compreender contextos e oferecer experiências personalizadas. Acreditamos que a inovação deve ser inteligente, acessível e responsável.
-      </p>
-    </div>
-
-    <div class="grid">
-      <div class="card grid-item futuristic-card">
-        <h3>2. O Significado do Nome NOVERIS</h3>
-        <p>Associamos na construção da marca:</p>
-        <ul class="feature-list">
-          <li><strong>NOV:</strong> A ideia de novidade, inovação e transformação.</li>
-          <li><strong>ERIS:</strong> A identidade futurista de uma empresa que deseja explorar novas possibilidades tecnológicas.</li>
-        </ul>
-        <p class="highlight-text">Lema: <strong>NOVERIS — Inteligência que acompanha sua evolução.</strong></p>
-      </div>
-
-      <div class="card grid-item futuristic-card">
-        <h3>3. Missão & Visão</h3>
-        <p><strong>Missão:</strong> Desenvolver soluções inteligentes que utilizem dados e IA para melhorar a interação entre pessoas, dispositivos e ambientes digitais, tornando a tecnologia mais acessível e integrada.</p>
-        <br>
-        <p><strong>Visão:</strong> Ser reconhecida como uma empresa de inovação que conecta comportamento humano, análise de dados, acessibilidade e automação.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Nossa Trajetória (Timeline) -->
-  <section id="trajetoria" class="container">
-    <h2>📅 Nossa Trajetória</h2>
-    <div class="timeline-container">
-      <div class="timeline-item">
-        <div class="timeline-year">2024</div>
-        <div class="timeline-content">
-          <h4>O Nascimento da NOVERIS</h4>
-          <p>Fundação da empresa e início da jornada no universo da inteligência artificial e análise de dados.</p>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-microchip"></i> Inteligência Artificial & Ciência de Dados
+            </div>
+            <h1>Tecnologia que entende <span>seu ritmo.</span></h1>
+            <p>A NOVERIS desenvolve soluções inteligentes, acessíveis e personalizadas que transformam dados complexos em experiências digitais intuitivas e seguras.</p>
+            <div class="hero-buttons">
+                <a href="#anhanga" class="btn btn-primary">Conheça o ANHANGÁ <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#sobre" class="btn btn-secondary">Nossa história</a>
+            </div>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2025</div>
-        <div class="timeline-content">
-          <h4>Construindo nossa Identidade</h4>
-          <p>Evolução da proposta tecnológica focada em desenvolvimento de software, IA e acessibilidade digital.</p>
+    </section>
+
+    <!-- SOBRE A EMPRESA & MISSAO/VISAO -->
+    <section id="sobre">
+        <div class="section-header">
+            <span>Quem Somos</span>
+            <h2>Inovação com propósito humano</h2>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2026</div>
-        <div class="timeline-content">
-          <h4>O Nascimento do ANHANGÁ</h4>
-          <p>Desenvolvimento da plataforma inteligente voltada ao acompanhamento de sessões de jogos e análise de ambiente.</p>
+        <div class="grid-2" style="margin-bottom: 4rem;">
+            <div class="card">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Missão</h3>
+                <p>Desenvolver soluções inteligentes, acessíveis e personalizadas que melhorem experiências digitais e promovam a autonomia do usuário com total transparência e responsabilidade.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-eye"></i>
+                <h3>Visão</h3>
+                <p>Ser referência em inovação, desenvolvimento de software e inteligência artificial aplicada, conectando o comportamento humano à tecnologia de ponta.</p>
+            </div>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2027</div>
-        <div class="timeline-content">
-          <h4>Nossa Próxima Evolução</h4>
-          <p>Planejamento de integração com dispositivos inteligentes (IoT) e automação de ambientes domésticos.</p>
+        
+        <div class="section-header" style="margin-bottom: 2rem;">
+            <h3 style="font-size: 1.5rem;">Nossos Valores</h3>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2030</div>
-        <div class="timeline-content">
-          <h4>Visão de Futuro</h4>
-          <p>Ampliação do ecossistema NOVERIS com soluções para produtividade, saúde e cidades inteligentes.</p>
+        <div class="grid-4">
+            <div class="card" style="padding: 1.5rem;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-bolt" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Inovação</h3>
+                <p style="font-size: 0.85rem;">Busca constante por novas fronteiras tecnológicas.</p>
+            </div>
+            <div class="card" style="padding: 1.5rem;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-universal-access" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Acessibilidade</h3>
+                <p style="font-size: 0.85rem;">Tecnologia inclusiva desde a concepção do código.</p>
+            </div>
+            <div class="card" style="padding: 1.5rem;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-shield-halved" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>Privacidade</h3>
+                <p style="font-size: 0.85rem;">Proteção rigorosa de dados e conformidade estrita.</p>
+            </div>
+            <div class="card" style="padding: 1.5rem;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-brain" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i><br>IA Responsável</h3>
+                <p style="font-size: 0.85rem;">Algoritmos transparentes que auxiliam, sem coação.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- O Nascimento do ANHANGÁ & Origem do Nome -->
-  <section id="sobre-anhanga" class="container">
-    <h2>🎯 O Nascimento do ANHANGÁ</h2>
-    
-    <div class="card futuristic-card">
-      <p>
-        O primeiro grande projeto da NOVERIS surgiu da observação de um comportamento comum entre jogadores: durante uma partida, é fácil perder a noção do tempo e deixar de perceber mudanças no ambiente. Longas sessões, poucas pausas, iluminação inadequada e ruídos excessivos prejudicam o conforto e o bem-estar.
-      </p>
-      <br>
-      <p>
-        O **ANHANGÁ** é o assistente inteligente criado para acompanhar sessões de jogo, registrar o tempo dedicado, analisar pausas e monitorar temperatura, luminosidade, umidade e ruído, transformando dados brutos em orientação personalizada.
-      </p>
-    </div>
-
-    <div class="card curiosidade-card futuristic-card">
-      <div class="curiosidade-header">
-        <span class="icon">💡</span>
-        <h2>Por que escolhemos o nome ANHANGÁ?</h2>
-      </div>
-      <p>
-        A escolha foi inspirada na entidade das tradições indígenas de língua tupi, reconhecida em diversas narrativas como o espírito protetor da fauna, da flora e das florestas.
-      </p>
-      <br>
-      <p>
-        Assim como o personagem mitológico protege a natureza, o **ANHANGÁ** foi idealizado para proteger o equilíbrio entre o jogador, seus hábitos e seu ambiente. O aplicativo não foi criado para proibir o ato de jogar, mas sim para ajudar as pessoas a jogarem com mais consciência, conforto e autonomia, atuando de maneira discreta e respeitosa.
-      </p>
-    </div>
-  </section>
-
-  <!-- Curiosidades -->
-  <section id="curiosidades" class="container">
-    <h2>💡 Curiosidades: Você Sabia?</h2>
-    <div class="grid">
-      <div class="card grid-item futuristic-card">
-        <h3>🗓️ Origem Recente</h3>
-        <p>A NOVERIS foi fundada em 2024, mas o projeto do ANHANGÁ começou a tomar forma telemétrica e prática em 2026.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>🛡️ Símbolo de Cuidado</h3>
-        <p>O nome ANHANGÁ representa guarda silenciosa, equilíbrio e acompanhamento sem imposições coercitivas.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>🎮 Autonomia do Jogador</h3>
-        <p>O ANHANGÁ não substitui as decisões do usuário. Ele fornece inteligência para que cada pessoa gerencie sua própria rotina.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>♿ Inclusão desde a Origem</h3>
-        <p>A acessibilidade visual, auditiva e motora faz parte da arquitetura do software desde o primeiro dia de design.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Como Funciona na Prática & Lógica de IA (Z-Score) -->
-  <section id="como-funciona" class="container">
-    <h2>🧠 Como Funciona na Prática & Lógica de IA</h2>
-    
-    <div class="card futuristic-card">
-      <div class="pipeline-flow">
-        <span>Dados</span> ➔ <span>Processamento</span> ➔ <span>Machine Learning</span> ➔ <span>Análise de Contexto</span> ➔ <span>IA Generativa</span> ➔ <span>Recomendação</span>
-      </div>
-      
-      <p>
-        O ANHANGÁ aprende o comportamento individual de cada usuário em vez de impor um limite fixo universal (como <code>if duracao > 120</code>). Uma sessão de 3 horas pode ser comum para um jogador e atípica para outro. O sistema responde à pergunta: <strong>“O que é normal para este usuário?”</strong>
-      </p>
-    </div>
-
-    <div class="card futuristic-card">
-      <h3>🧮 Matemática Aplicada & Z-Score</h3>
-      <p>Para fundamentação estatística e mensuração exata do desvio comportamental:</p>
-      <div class="formula-box">
-        <code>Z = (X - μ) / σ</code>
-        <p>Onde <strong>X</strong> é a duração atual, <strong>μ</strong> é a média histórica e <strong>σ</strong> é o desvio padrão.</p>
-      </div>
-      <p>Quando o desvio resulta em um <strong>Z-Score elevado</strong>, o modelo de Machine Learning classifica a sessão como fora do padrão e aciona o contexto de IA Generativa.</p>
-    </div>
-
-    <div class="card futuristic-card">
-      <h3>🤖 Machine Learning + IA Generativa</h3>
-      <div class="duo-box">
-        <div class="duo-item">
-          <h4>Machine Learning</h4>
-          <p>Mede estatisticamente os desvios e monitora sensores telemétricos de ambiente.</p>
+    <!-- ANHANGÁ SPOTLIGHT -->
+    <section id="anhanga" class="anhanga-spotlight">
+        <div class="spotlight-grid">
+            <div class="spotlight-content">
+                <div class="hero-badge" style="margin-bottom: 1rem;">Produto Principal</div>
+                <h2>ANHANGÁ Mobile</h2>
+                <p><strong>Análise Neural de Hábitos, Ambiente e Gaming Adaptativo.</strong></p>
+                <p>O ANHANGÁ é nosso principal ecossistema mobile voltado ao monitoramento inteligente de hábitos gamer, tempo de jogo, pausas, condições ambientais, acessibilidade e inteligência analítica.</p>
+                <p><em>Nota importante:</em> O sistema oferece informações e recomendações detalhadas, atuando de forma consultiva e mantendo o controle total nas mãos do jogador.</p>
+            </div>
+            <div>
+                <div class="logo-placeholder">
+                    <i class="fa-solid fa-shield-cat"></i>
+                    <h3>Espaço reservado para a Logo Original</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Aqui será inserida posteriormente a arte oficial do cervo com olhos luminosos e chifres conectados.</p>
+                </div>
+            </div>
         </div>
-        <div class="duo-item">
-          <h4>IA Generativa</h4>
-          <p>Explica os resultados em linguagem natural, amigável e contextualizada.</p>
+    </section>
+
+    <!-- ORIGEM E CURIOSIDADES -->
+    <section>
+        <div class="section-header">
+            <span>Mitologia & Design</span>
+            <h2>A história por trás do ANHANGÁ</h2>
         </div>
-      </div>
-      <blockquote class="ai-response">
-        💡 <strong>Recomendação Gerada:</strong> "Sua sessão atual está muito acima da sua duração habitual. Como você possui um compromisso próximo às 19:00, considere fazer uma pausa ou encerrar a partida."
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- Engenharia de Dados -->
-  <section id="engenharia" class="container">
-    <h2>🏗️ Engenharia de Dados</h2>
-    
-    <div class="card futuristic-card">
-      <h3>Fluxo da Arquitetura Telemétrica</h3>
-      <div class="data-pipeline">
-        <div class="pipe-step">
-          <strong>SOURCE</strong>
-          <small>Sessões, sensores IoT e ambiente</small>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-secondary);">
+            O nome ANHANGÁ foi inspirado em tradições indígenas brasileiras, onde em algumas narrativas é associado à proteção dos animais e das matas, podendo aparecer como um veado branco de olhos luminosos. A NOVERIS criou uma interpretação artística futurista.
+        </p>
+        <div class="grid-4">
+            <div class="card">
+                <i class="fa-solid fa-eye"></i>
+                <h3>Olhos Luminosos</h3>
+                <p>Percepção apurada do ambiente e sensibilidade aos estados de uso.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>Chifres</h3>
+                <p>Conexão lógica entre informações telemétricas e o histórico do usuário.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-paw"></i>
+                <h3>Cervo</h3>
+                <p>Atenção constante ao ecossistema e equilíbrio dinâmico.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>Estética Futurista</h3>
+                <p>Fusão entre ancestralidade cultural e vanguarda tecnológica.</p>
+            </div>
         </div>
-        <div class="pipe-arrow">➔</div>
-        <div class="pipe-step">
-          <strong>INGESTION</strong>
-          <small>Entrada telemétrica em tempo real</small>
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 2rem;">
+            * Trata-se de uma interpretação artística e autoral do projeto; as tradições indígenas possuem múltiplas e ricas variações culturais que devem ser respeitadas.
+        </p>
+    </section>
+
+    <!-- HISTÓRIA DO DESENVOLVIMENTO (TIMELINE) -->
+    <section id="historia" style="background: var(--bg-secondary);">
+        <div class="section-header">
+            <span>Evolução Tecnológica</span>
+            <h2>História do Desenvolvimento</h2>
         </div>
-        <div class="pipe-arrow">➔</div>
-        <div class="pipe-step">
-          <strong>PROCESSING</strong>
-          <small>Cálculo de Z-Score e indicadores</small>
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>Fase 1</h4>
+                    <h3>Python + FastAPI + Supabase PostgreSQL</h3>
+                    <p>Construção da API base para cadastro, sessões e análises em <code>http://127.0.0.1:8000/docs</code>. Integração imediata com Supabase PostgreSQL.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>Fase 2</h4>
+                    <h3>Estatística Avançada com Python</h3>
+                    <p>Implementação de cálculos de Média, Mediana, Desvio Padrão, Z-score, Scores de anomalia e recomendação ambiental baseada em dados.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>Fase 3</h4>
+                    <h3>Machine Learning & Edge Functions</h3>
+                    <p>Desenvolvimento do modelo de regressão logística experimental para estimar o risco de prolongamento das partidas via Supabase Edge Functions.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>Fase 4</h4>
+                    <h3>Flutter + Dart + Kotlin + Supabase</h3>
+                    <p>Desenvolvimento do aplicativo Android com histórico completo, estatísticas, jogos instalados e relógio flutuante (validado no Samsung Galaxy A56 com Android 16).</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>Fase 5</h4>
+                    <h3>Agenda Inteligente & Meu Quarto</h3>
+                    <p>Integração de acessibilidade avançada, simulação de ambiente virtual via Supabase Realtime e leitura de compromissos autorizados.</p>
+                </div>
+            </div>
         </div>
-        <div class="pipe-arrow">➔</div>
-        <div class="pipe-step">
-          <strong>STORAGE</strong>
-          <small>PostgreSQL / Supabase</small>
+    </section>
+
+    <!-- FUNCIONALIDADES DO APLICATIVO -->
+    <section id="funcionalidades">
+        <div class="section-header">
+            <span>Ecossistema ANHANGÁ</span>
+            <h2>Funcionalidades do Aplicativo</h2>
         </div>
-        <div class="pipe-arrow">➔</div>
-        <div class="pipe-step">
-          <strong>CONSUMPTION</strong>
-          <small>Dashboards e Alerta IA</small>
+        <div class="grid-3">
+            <div class="card">
+                <i class="fa-solid fa-clock"></i>
+                <h3>Relógio Flutuante (Kotlin)</h3>
+                <p>Cronômetro flutuante sobre outros aplicativos. Tempo decorrido, alerta de limite, pausa e movimentação livre. Testado com sucesso no Android 16.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Meu Ritmo</h3>
+                <p>Estatísticas detalhadas de partidas, tempo total, tempo médio, duração habitual, variações, sessões mais curtas/longas e análises históricas.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-gamepad"></i>
+                <h3>Partidas</h3>
+                <p>Histórico individual completo por jogo, plataforma, horário, duração estipulada, pausas registradas e classificações analíticas associadas.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-calendar-days"></i>
+                <h3>Agenda Inteligente</h3>
+                <p>Consulta compromissos autorizados do calendário Android para correlacionar eventos ao limite de tempo escolhido pelo jogador.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-house-laptop"></i>
+                <h3>Meu Quarto</h3>
+                <p>Simulação virtual de ambiente gamer (luz, temperatura, umidade, ruído, personagem) com comunicação em tempo real via Supabase Realtime.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-universal-access"></i>
+                <h3>Acessibilidade & IA</h3>
+                <p>Alto contraste, paletas para daltonismo, tipografia ajustável e análises experimentais baseadas nos dados do próprio usuário.</p>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- MACHINE LEARNING & IA -->
+    <section style="background: var(--bg-secondary);">
+        <div class="section-header">
+            <span>Inteligência Analítica</span>
+            <h2>ANHANGÁ Predictor (Regressão Logística)</h2>
+        </div>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-secondary);">
+            Modelo experimental desenvolvido para estimar o risco de uma sessão ultrapassar o limite de tempo definido, utilizando variáveis como duração atual, média histórica e pausas.
+        </p>
+        <div class="grid-4" style="text-align: center;">
+            <div class="card">
+                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">83,00%</h3>
+                <p>Acurácia do Modelo</p>
+            </div>
+            <div class="card">
+                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">86,62%</h3>
+                <p>Precisão</p>
+            </div>
+            <div class="card">
+                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">89,13%</h3>
+                <p>Recall</p>
+            </div>
+            <div class="card">
+                <h3 style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 0.5rem;">87,86%</h3>
+                <p>F1-Score</p>
+            </div>
+        </div>
+        <p style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 2rem;">
+            * Métricas obtidas com base em conjuntos de dados sintéticos para validação de arquitetura (Treinamento: 1.600 amostras / Teste: 400 amostras). Não constitui validação clínica ou com usuários reais em larga escala.
+        </p>
+    </section>
+
+    <!-- ARQUITETURA DE DADOS & SUPABASE -->
+    <section id="arquitetura">
+        <div class="section-header">
+            <span>Engenharia Robusta</span>
+            <h2>Arquitetura de Dados & Supabase PostgreSQL</h2>
+        </div>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+            Desde o início dos testes com FastAPI, utilizamos Supabase PostgreSQL para garantir integridade relacional, segurança e alta disponibilidade nas tabelas dimensionais e de fatos:
+        </p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 2rem auto;">
+            <span class="hero-badge" style="background:var(--bg-card);">dim_usuario</span>
+            <span class="hero-badge" style="background:var(--bg-card);">dim_jogo</span>
+            <span class="hero-badge" style="background:var(--bg-card);">dim_dispositivo</span>
+            <span class="hero-badge" style="background:var(--bg-card);">dim_ambiente</span>
+            <span class="hero-badge" style="background:var(--bg-card);">dim_tempo</span>
+            <span class="hero-badge" style="background:var(--bg-card);">dim_modelo_ia</span>
+            <span class="hero-badge" style="background:var(--bg-card);">fato_ia</span>
+            <span class="hero-badge" style="background:var(--bg-card);">fato_acao_ia</span>
+            <span class="hero-badge" style="background:var(--bg-card);">fato_avaliacao_modelo</span>
+        </div>
+
+        <div class="architecture-flow">
+            <div class="arch-node">Jogador (Usuário Final)</div>
+            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+            <div class="arch-node">Aplicativo Mobile (Flutter / Dart)</div>
+            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+            <div class="arch-node">Serviço Kotlin & Integração Supabase</div>
+            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+            <div class="arch-node">Supabase PostgreSQL & Edge Functions</div>
+            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+            <div class="arch-node">Insights, Analytics & Retorno Visual no App</div>
+        </div>
+    </section>
+
+    <!-- SITUAÇÃO DO PROJETO / ROADMAP -->
+    <section id="roadmap" style="background: var(--bg-secondary);">
+        <div class="section-header">
+            <span>Transparência Operacional</span>
+            <h2>Nossa Evolução e Situação Atual</h2>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <span class="status-badge status-tested">Implementado & Testado</span>
+                <h3>Validadas em Campo</h3>
+                <p>• Aplicativo Flutter instalado no Android<br>• Relógio flutuante (Kotlin)<br>• Histórico e estatísticas locais/nuvem<br>• Backend FastAPI com Supabase<br>• Comunicação virtual do Meu Quarto</p>
+            </div>
+            <div class="card">
+                <span class="status-badge status-validating">Em Validação</span>
+                <h3>Ajustes Finais</h3>
+                <p>• Integração automática da Agenda<br>• Alertas durante jogos em segundo plano<br>• Indicadores amigáveis em todas as telas<br>• Sincronização contínua de telemetria</p>
+            </div>
+            <div class="card">
+                <span class="status-badge status-planned">Planejado</span>
+                <h3>Próximos Passos</h3>
+                <p>• Conclusão da Agenda com Meu Quarto<br>• Automação com dispositivos físicos inteligentes<br>• Expansão de ferramentas de acessibilidade<br>• Testes do modelo com dados reais autorizados</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section-header">
+            <span>Dúvidas Comuns</span>
+            <h2>Perguntas Frequentes</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>O ANHANGÁ controla o meu celular ou impede de jogar?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Não. O ANHANGÁ foi desenvolvido para fornecer informações, estatísticas e recomendações inteligentes. Ele atua como um assistente de autogestão, mantendo o controle e a autonomia integral nas mãos do jogador.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>O sistema utiliza banco de dados MySQL?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Não. Desde o início dos testes com FastAPI, utilizamos exclusivamente o Supabase PostgreSQL, garantindo alta performance e segurança relacional.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>A Agenda e a automação física já estão concluídas?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    A leitura de compromissos e a simulação virtual do ambiente já estão implementadas e em fase de validação final. A automação completa com dispositivos físicos inteligentes está planejada para etapas futuras.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Como a NOVERIS lida com a minha privacidade?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Adotamos diretrizes estritas de privacidade e transparência. Seus dados de uso e telemetria são protegidos por criptografia e protocolos de segurança avançados na nuvem do Supabase, sem compartilhamento indevido.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER & CONTATO -->
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="logo" style="font-size: 1.8rem;">NOVERIS<span>.</span></a>
+            <p>Tecnologia, Inteligência Artificial e Ciência de Dados aplicada com responsabilidade.</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">NOVERIS © 2024–2026 • Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <div class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+        <i class="fa-solid fa-arrow-up"></i>
     </div>
-  </section>
 
-  <!-- Modalidades Comerciais -->
-  <section id="comercial" class="container">
-    <h2>💼 O que a NOVERIS Desenvolve e Comercializa?</h2>
-    <p class="section-desc">Nosso modelo comercial para o ecossistema ANHANGÁ contempla três modalidades estratégicas:</p>
-    
-    <div class="grid">
-      <div class="card grid-item futuristic-card tier-card">
-        <h3>ANHANGÁ Free</h3>
-        <p class="tier-subtitle">Versão Gratuita</p>
-        <ul class="feature-list">
-          <li>Registro e acompanhamento de sessões</li>
-          <li>Controle de tempo e pausas</li>
-          <li>Histórico de partidas</li>
-          <li>Indicadores estatísticos básicos</li>
-        </ul>
-      </div>
+    <!-- JAVASCRIPT INTERATIVO -->
+    <script>
+        // Alternância de Tema (Claro / Escuro)
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
 
-      <div class="card grid-item futuristic-card tier-card highlight-tier">
-        <h3>ANHANGÁ Plus</h3>
-        <p class="tier-subtitle">Assinatura Avançada</p>
-        <ul class="feature-list">
-          <li>Recursos avançados de Machine Learning</li>
-          <li>Relatórios personalizados de rotina</li>
-          <li>Alertas e recomendações preditivas via IA</li>
-          <li>Análise avançada de sensores de ambiente</li>
-        </ul>
-      </div>
+        // Recuperar tema salvo
+        const savedTheme = localStorage.getItem('noveris_theme') || 'dark';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
 
-      <div class="card grid-item futuristic-card tier-card">
-        <h3>ANHANGÁ Connect</h3>
-        <p class="tier-subtitle">Automação Smart Home</p>
-        <ul class="feature-list">
-          <li>Integração com dispositivos IoT compatíveis</li>
-          <li>Ajuste automático de iluminação e temperatura</li>
-          <li>Automação residencial adaptativa para gaming</li>
-          <li>Central de controle Smart Home 2050</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('noveris_theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
 
-  <!-- Experiência e Acessibilidade -->
-  <section id="acessibilidade" class="container">
-    <h2>♿ Acessibilidade como Parte da Inovação</h2>
-    <div class="card futuristic-card">
-      <p>
-        Para a NOVERIS, acessibilidade não é um recurso secundário; faz parte da concepção da tecnologia. O ANHANGÁ foi projetado com opções de personalização visual, contraste e paletas voltadas a diferentes tipos de daltonismo.
-      </p>
-      <div class="access-grid">
-        <div>• Paletas de cores para Daltonismo (Protanopia, Deuteranopia, Tritanopia)</div>
-        <div>• Modos de Alto Contraste e Tamanho de Texto Regulável</div>
-        <div>• Alertas Visuais, Sonoros e Hápticos Personalizáveis</div>
-        <div>• Suporte e Adaptações de Comunicação em Libras</div>
-        <div>• Regulagem de Sensibilidade à Luz, Som e Movimento</div>
-      </div>
-    </div>
-  </section>
+        function updateThemeIcon(theme) {
+            if (theme === 'light') {
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
 
-  <!-- Tecnologias -->
-  <section id="tecnologias" class="container">
-    <h2>🚀 Tecnologias da Solução</h2>
-    <div class="grid">
-      <div class="card grid-item futuristic-card">
-        <h3>Python 3.11+</h3>
-        <p>Core de processamento de dados e inteligência do sistema.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>FastAPI</h3>
-        <p>Backend de alta performance para disponibilização de APIs REST e conexões telemétricas.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>Pandas & NumPy</h3>
-        <p>Tratamento, manipulação e cálculo estatístico de vetores e arrays.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>Scikit-learn</h3>
-        <p>Modelos de Machine Learning e detecção de anomalias.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>PostgreSQL / Supabase</h3>
-        <p>Armazenamento de dados relacional e gerenciamento em nuvem.</p>
-      </div>
-      <div class="card grid-item futuristic-card">
-        <h3>Git / GitHub Pages</h3>
-        <p>Controle de versão e publicação do showcase institucional.</p>
-      </div>
-    </div>
-  </section>
+        // Menu Mobile Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
 
-  <!-- O Futuro da NOVERIS -->
-  <section class="container">
-    <div class="card vision-card futuristic-card">
-      <h2>🌐 O Futuro da NOVERIS</h2>
-      <p>
-        A NOVERIS pretende expandir sua atuação para além do universo dos jogos. A mesma tecnologia desenvolvida para compreender sessões de jogo inspirará soluções para ambientes inteligentes, produtividade, acessibilidade e automação residencial.
-      </p>
-      <br>
-      <p class="final-quote">
-        <strong>NOVERIS — O futuro não é apenas inteligente. Ele precisa ser humano.</strong>
-      </p>
-    </div>
-  </section>
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
 
-  <!-- Rodapé -->
-  <footer>
-    <p><strong>🦅 ANHANGÁ — Inteligência que entende seu contexto.</strong></p>
-    <p>NOVERIS © 2024–2026 • ExpoTech 2026.2 • Missão 2050 🌌</p>
-  </footer>
+        // Fechar menu mobile ao clicar em um link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
 
+        // Accordion FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // Fechar outros
+                faqItems.forEach(other => {
+                    if (other !== item) other.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        });
+
+        // Botão Voltar ao Topo
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
