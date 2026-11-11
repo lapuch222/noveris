@@ -1,3 +1,7 @@
+import 'ranking_jogos_anhanga.dart';
+import 'icone_jogo_android.dart';
+import 'painel_dispositivos.dart';
+import 'analise_amigavel.dart';
 import 'agenda_inteligente.dart';
 import 'agenda_prazo_android.dart';
 import 'agenda_automatica.dart';
@@ -1933,6 +1937,7 @@ class _AnhangaPainelState extends State<AnhangaPainel>
           ),
         ),
         filtrosDashboard(),
+        PainelDispositivos(sessoes: sessoesPeriodo, destaque: destaque),
 
         cartao(
           'Seu tempo de jogo',
@@ -2195,11 +2200,10 @@ class _AnhangaPainelState extends State<AnhangaPainel>
 
           for (final jogo in jogosInstalados)
             ListTile(
-              leading: Icon(
-                jogoSelecionado == jogo['pacote']
-                    ? Icons.check_circle
-                    : Icons.sports_esports_outlined,
-                color: destaque,
+              leading: IconeJogoAndroid(
+                pacote: jogo['pacote']?.toString(),
+                cor: destaque,
+                tamanho: 40,
               ),
               selected: jogoSelecionado == jogo['pacote'],
               onTap: () {
@@ -2227,6 +2231,245 @@ class _AnhangaPainelState extends State<AnhangaPainel>
         sessao['recomendacao'] != null;
   }
 
+  Widget iconePeloNome(String nome, {double tamanho = 36}) {
+    // ANHANGA_ICONES_CLAROS
+    final chaveClara = nome.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+    const imagensClaras = <String, String>{
+      'genshinimpact': 'genshin_claro.png',
+      'minecraft': 'minecraft_claro.png',
+    };
+
+    final imagemClara = imagensClaras[chaveClara];
+
+    if (imagemClara != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(9),
+        child: Image.asset(
+          'assets/icons/jogos/$imagemClara',
+          width: tamanho,
+          height: tamanho,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+    // ANHANGA_QUATRO_JOGOS_2026
+    final chaveImagem = nome.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+    const artesNovas = <String, String>{
+      'minecraft': 'minecraft.png',
+      'fortnite': 'fortnite.png',
+      'valorant': 'valorant.jpg',
+      'genshinimpact': 'genshin_impact.jpg',
+    };
+
+    final arteNova = artesNovas[chaveImagem];
+
+    if (arteNova != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.asset(
+          'assets/icons/jogos/$arteNova',
+          width: tamanho,
+          height: tamanho,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.sports_esports, size: tamanho);
+          },
+        ),
+      );
+    }
+    // ANHANGA_ICONES_MULTIPLATAFORMA
+    final chaveJogo = nome.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+    const pacotesMultiplataforma = <String, String>{
+      'zenlesszonezero': 'com.HoYoverse.Nap',
+      'zzz': 'com.HoYoverse.Nap',
+      'diabloimmortal': 'com.blizzard.diablo.immortal',
+    };
+
+    final pacoteMultiplataforma = pacotesMultiplataforma[chaveJogo];
+
+    if (pacoteMultiplataforma != null) {
+      return IconeJogoAndroid(
+        pacote: pacoteMultiplataforma,
+        cor: destaque,
+        tamanho: tamanho,
+      );
+    }
+    String normalizar(String texto) {
+      return texto.toLowerCase().trim().replaceAll(RegExp(r'[^a-z0-9]'), '');
+    }
+
+    final procurado = normalizar(nome);
+    String? pacote;
+
+    // Primeiro procurar correspondencia exata.
+    for (final jogo in jogosInstalados) {
+      final atual = normalizar((jogo['nome'] ?? '').toString());
+
+      if (procurado.isNotEmpty && atual == procurado) {
+        pacote = jogo['pacote']?.toString();
+        break;
+      }
+    }
+
+    // Depois aceitar variacoes claras do mesmo titulo.
+    if (pacote == null && procurado.length >= 8) {
+      final candidatos = jogosInstalados.where((jogo) {
+        final atual = normalizar((jogo['nome'] ?? '').toString());
+
+        if (atual.length < 8) return false;
+
+        final menor = procurado.length < atual.length
+            ? procurado.length
+            : atual.length;
+
+        final maior = procurado.length > atual.length
+            ? procurado.length
+            : atual.length;
+
+        return (atual.contains(procurado) || procurado.contains(atual)) &&
+            menor / maior >= 0.75;
+      }).toList();
+
+      // Evitar usar a imagem errada se houver ambiguidade.
+      if (candidatos.length == 1) {
+        pacote = candidatos.first['pacote']?.toString();
+      }
+    }
+
+    final iconeAndroid = IconeJogoAndroid(
+      pacote: pacote,
+      cor: destaque,
+      tamanho: tamanho,
+    );
+
+    final chave = nome.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+    const imagensLocais = <String, String>{
+      'enterthegungeon': 'enter_the_gungeon.jpg',
+      'musedash': 'muse_dash.jpg',
+      'paladins': 'paladins.jpg',
+      'anotherdoor': 'another_door.jpg',
+    };
+
+    final arquivo = imagensLocais[chave];
+
+    // GrandChase Mobile e Diablo Immortal
+    // continuam usando seus icones Android.
+    if (arquivo == null) {
+      return iconeAndroid;
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Image.asset(
+        'assets/icons/jogos/$arquivo',
+        width: tamanho,
+        height: tamanho,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('Falha ao carregar: $arquivo - $error');
+          return iconeAndroid;
+        },
+      ),
+    );
+  }
+
+  Widget iconeDaPartida(Map<String, dynamic> sessao) {
+    final nome = nomeJogoHistorico(sessao);
+
+    final id = int.tryParse(sessao['id_jogo']?.toString() ?? '');
+
+    final plataforma = (sessao['plataforma'] ?? '').toString().toLowerCase();
+
+    final ehPC = plataforma == 'pc' || plataforma == 'windows';
+
+    final ehAndroid = plataforma == 'android' || plataforma == 'smartphone';
+
+    // Arquivos locais dos jogos confirmados.
+    const imagensPorId = <int, String>{
+      8: 'enter_the_gungeon.jpg',
+      9: 'muse_dash.jpg',
+      12: 'paladins.jpg',
+      13: 'another_door.jpg',
+    };
+
+    String normalizar(String texto) {
+      return texto.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+    }
+
+    const imagensPorNome = <String, String>{
+      'enterthegungeon': 'enter_the_gungeon.jpg',
+      'musedash': 'muse_dash.jpg',
+      'paladins': 'paladins.jpg',
+      'anotherdoor': 'another_door.jpg',
+    };
+
+    final nomeNormalizado = normalizar(nome);
+
+    // Nao atribuir arte de outra versao ao GrandChase
+    // ou ao Diablo Immortal.
+    final priorizarAndroid =
+        nomeNormalizado == 'grandchase' ||
+        nomeNormalizado == 'grandchasemobile' ||
+        nomeNormalizado == 'diabloimmortal';
+
+    final iconeAndroid = iconePeloNome(nome, tamanho: 38);
+
+    final arquivo = priorizarAndroid
+        ? null
+        : (id == null ? null : imagensPorId[id]) ??
+              imagensPorNome[nomeNormalizado];
+
+    final Widget imagem = arquivo == null
+        ? iconeAndroid
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/icons/jogos/$arquivo',
+              width: 38,
+              height: 38,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                debugPrint('ANHANGA: falha no asset $arquivo: $error');
+                return iconeAndroid;
+              },
+            ),
+          );
+
+    return SizedBox(
+      width: 44,
+      height: 44,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(top: 0, left: 0, child: imagem),
+          if (ehPC || ehAndroid)
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF102431),
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: destaque),
+                ),
+                child: Icon(
+                  ehPC ? Icons.computer : Icons.smartphone,
+                  color: destaque,
+                  size: 13,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
   Widget resultadoSalvoSupabase(Map<String, dynamic> sessao) {
     final temAmbiente =
         sessao['temperatura'] != null ||
@@ -2241,7 +2484,7 @@ class _AnhangaPainelState extends State<AnhangaPainel>
         children: [
           Row(
             children: [
-              Icon(Icons.sports_esports, color: destaque, size: 28),
+              iconeDaPartida(sessao),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -2448,6 +2691,13 @@ class _AnhangaPainelState extends State<AnhangaPainel>
 
         painelEstatistico('Computador', pc),
         painelEstatistico('Celular', android),
+        painelJogosAmigavel(sessoes, nomeJogoHistorico, iconePeloNome),
+        painelRankingAvancado(
+          sessoes: sessoes,
+          nomeJogo: nomeJogoHistorico,
+          iconeJogo: (nome) => iconePeloNome(nome, tamanho: 36),
+          destaque: destaque,
+        ),
 
         cartao(
           'Como foram suas partidas',
@@ -2549,7 +2799,7 @@ class _AnhangaPainelState extends State<AnhangaPainel>
               children: [
                 Row(
                   children: [
-                    Icon(Icons.sports_esports, color: destaque),
+                    iconeDaPartida(sessao),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -2595,6 +2845,7 @@ class _AnhangaPainelState extends State<AnhangaPainel>
                   '${classificacaoJogador(sessao['classificacao'])}',
                 ),
 
+                analisePartidaAmigavel(sessao, sessoes, nomeJogoHistorico),
                 if (sessao['probabilidade_prolongada'] != null)
                   Text(
                     'Risco registrado de passar do tempo: '
@@ -2604,7 +2855,37 @@ class _AnhangaPainelState extends State<AnhangaPainel>
                 if (sessao['recomendacao'] != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text('Dica: ${dicaJogador(sessao['recomendacao'])}'),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.lightbulb_outline,
+                              color: destaque,
+                              size: 26,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Uma dica para você',
+                                style: TextStyle(
+                                  color: destaque,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          dicaJogador(sessao['recomendacao']),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
               ],
             ),
