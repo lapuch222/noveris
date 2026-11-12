@@ -37,6 +37,9 @@ dependencies:
   supabase_flutter: ^2.18.3
   installed_apps: ^2.2.1
   device_calendar: 4.3.3
+  speech_to_text: ^7.5.0
+  pdf: ^3.13.1
+  printing: ^5.15.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +60,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/icons/jogos/
     - assets/images/anhanga_logo.webp
     - assets/images/anhanga_cervo.webp
 

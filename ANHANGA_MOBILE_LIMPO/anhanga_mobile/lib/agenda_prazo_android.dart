@@ -1,5 +1,18 @@
 import 'package:device_calendar/device_calendar.dart';
 
+DateTime horarioLocalAgenda(dynamic data) {
+  return DateTime(
+    data.year,
+    data.month,
+    data.day,
+    data.hour,
+    data.minute,
+    data.second,
+    data.millisecond,
+    data.microsecond,
+  );
+}
+
 class AgendaPrazoAndroid {
   static Future<int?> buscar({required int limiteSegundos}) async {
     if (limiteSegundos <= 0) return null;
@@ -40,7 +53,7 @@ class AgendaPrazoAndroid {
             continue;
           }
 
-          final inicio = evento.start!.toLocal();
+          final inicio = horarioLocalAgenda(evento.start!);
 
           if (!inicio.isAfter(agora)) continue;
 

@@ -1,5 +1,18 @@
 import 'package:device_calendar/device_calendar.dart';
 
+DateTime horarioLocalAgenda(dynamic data) {
+  return DateTime(
+    data.year,
+    data.month,
+    data.day,
+    data.hour,
+    data.minute,
+    data.second,
+    data.millisecond,
+    data.microsecond,
+  );
+}
+
 class AgendaAutomatica {
   final DeviceCalendarPlugin _calendario = DeviceCalendarPlugin();
 
@@ -61,7 +74,7 @@ class AgendaAutomatica {
       eventos.sort((a, b) => a.start!.compareTo(b.start!));
 
       final proximo = eventos.first;
-      final inicio = proximo.start!.toLocal();
+      final inicio = horarioLocalAgenda(proximo.start!);
 
       final prazo = inicio.subtract(Duration(minutes: minutosPreparacao));
 

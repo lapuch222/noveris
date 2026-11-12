@@ -1,3 +1,4 @@
+﻿import 'chatbot_screen.dart';
 import 'ranking_jogos_anhanga.dart';
 import 'icone_jogo_android.dart';
 import 'painel_dispositivos.dart';
@@ -3146,6 +3147,14 @@ class _AnhangaPainelState extends State<AnhangaPainel>
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        tooltip: 'Conversar com o ANHANGÁ AI',
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ChatbotScreen()),
+        ),
+        icon: const Icon(Icons.smart_toy_outlined),
+        label: const Text('Chat IA'),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: pagina,
         onDestinationSelected: (indice) {
@@ -3164,3 +3173,5 @@ class _AnhangaPainelState extends State<AnhangaPainel>
     );
   }
 }
+
+

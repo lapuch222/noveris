@@ -1,12 +1,14 @@
 
 package com.noveris.anhanga_mobile
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -129,6 +131,21 @@ class MainActivity : FlutterActivity() {
                             }
 
                             else -> {
+                                // ANHANGA_V7_PEDIR_NOTIFICACOES: permissÃ£o em tempo de execuÃ§Ã£o (Android 13+).
+                                // A sessÃ£o continua funcionando mesmo se o jogador negar a autorizaÃ§Ã£o.
+                                if (
+                                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                                    ContextCompat.checkSelfPermission(
+                                        this,
+                                        Manifest.permission.POST_NOTIFICATIONS
+                                    ) != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    ActivityCompat.requestPermissions(
+                                        this,
+                                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                                        8307
+                                    )
+                                }
                                 enviarAcao(
                                     acao =
                                         RelogioFlutuanteService.ACAO_INICIAR,

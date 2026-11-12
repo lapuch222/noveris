@@ -5,6 +5,19 @@ import 'package:device_calendar/device_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+DateTime horarioLocalAgenda(dynamic data) {
+  return DateTime(
+    data.year,
+    data.month,
+    data.day,
+    data.hour,
+    data.minute,
+    data.second,
+    data.millisecond,
+    data.microsecond,
+  );
+}
+
 /// ANHANGÁ — Agenda Inteligente.
 /// Lê somente os eventos locais com consentimento. Não envia eventos à nuvem.
 /// A recomendação de horário é baseada em regras e no histórico de sessões;
@@ -252,7 +265,7 @@ class _AgendaInteligenteState extends State<AgendaInteligente> {
     }
     final agora = DateTime.now();
     final proximo = _eventos.first;
-    final inicio = proximo.start!.toLocal();
+    final inicio = horarioLocalAgenda(proximo.start!);
     final minutos = inicio.difference(agora).inMinutes;
     final tempoLivre = minutos - _minutosParaPreparacao;
     if (tempoLivre <= 0) {
@@ -269,9 +282,10 @@ class _AgendaInteligenteState extends State<AgendaInteligente> {
   Widget build(BuildContext context) {
     final proximo = _eventos.isEmpty ? null : _eventos.first;
     final agora = DateTime.now();
-    final prazo = proximo?.start?.toLocal().subtract(
-      Duration(minutes: _minutosParaPreparacao),
-    );
+    final prazo = proximo?.start == null
+        ? null
+        : horarioLocalAgenda(proximo!.start!)
+              .subtract(Duration(minutes: _minutosParaPreparacao));
     final restantes = prazo == null
         ? null
         : math.max(0, prazo.difference(agora).inMinutes);
@@ -448,7 +462,7 @@ class _AgendaInteligenteState extends State<AgendaInteligente> {
                         : evento.title!,
                   ),
                   subtitle: Text(
-                    '${_data(evento.start!.toLocal())} às ${_hora(evento.start!.toLocal())}',
+                    '${_data(horarioLocalAgenda(evento.start!))} às ${_hora(horarioLocalAgenda(evento.start!))}',
                   ),
                 ),
               ),
