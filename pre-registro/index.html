@@ -18,15 +18,142 @@
 </div></div><div class="footer">© NOVERIS · ANHANGÁ · NEO SUNSET</div></div>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const sb=createClient('https://wkfujrfuederxdqjotqj.supabase.co','sb_publishable_g7shyNcyFgyvNJYs0bHJBQ_kImp4quN');
-const f=document.getElementById('f'),status=document.getElementById('status'),btn=document.getElementById('enviar');
-const key='neo_sunset_cadastro_pendente_v1';
-const msg=(s)=>{status.textContent=s;};
-function values(){return {nome:document.getElementById('nome').value.trim(),email:document.getElementById('email').value.trim().toLowerCase(),plataforma:document.getElementById('plataforma').value,consentimento_marketing:document.getElementById('marketing').checked};}
-function restore(){try{const v=JSON.parse(localStorage.getItem(key)||'null');if(v){for(const k of ['nome','email','plataforma'])document.getElementById(k).value=v[k]||'';document.getElementById('marketing').checked=!!v.consentimento_marketing;return v}}catch{}return null}
-async function register(v,user){if(!v||!user||!v.nome||!v.plataforma){msg('E-mail confirmado! Preencha os campos e clique em Confirmar pré-registro para concluir.');return}if(v.email!==user.email?.toLowerCase()){msg('O e-mail confirmado é diferente do informado. Confira seu cadastro.');return}btn.disabled=true;try{const {data:existing,error:findError}=await sb.from('pre_registros_anhanga').select('status,edicao_reservada,status_resgate').eq('auth_user_id',user.id).maybeSingle();if(findError)throw findError;if(existing){localStorage.removeItem(key);msg('Você já está inscrito(a)! Edição: Neo Sunset. Situação: '+existing.status+'. Resgate: '+existing.status_resgate+'.');return}const {error}=await sb.from('pre_registros_anhanga').insert({nome:v.nome,email:v.email,plataforma:v.plataforma,consentimento_marketing:v.consentimento_marketing,consentimento_privacidade_em:new Date().toISOString(),auth_user_id:user.id});if(error)throw error;localStorage.removeItem(key);msg('PRÉ-REGISTRO CONFIRMADO! Sua edição Neo Sunset gratuita está reservada. Aguarde o anúncio de liberação pela NOVERIS.')}catch(e){msg('Não foi possível concluir: '+(e.message||String(e)))}finally{btn.disabled=false}}
-const draft=restore();
-const {data:{session}}=await sb.auth.getSession();
-if(session?.user){msg('E-mail autenticado: '+session.user.email);if(draft)await register(draft,session.user)}
-f.addEventListener('submit',async e=>{e.preventDefault();if(!f.reportValidity())return;const v=values();if(!document.getElementById('privacidade').checked){msg('Aceite o aviso de privacidade para continuar.');return}btn.disabled=true;try{const {data:{session}}=await sb.auth.getSession();if(session?.user && session.user.email?.toLowerCase()===v.email){await register(v,session.user);return}localStorage.setItem(key,JSON.stringify(v));const redirect=window.location.origin+window.location.pathname;const {error}=await sb.auth.signInWithOtp({email:v.email,options:{emailRedirectTo:redirect,shouldCreateUser:true}});if(error)throw error;msg('Enviamos um link de confirmação para '+v.email+'. Abra o e-mail e clique no link para concluir sua inscrição. Se necessário, volte a esta página no mesmo navegador.')}catch(e){msg('Erro: '+(e.message||String(e)))}finally{btn.disabled=false}});
+const sb = createClient('https://wkfujrfuederxdqjotqj.supabase.co', 'sb_publishable_g7shyNcyFgyvNJYs0bHJBQ_kImp4quN');
+const form = document.getElementById('f');
+const status = document.getElementById('status');
+const btn = document.getElementById('enviar');
+const localKey = 'neo_sunset_cadastro_pendente_v2';
+const oldKey = 'neo_sunset_cadastro_pendente_v1';
+let processing = false;
+function msg(message) { status.textContent = message; }
+function fields() {
+  return {
+    nome: document.getElementById('nome').value.trim(),
+    email: document.getElementById('email').value.trim().toLowerCase(),
+    plataforma: document.getElementById('plataforma').value,
+    consentimento_marketing: document.getElementById('marketing').checked,
+    consentimento_privacidade: document.getElementById('privacidade').checked
+  };
+}
+function getDraft() {
+  try {
+    const value = JSON.parse(localStorage.getItem(localKey) || localStorage.getItem(oldKey) || 'null');
+    if (value && value.nome && value.email && value.plataforma) return value;
+  } catch (_) {}
+  return null;
+}
+function restoreDraft(value) {
+  if (!value) return;
+  for (const key of ['nome','email','plataforma']) document.getElementById(key).value = value[key] || '';
+  document.getElementById('marketing').checked = !!value.consentimento_marketing;
+  document.getElementById('privacidade').checked = !!value.consentimento_privacidade;
+}
+function clearDraft() { localStorage.removeItem(localKey); localStorage.removeItem(oldKey); }
+function fromMetadata(user) {
+  const m = user?.user_metadata?.neo_sunset_registro;
+  if (m && m.nome && m.plataforma && m.consentimento_privacidade === true &&
+      ['Android','PC','Console'].includes(m.plataforma)) {
+    return { ...m, email: user.email.toLowerCase() };
+  }
+  return null;
+}
+function showSuccess(message) {
+  msg(message);
+  form.hidden = true;
+  status.style.border = '1px solid #69e9eb';
+  status.style.background = '#12352f';
+  status.style.color = '#fff';
+}
+async function finishRegistration(user, preferredDraft) {
+  if (!user?.email || processing) return;
+  processing = true; btn.disabled = true;
+  try {
+    const { data: existing, error: readErr } = await sb.from('pre_registros_anhanga')
+      .select('status,status_resgate,edicao_reservada')
+      .eq('auth_user_id', user.id).maybeSingle();
+    if (readErr) throw readErr;
+    if (existing) {
+      clearDraft();
+      showSuccess('PRÉ-REGISTRO CONFIRMADO! Sua edição Neo Sunset está reservada. Status: ' + existing.status + '. Resgate: ' + existing.status_resgate + '.');
+      return;
+    }
+    const local = preferredDraft || getDraft();
+    const draft = local && local.email?.toLowerCase() === user.email.toLowerCase() && local.consentimento_privacidade === true
+      ? local : fromMetadata(user);
+    if (!draft) {
+      msg('Seu e-mail foi confirmado! Para concluir a reserva, precisamos recuperar os dados do cadastro. Se o formulário estiver vazio, preencha-o uma única vez nesta página e clique em Confirmar pré-registro.');
+      return;
+    }
+    if (!['Android','PC','Console'].includes(draft.plataforma) || draft.nome.length < 2 || draft.nome.length > 120) {
+      throw new Error('Dados incompletos. Verifique seu nome e sua plataforma.');
+    }
+    const payload = {
+      nome: draft.nome,
+      email: user.email.toLowerCase(),
+      plataforma: draft.plataforma,
+      consentimento_marketing: !!draft.consentimento_marketing,
+      consentimento_privacidade_em: new Date().toISOString(),
+      auth_user_id: user.id
+    };
+    const {error: saveErr} = await sb.from('pre_registros_anhanga').insert(payload);
+    if (saveErr) {
+      if (saveErr.code === '23505') {
+        const {data: registered, error: checkErr} = await sb.from('pre_registros_anhanga')
+          .select('status').eq('auth_user_id',user.id).maybeSingle();
+        if (!checkErr && registered) { clearDraft(); showSuccess('PRÉ-REGISTRO CONFIRMADO! Sua edição Neo Sunset está reservada.'); return; }
+      }
+      throw saveErr;
+    }
+    clearDraft();
+    showSuccess('PRÉ-REGISTRO CONFIRMADO! Sua edição Neo Sunset gratuita está reservada. Aguarde a liberação pela NOVERIS.');
+  } catch (err) {
+    msg('Não foi possível concluir a inscrição: ' + (err.message || String(err)));
+  } finally { processing = false; btn.disabled = false; }
+}
+restoreDraft(getDraft());
+// O cliente Supabase processa a sessão recebida após o redirecionamento do Magic Link.
+const { data: { session }, error: sessionErr } = await sb.auth.getSession();
+if (sessionErr) msg('Falha ao recuperar a confirmação: ' + sessionErr.message);
+else if (session?.user) await finishRegistration(session.user);
+// Em navegadores onde a sessão chega depois do carregamento, finalizar pelo evento.
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session?.user) {
+    setTimeout(() => { void finishRegistration(session.user); }, 0);
+  }
+});
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!form.reportValidity()) return;
+  const draft = fields();
+  if (!draft.consentimento_privacidade) { msg('Aceite o aviso de privacidade para continuar.'); return; }
+  btn.disabled = true;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session?.user && session.user.email?.toLowerCase() === draft.email) {
+      localStorage.setItem(localKey,JSON.stringify(draft));
+      await finishRegistration(session.user, draft);
+      return;
+    }
+    localStorage.setItem(localKey, JSON.stringify(draft));
+    // Metadados acompanham a criação de novas contas e podem ser recuperados em outro navegador.
+    const {error} = await sb.auth.signInWithOtp({
+      email: draft.email,
+      options: {
+        emailRedirectTo: 'https://noveris-three.vercel.app/pre-registro/',
+        shouldCreateUser: true,
+        data: {
+          neo_sunset_registro: {
+            nome: draft.nome,
+            plataforma: draft.plataforma,
+            consentimento_marketing: draft.consentimento_marketing,
+            consentimento_privacidade: true
+          }
+        }
+      }
+    });
+    if (error) throw error;
+    msg('Enviamos o link de confirmação para ' + draft.email + '. Abra seu e-mail e toque no botão para concluir. Para novas contas, não será necessário repetir os dados.');
+  } catch (err) { msg('Erro ao enviar confirmação: ' + (err.message || String(err))); }
+  finally { btn.disabled = false; }
+});
 </script></body></html>
