@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#180b2d" />
+<title>ANHANGÁ Neo Sunset Beta — NOVERIS</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 75% 10%,#65306b 0%,#221339 42%,#0e1023 100%);color:white}.wrap{max-width:780px;margin:0 auto;padding:28px 18px 68px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:32px}header strong{letter-spacing:.17em;color:#ff65bc;font-size:clamp(22px,5vw,35px)}a{color:#62e4ef}header a{font-size:14px}.hero{position:relative;overflow:hidden;background:linear-gradient(145deg,#51245f,#170e30);border:1px solid #f15bb4;border-radius:24px;box-shadow:0 15px 48px #0b071d88}.scene{height:180px;overflow:hidden;position:relative;background:linear-gradient(#6a2978,#bd4689 68%,#fb8c69)}.sun{position:absolute;right:16%;top:23px;background:#ffd491;border-radius:50%;width:138px;height:138px}.skyline{position:absolute;bottom:0;width:100%;height:65px;background:repeating-linear-gradient(90deg,#24183e 0 31px,transparent 31px 40px,#24183e 40px 71px,transparent 71px 81px)}.inside{padding:26px}.eyebrow{font-size:12px;letter-spacing:.2em;color:#68e9ee;font-weight:800}h1{font-size:clamp(29px,6vw,43px);line-height:1.08;margin:8px 0 12px}p{color:#e3d7e8;line-height:1.55}.pill{display:inline-block;color:#ffd4e9;border:1px solid #e66bb8;border-radius:999px;font-size:12px;padding:7px 12px}.panel{background:#28183c;border:1px solid #5c396d;padding:20px;border-radius:17px;margin-top:22px}label{display:block;font-weight:700;margin:10px 0 8px}input{display:block;width:100%;padding:15px;border-radius:11px;border:1px solid #af89b3;background:#110e29;color:white;font:inherit}button,.button{font:inherit;font-weight:800;display:inline-block;text-align:center;text-decoration:none;background:#f51e30;color:#fff;padding:15px 20px;border-radius:12px;border:0;cursor:pointer;margin-top:12px}button:disabled{opacity:.5;cursor:wait}.alt{background:#473059}.hidden{display:none!important}.status{margin-top:16px;line-height:1.5;white-space:pre-line}.fine{font-size:12px;color:#c9b7d2}.good{color:#7df3d4}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1}ul{color:#e2d9e8;padding-left:22px;line-height:1.6}footer{text-align:center;color:#bdb1cc;font-size:12px;margin-top:25px}@media(max-width:550px){.row{display:block}.row>*{width:100%}}
+</style>
+</head>
+<body><div class="wrap">
+<header><strong>NOVERIS</strong><a href="/pre-registro/">Voltar ao pré-registro</a></header>
+<main class="hero"><div class="scene"><div class="sun"></div><div class="skyline"></div></div>
+<div class="inside"><div class="eyebrow">ANHANGÁ · NEO SUNSET</div><h1>Beta para Android</h1>
+<span class="pill">VERSÃO EXPERIMENTAL 0.1</span>
+<p>Bem-vindo à área de acesso antecipado. Para baixar o aplicativo, entre com o e-mail confirmado no pré-registro da NOVERIS.</p>
+<section class="panel" id="loginPanel"><h2>Verificar inscrição</h2>
+<form id="emailForm"><label for="email">E-mail utilizado no pré-registro</label><input id="email" type="email" autocomplete="email" required placeholder="seuemail@exemplo.com" /><button id="send" type="submit">ENVIAR CÓDIGO</button></form>
+<form id="codeForm" class="hidden"><label for="code">Código recebido por e-mail (6 dígitos)</label><input id="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required placeholder="000000" /><div class="row"><button type="submit" id="verify">VERIFICAR CÓDIGO</button><button type="button" id="back" class="alt">TROCAR E-MAIL</button></div></form></section>
+<section class="panel hidden" id="resultPanel"><h2 id="resultTitle">Sua inscrição</h2><p id="resultText"></p><a id="download" class="button hidden" rel="noopener noreferrer" href="#">BAIXAR APK BETA</a><p id="releaseNote" class="fine"></p><button id="logout" class="alt" type="button">SAIR DESTA CONTA</button></section>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+<section class="panel"><h2>Sobre a versão Beta</h2><ul><li>Somente Android; versão experimental com possíveis erros.</li><li>Instale apenas após conferir o arquivo e a origem NOVERIS.</li><li>O navegador pode avisar que o APK não vem da Play Store.</li><li>Esta versão não garante suporte a todas as versões do Android nem acesso futuro a jogos.</li></ul><p class="fine">Os arquivos de instalação podem ser compartilhados depois de baixados. O controle de acesso nesta página não equivale a um download tecnicamente privado.</p></section>
+</div></main><footer>© NOVERIS · ANHANGÁ NEO SUNSET · BETA 0.1</footer>
+</div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase=createClient('https://wkfujrfuederxdqjotqj.supabase.co','sb_publishable_g7shyNcyFgyvNJYs0bHJBQ_kImp4quN');
+const $=id=>document.getElementById(id);let emailCandidate='';let busy=false;
+const msg=text=>{$('status').textContent=text};
+async function showAccount(user){if(!user?.id)return; $('loginPanel').classList.add('hidden');$('resultPanel').classList.remove('hidden');$('download').classList.add('hidden');$('download').removeAttribute('href');
+  $('resultTitle').textContent='Verificando sua inscrição';$('resultText').textContent='Consultando o pré-registro confirmado...';
+  const {data,error}=await supabase.from('pre_registros_anhanga').select('status,edicao_reservada,status_resgate').eq('auth_user_id',user.id).maybeSingle();
+  if(error){$('resultTitle').textContent='Não foi possível verificar';$('resultText').textContent='Tente novamente mais tarde. '+error.message;return}
+  if(!data||!['confirmado','convidado','acesso_liberado'].includes(data.status)){$('resultTitle').textContent='Inscrição não confirmada';$('resultText').textContent='É necessário concluir o pré-registro antes de receber acesso ao Beta.';return}
+  $('resultTitle').textContent='Pré-registro confirmado';$('resultText').textContent='Sua conta está apta a participar dos testes Android. A reserva Neo Sunset segue registrada.';
+  $('releaseNote').textContent='Verificando disponibilidade do APK Beta...';
+  try{
+    const response=await fetch('https://api.github.com/repos/lapuch222/noveris/releases/tags/anhanga-beta-v0.1',{cache:'no-store'});
+    if(response.status===404){$('releaseNote').textContent='APK Beta em preparação. A página será atualizada quando o arquivo for publicado.';return}
+    if(!response.ok)throw new Error('Não foi possível consultar o lançamento.');
+    const release=await response.json();
+    if(release.draft){$('releaseNote').textContent='O APK ainda está em revisão.';return}
+    const asset=release.assets?.find(a=>a.name==='ANHANGA_Neo_Sunset_Beta_v0.1_OFICIAL.apk');
+    if(!asset){$('releaseNote').textContent='O APK ainda não foi anexado ao lançamento.';return}
+    $('download').href=asset.browser_download_url;$('download').classList.remove('hidden');
+    $('releaseNote').textContent='Arquivo oficial da versão Beta 0.1. Confira se o download foi iniciado no GitHub Releases.';
+  }catch(e){$('releaseNote').textContent='Não foi possível localizar o APK agora. Tente novamente.'}
+}
+$('emailForm').addEventListener('submit',async ev=>{ev.preventDefault();if(busy)return;busy=true;$('send').disabled=true;emailCandidate=$('email').value.trim().toLowerCase();try{
+ const {error}=await supabase.auth.signInWithOtp({email:emailCandidate,options:{shouldCreateUser:false,emailRedirectTo:'https://noveris-three.vercel.app/beta/'}});if(error)throw error;
+ $('emailForm').classList.add('hidden');$('codeForm').classList.remove('hidden');msg('Código enviado. Confira o e-mail e digite os 6 dígitos aqui.');
+}catch(e){msg('Não foi possível enviar: '+(e.message||String(e)))}finally{busy=false;$('send').disabled=false}});
+$('codeForm').addEventListener('submit',async ev=>{ev.preventDefault();if(busy)return;busy=true;$('verify').disabled=true;try{
+ const {data,error}=await supabase.auth.verifyOtp({email:emailCandidate,token:$('code').value.trim(),type:'email'});if(error)throw error;await showAccount(data.user||data.session?.user);
+}catch(e){msg('Código inválido ou expirado: '+(e.message||String(e)))}finally{busy=false;$('verify').disabled=false}});
+$('back').addEventListener('click',()=>{$('codeForm').classList.add('hidden');$('emailForm').classList.remove('hidden');$('code').value='';msg('')});
+$('logout').addEventListener('click',async()=>{await supabase.auth.signOut();$('resultPanel').classList.add('hidden');$('loginPanel').classList.remove('hidden');$('codeForm').classList.add('hidden');$('emailForm').classList.remove('hidden');msg('Sessão encerrada.')});
+const {data:{session},error}=await supabase.auth.getSession();if(error)msg('Erro de autenticação: '+error.message);else if(session?.user)await showAccount(session.user);
+supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session?.user)setTimeout(()=>{void showAccount(session.user)},0)});
+</script></body></html>
